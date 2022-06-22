@@ -24,5 +24,15 @@
     </excludedpackages>
 
     <instructions type="install">
+        <instruction type="file" application="rp">files_rp.tar</instruction>
+        
+        <instruction type="sql" run="standalone" />
+        
+        <instruction type="packageInstallationPlugin" />
+        
+        <instruction type="option" />
+        <instruction type="userGroupOption" />
+        
+        <instruction type="language" />
     </instructions>
 </package>
