@@ -70,7 +70,7 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 
         return [
             'sql' => $sql,
-            'parameters' => $parameters
+            'parameters' => $parameters,
         ];
     }
 
@@ -104,7 +104,7 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         foreach ($items as $item) {
             $statement->execute([
                 $item['attributes']['identifier'],
-                $this->installation->getPackageID()
+                $this->installation->getPackageID(),
             ]);
         }
         WCF::getDB()->commitTransaction();
@@ -130,7 +130,7 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 $statement = WCF::getDB()->prepareStatement($sql);
                 $statement->execute([
                     $gameID,
-                    'rp_default_game_id'
+                    'rp_default_game_id',
                 ]);
 
                 // update options.inc.php
@@ -144,16 +144,6 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     protected function prepareImport(array $data): array
     {
-        if ($this->installation->getAction() == 'install') {
-            $sql = "SELECT  COUNT(gameID)
-                FROM    " . $this->application . WCF_N . "_" . $this->tableName . "";
-            $statement = WCF::getDB()->prepareStatement($sql);
-            $statement->execute();
-            if ($statement->fetchSingleColumn()) {
-                throw new SystemException("Only one game can be installed. Uninstall the installed game and try again.");
-            }
-        }
-
         return [
             'icon' => $data['elements']['icon'] ?? '',
             'identifier' => $data['attributes']['identifier'],
