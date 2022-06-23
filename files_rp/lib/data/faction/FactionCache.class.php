@@ -37,7 +37,7 @@ class FactionCache extends SingletonFactory
      * cached faction ids with faction identifier as key
      * @var int[]
      */
-    protected array $cachedFactionByIdentifier = [];
+    protected array $cachedIdentifier = [];
 
     /**
      * cached factions
@@ -58,7 +58,7 @@ class FactionCache extends SingletonFactory
      */
     public function getFactionByIdentifier(string $identifier): ?Faction
     {
-        return $this->getFactionByID($this->cachedFactionByIdentifier[$identifier] ?? 0);
+        return $this->getFactionByID($this->cachedIdentifier[$identifier] ?? 0);
     }
 
     /**
@@ -93,6 +93,6 @@ class FactionCache extends SingletonFactory
     protected function init(): void
     {
         $this->cachedFactions = FactionCacheBuilder::getInstance()->getData(['gameID' => RP_DEFAULT_GAME_ID], 'faction');
-        $this->cachedFactionByIdentifier = FactionCacheBuilder::getInstance()->getData(['gameID' => RP_DEFAULT_GAME_ID], 'identifier');
+        $this->cachedIdentifier = FactionCacheBuilder::getInstance()->getData(['gameID' => RP_DEFAULT_GAME_ID], 'identifier');
     }
 }

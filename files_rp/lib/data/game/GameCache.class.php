@@ -37,7 +37,7 @@ class GameCache extends SingletonFactory
      * cached game ids with game identifier as key
      * @var int[]
      */
-    protected array $cachedGameByIdentifier = [];
+    protected array $cachedIdentifier = [];
 
     /**
      * cached games
@@ -58,8 +58,8 @@ class GameCache extends SingletonFactory
      */
     public function getGameByIdentifier(string $identifier): ?Game
     {
-        if (!isset($this->cachedGameByIdentifier[$identifier])) return null;
-        return $this->getGameByID($this->cachedGameByIdentifier[$identifier]);
+        if (!isset($this->cachedIdentifier[$identifier])) return null;
+        return $this->getGameByID($this->cachedIdentifier[$identifier]);
     }
 
     /**
@@ -94,6 +94,6 @@ class GameCache extends SingletonFactory
     protected function init(): void
     {
         $this->cachedGames = GameCacheBuilder::getInstance()->getData([], 'games');
-        $this->cachedGameByIdentifier = GameCacheBuilder::getInstance()->getData([], 'identifier');
+        $this->cachedIdentifier = GameCacheBuilder::getInstance()->getData([], 'identifier');
     }
 }
