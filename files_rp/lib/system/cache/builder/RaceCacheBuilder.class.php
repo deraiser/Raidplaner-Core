@@ -40,11 +40,14 @@ class RaceCacheBuilder extends AbstractCacheBuilder
      */
     protected function rebuild(array $parameters): array
     {
-        $data = ['race' => [], 'identifier' => []];
+        $data = [
+            'identifier' => [],
+            'race' => [],
+        ];
 
         // get game race
-        $sql = "SELECT  raceID
-                FROM    rp" . WCF_N . "_race_to_faction
+        $sql = "SELECT  *
+                FROM    rp" . WCF_N . "_race
                 WHERE   gameID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
         $statement->execute([$parameters['gameID']]);
