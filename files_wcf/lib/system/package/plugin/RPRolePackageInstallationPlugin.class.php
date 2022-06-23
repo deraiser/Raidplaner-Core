@@ -138,7 +138,7 @@ class RPRolePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 
         return [
             'gameID' => $gameID,
-            'icon' => isset($data['elements']['icon']) ? $data['elements']['icon'] : '',
+            'icon' => $data['elements']['icon'] ?? '',
             'identifier' => $data['attributes']['identifier'],
         ];
     }

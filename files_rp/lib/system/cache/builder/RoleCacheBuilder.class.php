@@ -40,7 +40,10 @@ class RoleCacheBuilder extends AbstractCacheBuilder
      */
     protected function rebuild(array $parameters): array
     {
-        $data = ['role' => [], 'identifier' => []];
+        $data = [
+            'identifier' => [],
+            'role' => [],
+        ];
 
         // get game role
         $sql = "SELECT  *

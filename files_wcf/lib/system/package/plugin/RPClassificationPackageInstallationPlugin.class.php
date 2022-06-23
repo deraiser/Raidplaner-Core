@@ -2,8 +2,10 @@
 
 namespace wcf\data\package\installation\plugin;
 
+use rp\data\classification\ClassificationEditor;
 use rp\data\faction\Faction;
-use rp\data\race\RaceEditor;
+use rp\data\race\Race;
+use rp\data\role\Role;
 use wcf\data\IStorableObject;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
@@ -32,12 +34,12 @@ use wcf\util\ArrayUtil;
  */
 
 /**
- * Installs, updates and deletes races.
+ * Installs, updates and deletes classifications.
  * 
  * @author      Marco Daries
  * @package     WoltLabSuite\Core\System\Package\Plugin
  */
-class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
+class RPClassificationPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -47,17 +49,17 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     /**
      * @inheritDoc
      */
-    public $className = RaceEditor::class;
+    public $className = ClassificationEditor::class;
 
     /**
      * @inheritDoc
      */
-    public $tableName = 'race';
+    public $tableName = 'classification';
 
     /**
      * @inheritDoc
      */
-    public $tagName = 'race';
+    public $tagName = 'classification';
 
     /**
      * @inheritDoc
@@ -74,8 +76,8 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         ];
 
         return [
-            'sql' => $sql,
             'parameters' => $parameters,
+            'sql' => $sql,
         ];
     }
 
@@ -84,7 +86,7 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
      */
     public static function getDefaultFilename(): string
     {
-        return 'rpRace.xml';
+        return 'rpClassification.xml';
     }
 
     /**
@@ -102,31 +104,75 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     {
         $factions = $data['factions'];
         unset($data['factions']);
+        $races = $data['races'];
+        unset($data['races']);
+        $roles = $data['roles'];
+        unset($data['roles']);
 
-        $race = parent::import($row, $data);
+        $classification = parent::import($row, $data);
 
-        // remove exist
+        // delete old entry
         $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_to_faction
-                WHERE       raceID = ?";
+                WHERE       classificationID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
-        $statement->execute([$race->raceID]);
+        $statement->execute([$classification->classificationID]);
 
-        // new entry
+        $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_to_race
+                WHERE       classificationID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$classification->classificationID]);
+
+        $sql = "DELETE FROM " . $this->application . WCF_N . "_" . $this->tableName . "_to_role
+                WHERE       classificationID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$classification->classificationID]);
+
+        // new entry to factions
         $sql = "INSERT INTO " . $this->application . WCF_N . "_" . $this->tableName . "_to_faction
-                            (raceID, factionID)
+                            (classificationID, factionID)
                 VALUES      (?, ?)";
         $statement = WCF::getDB()->prepareStatement($sql);
 
         WCF::getDB()->beginTransaction();
         foreach ($factions as $faction) {
             $statement->execute([
-                $race->raceID,
+                $classification->classificationID,
                 $faction->factionID,
             ]);
         }
         WCF::getDB()->commitTransaction();
 
-        return $race;
+        // new entry to races
+        $sql = "INSERT INTO " . $this->application . WCF_N . "_" . $this->tableName . "_to_race
+                            (classificationID, raceID)
+                VALUES      (?, ?)";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($races as $race) {
+            $statement->execute([
+                $classification->classificationID,
+                $race->raceID,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+
+        // new entry to roles
+        $sql = "INSERT INTO " . $this->application . WCF_N . "_" . $this->tableName . "_to_role
+                            (classificationID, roleID)
+                VALUES      (?, ?)";
+        $statement = WCF::getDB()->prepareStatement($sql);
+
+        WCF::getDB()->beginTransaction();
+        foreach ($roles as $role) {
+            $statement->execute([
+                $classification->classificationID,
+                $role->roleID,
+            ]);
+        }
+        WCF::getDB()->commitTransaction();
+
+        return $classification;
     }
 
     /**
@@ -163,14 +209,14 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             $statement->execute([$data['elements']['game']]);
             $row = $statement->fetchSingleRow();
             if ($row === false) {
-                throw new SystemException("Unable to find game '" . $data['elements']['game'] . "' for race '" . $data['attributes']['identifier'] . "'");
+                throw new SystemException("Unable to find game '" . $data['elements']['game'] . "' for classification '" . $data['attributes']['identifier'] . "'");
             }
 
             $gameID = $row['gameID'];
         }
 
         if ($gameID === null) {
-            throw new SystemException("The race '" . $data['attributes']['identifier'] . "' must either have an associated game.");
+            throw new SystemException("The classification '" . $data['attributes']['identifier'] . "' must either have an associated game.");
         }
 
         $factions = [];
@@ -188,10 +234,54 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
                 ]);
                 $row = $statement->fetchSingleRow();
                 if ($row === false) {
-                    throw new SystemException("Unable to find faction '" . $factionName . "' for race '" . $data['attributes']['identifier'] . "'");
+                    throw new SystemException("Unable to find faction '" . $factionName . "' for classification '" . $data['attributes']['identifier'] . "'");
                 }
 
                 $factions[] = new Faction(null, $row);
+            }
+        }
+
+        $races = [];
+        if (isset($data['elements']['races'])) {
+            $tmpRaces = ArrayUtil::trim(\explode(',', $data['elements']['races']));
+            foreach ($tmpRaces as $raceName) {
+                $sql = "SELECT  raceID
+                        FROM    " . $this->application . WCF_N . "_race
+                        WHERE   identifier = ?
+                            AND gameID = ?";
+                $statement = WCF::getDB()->prepareStatement($sql, 1);
+                $statement->execute([
+                    $raceName,
+                    $gameID,
+                ]);
+                $row = $statement->fetchSingleRow();
+                if ($row === false) {
+                    throw new SystemException("Unable to find race '" . $raceName . "' for classification '" . $data['attributes']['identifier'] . "'");
+                }
+
+                $races[] = new Race(null, $row);
+            }
+        }
+
+        $roles = [];
+        if (isset($data['elements']['roles'])) {
+            $tmpRoles = ArrayUtil::trim(\explode(',', $data['elements']['roles']));
+            foreach ($tmpRoles as $roleName) {
+                $sql = "SELECT  roleID
+                        FROM    " . $this->application . WCF_N . "_role
+                        WHERE   identifier = ?
+                            AND gameID = ?";
+                $statement = WCF::getDB()->prepareStatement($sql, 1);
+                $statement->execute([
+                    $roleName,
+                    $gameID
+                ]);
+                $row = $statement->fetchSingleRow();
+                if ($row === false) {
+                    throw new SystemException("Unable to find role '" . $roleName . "' for classification '" . $data['attributes']['identifier'] . "'");
+                }
+
+                $roles[] = new Role(null, $row);
             }
         }
 
@@ -200,6 +290,8 @@ class RPRacePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
             'gameID' => $gameID,
             'icon' => $data['elements']['icon'] ?? '',
             'identifier' => $data['attributes']['identifier'],
+            'races' => $races,
+            'roles' => $roles,
         ];
     }
 }
