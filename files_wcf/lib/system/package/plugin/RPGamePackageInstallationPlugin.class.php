@@ -1,8 +1,9 @@
 <?php
 
+namespace wcf\data\package\installation\plugin;
+
 use rp\data\game\GameEditor;
 use wcf\data\option\OptionEditor;
-use wcf\system\exception\SystemException;
 use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\WCF;
 
