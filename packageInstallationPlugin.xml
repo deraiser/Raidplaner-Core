@@ -3,5 +3,6 @@
     <import>
         <pip name="rpFaction">wcf\system\package\plugin\RPFactionPackageInstallationPlugin</pip>
         <pip name="rpGame">wcf\system\package\plugin\RPGamePackageInstallationPlugin</pip>
+        <pip name="rpRace">wcf\system\package\plugin\RPRacePackageInstallationPlugin</pip>
     </import>
 </data>
