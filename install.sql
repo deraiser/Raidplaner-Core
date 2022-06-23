@@ -38,6 +38,17 @@ CREATE TABLE rp1_race_to_faction (
     UNIQUE KEY(raceID, factionID)
 );
 
+DROP TABLE IF EXISTS rp1_role;
+CREATE TABLE rp1_role (
+    roleID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    packageID INT(10) NOT NULL,
+    gameID INT(10) NOT NULL,
+    identifier VARCHAR(191) NOT NULL,
+    icon VARCHAR(255) NOT NULL DEFAULT '',
+    isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+    UNIQUE KEY identifier (identifier, gameID)
+);
+
 /* SQL_PARSER_OFFSET */
 
 -- foreign keys
@@ -50,3 +61,6 @@ ALTER TABLE rp1_race ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DE
 ALTER TABLE rp1_race ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (raceID) REFERENCES rp1_race (raceID) ON DELETE CASCADE;
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (factionID) REFERENCES rp1_faction (factionID) ON DELETE CASCADE;
+
+ALTER TABLE rp1_role ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
+ALTER TABLE rp1_role ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
