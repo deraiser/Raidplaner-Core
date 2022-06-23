@@ -35,7 +35,6 @@ use wcf\util\StringUtil;
  * @property-read   int         $packageID          id of the package which delivers the game
  * @property-read   string      $identifier         unique textual identifier of the game
  * @property-read   int         $maxLevel           max level of the game
- * @property-read   int         $maxClass           max class per charater of the game
  * @property-read   string      $icon               icon of the game
  */
 class Game extends DatabaseObject implements ITitledObject

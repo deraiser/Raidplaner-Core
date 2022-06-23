@@ -147,7 +147,6 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
         return [
             'icon' => $data['elements']['icon'] ?? '',
             'identifier' => $data['attributes']['identifier'],
-            'maxClass' => $data['elements']['maxClass'] ?? 1,
             'maxLevel' => $data['elements']['maxLevel'],
         ];
     }
