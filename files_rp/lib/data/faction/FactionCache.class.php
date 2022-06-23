@@ -34,8 +34,8 @@ use wcf\system\SingletonFactory;
 class FactionCache extends SingletonFactory
 {
     /**
-     * cached factions with faction identifier as key
-     * @var Faction[]
+     * cached faction ids with faction identifier as key
+     * @var int[]
      */
     protected array $cachedFactionByIdentifier = [];
 

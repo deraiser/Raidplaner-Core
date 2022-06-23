@@ -34,7 +34,7 @@ use wcf\system\SingletonFactory;
 class GameCache extends SingletonFactory
 {
     /**
-     * cached games with game identifier as key
+     * cached game ids with game identifier as key
      * @var int[]
      */
     protected array $cachedGameByIdentifier = [];
