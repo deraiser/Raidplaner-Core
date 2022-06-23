@@ -6,5 +6,6 @@
         <pip name="rpGame">wcf\system\package\plugin\RPGamePackageInstallationPlugin</pip>
         <pip name="rpRace">wcf\system\package\plugin\RPRacePackageInstallationPlugin</pip>
         <pip name="rpRole">wcf\system\package\plugin\RPRolePackageInstallationPlugin</pip>
+        <pip name="rpServer">wcf\system\package\plugin\RPServerPackageInstallationPlugin</pip>
     </import>
 </data>

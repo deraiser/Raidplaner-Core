@@ -82,6 +82,17 @@ CREATE TABLE rp1_role (
     UNIQUE KEY identifier (identifier, gameID)
 );
 
+DROP TABLE IF EXISTS rp1_server;
+CREATE TABLE rp1_server (
+    serverID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    packageID INT(10) NOT NULL,
+    gameID INT(10) NOT NULL,
+    identifier VARCHAR(191) NOT NULL,
+    type VARCHAR(10) NOT NULL DEFAULT '',
+    serverGroup VARCHAR(255) NOT NULL DEFAULT '',
+    UNIQUE KEY identifier (identifier, gameID)
+);
+
 /* SQL_PARSER_OFFSET */
 
 -- foreign keys
@@ -106,3 +117,6 @@ ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (factionID) REFERENCES rp1_facti
 
 ALTER TABLE rp1_role ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_role ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE rp1_server ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
+ALTER TABLE rp1_server ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
