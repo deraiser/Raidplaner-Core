@@ -30,6 +30,8 @@
         
         <instruction type="packageInstallationPlugin" />
         
+        <instruction type="templateListener" />
+        
         <instruction type="option" />
         <instruction type="userGroupOption" />
         

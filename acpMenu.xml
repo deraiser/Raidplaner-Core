@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/acpMenu.xsd">
+    <import>
+        <!-- rp -->
+        <acpmenuitem name="rp.acp.menu.link.rp">
+            <icon>fa-gamepad</icon>
+        </acpmenuitem>
+        
+        <!-- character -->
+        <acpmenuitem name="rp.acp.menu.link.character">
+            <parent>rp.acp.menu.link.rp</parent>
+            <showOrder>1</showOrder>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.character.list">
+            <controller>rp\acp\page\CharacterListPage</controller>
+            <parent>rp.acp.menu.link.character</parent>
+            <showorder>1</showorder>
+            <permissions>admin.rp.canSearchCharacter</permissions>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.character.search">
+            <controller>rp\acp\form\CharacterSearchForm</controller>
+            <parent>rp.acp.menu.link.character.list</parent>
+            <permissions>admin.rp.canSearchCharacter</permissions>
+            <icon>fa-search</icon>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.character.add">
+            <controller>rp\acp\form\CharacterAddForm</controller>
+            <parent>rp.acp.menu.link.character.list</parent>
+            <permissions>admin.rp.canAddCharacter</permissions>
+            <icon>fa-plus</icon>
+        </acpmenuitem>
+    </import>
+</data>

@@ -5,6 +5,16 @@
             <category name="admin.rp">
                 <parent>admin</parent>
             </category>
+            <category name="admin.rp.character">
+                <parent>admin.rp</parent>
+            </category>
+            
+            <category name="user.rp">
+                <parent>user</parent>
+            </category>
+            <category name="user.rp.character">
+                <parent>user.rp</parent>
+            </category>
         </categories>
         <options>
             <!-- admin.rp -->
@@ -15,6 +25,68 @@
                 <admindefaultvalue>1</admindefaultvalue>
                 <usersonly>1</usersonly>
             </option>
+            
+            <!-- admin.rp.character -->
+            <option name="admin.rp.canAddCharacter">
+                <categoryname>admin.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>0</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="admin.rp.canEditCharacter">
+                <categoryname>admin.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>0</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="admin.rp.canDeleteCharacter">
+                <categoryname>admin.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>0</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="admin.rp.canSearchCharacter">
+                <categoryname>admin.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>0</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <!-- /admin.rp.character -->
+            <!-- /admin.rp -->
+            
+            <!-- user.rp -->
+            <!-- user.rp.character -->
+            <option name="user.rp.canAddCharacter">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="user.rp.canEditOwnCharacter">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="user.rp.canDeleteOwnCharacter">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="user.rp.canViewCharacterProfile">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
+            <!-- /user.rp.character -->
         </options>
     </import>
 </data>

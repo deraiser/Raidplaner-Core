@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/templateListener.xsd">
+    <import>
+        <!-- admin -->
+        <templatelistener name="requirePathsAdmin">
+            <environment>admin</environment>
+            <templatename>header</templatename>
+            <eventname>requirePaths</eventname>
+            <templatecode><![CDATA['Daries/RP': '{@$__wcf->getPath('rp')}js/RP',]]></templatecode>
+        </templatelistener>
+        
+         <!-- user -->
+        <templatelistener name="javascriptInit">
+            <environment>user</environment>
+            <templatename>headInclude</templatename>
+            <eventname>javascriptInit</eventname>
+            <templatecode><![CDATA[{include file='__javascriptInit' application='rp'}]]></templatecode>
+        </templatelistener>
+        <templatelistener name="requirePaths">
+            <environment>user</environment>
+            <templatename>headIncludeJavaScript</templatename>
+            <eventname>requirePaths</eventname>
+            <templatecode><![CDATA['Daries/RP': '{@$__wcf->getPath('rp')}js/RP',]]></templatecode>
+        </templatelistener>
+    </import>
+</data>

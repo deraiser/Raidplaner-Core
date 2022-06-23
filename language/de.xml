@@ -1,9 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="de">
     <import>
+        <category name="rp.acp.menu">
+            <item name="rp.acp.menu.link.character"><![CDATA[Charakter]]></item>
+            <item name="rp.acp.menu.link.character.add"><![CDATA[Charakter hinzufügen]]></item>
+            <item name="rp.acp.menu.link.character.list"><![CDATA[Charaktere]]></item>
+            <item name="rp.acp.menu.link.character.search"><![CDATA[Charakter suchen]]></item>
+            <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
+        </category>
+        
         <category name="wcf.acp.group">
-            <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canAddCharacter"><![CDATA[Kann Charaktere erstellen]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canDeleteCharacter"><![CDATA[Kann Charaktere löschen]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canEditCharacter"><![CDATA[Kann Charaktere bearbeiten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageGame"><![CDATA[Kann Spiele verwalten]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Kann Charaktere suchen]]></item>
+            <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Charakter]]></item>
+            <item name="wcf.acp.group.option.category.user.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Charakter]]></item>
+            <item name="wcf.acp.group.option.user.rp.canAddCharacter"><![CDATA[Kann Charaktere hinzufügen]]></item>
+            <item name="wcf.acp.group.option.user.rp.canEditOwnCharacter"><![CDATA[Kann eigene Charaktere bearbeiten]]></item>
+            <item name="wcf.acp.group.option.user.rp.canViewCharacterProfile"><![CDATA[Kann Charakter Profile sehen]]></item>
         </category>
         
         <category name="wcf.acp.option">
