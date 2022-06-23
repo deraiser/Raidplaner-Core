@@ -2,7 +2,7 @@
 
 namespace rp\system\cache\builder;
 
-use rp\data\faction\Faction;
+use rp\data\role\Role;
 use wcf\system\cache\builder\AbstractCacheBuilder;
 use wcf\system\WCF;
 
@@ -27,12 +27,12 @@ use wcf\system\WCF;
  */
 
 /**
- * Caches the faction.
+ * Caches the role.
  * 
  * @author      Marco Daries
  * @package     Daries\RP\System\Cache\Builder
  */
-class FactionCacheBuilder extends AbstractCacheBuilder
+class RoleCacheBuilder extends AbstractCacheBuilder
 {
 
     /**
@@ -40,11 +40,11 @@ class FactionCacheBuilder extends AbstractCacheBuilder
      */
     protected function rebuild(array $parameters): array
     {
-        $data = ['faction' => [], 'identifier' => []];
+        $data = ['role' => [], 'identifier' => []];
 
-        // get game faction
+        // get game role
         $sql = "SELECT  *
-                FROM    rp" . WCF_N . "_faction
+                FROM    rp" . WCF_N . "_role
                 WHERE   isDisabled = ?
                     AND gameID = ?";
         $statement = WCF::getDB()->prepareStatement($sql);
@@ -53,10 +53,10 @@ class FactionCacheBuilder extends AbstractCacheBuilder
             $parameters['gameID'],
         ]);
 
-        /** @var Faction $object */
-        while ($object = $statement->fetchObject(Faction::class)) {
-            $data['faction'][$object->factionID] = $object;
-            $data['identifier'][$object->identifier] = $object->factionID;
+        /** @var Role $object */
+        while ($object = $statement->fetchObject(Role::class)) {
+            $data['role'][$object->roleID] = $object;
+            $data['identifier'][$object->identifier] = $object->roleID;
         }
 
         return $data;

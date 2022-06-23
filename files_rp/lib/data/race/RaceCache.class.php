@@ -43,7 +43,7 @@ class RaceCache extends SingletonFactory
      * cached races
      * @var Race[]
      */
-    protected $cachedRaces = [];
+    protected array $cachedRaces = [];
 
     /**
      * Returns the race with the given race id or `null` if no such race exists.
