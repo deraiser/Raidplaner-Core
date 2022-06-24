@@ -1,6 +1,6 @@
 <?php
 
-namespace wcf\data\package\installation\plugin;
+namespace wcf\system\package\plugin;
 
 use rp\data\classification\ClassificationEditor;
 use rp\data\faction\Faction;
@@ -9,7 +9,6 @@ use rp\data\role\Role;
 use wcf\data\IStorableObject;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
-use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 

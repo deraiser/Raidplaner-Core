@@ -1,11 +1,10 @@
 <?php
 
-namespace wcf\data\package\installation\plugin;
+namespace wcf\system\package\plugin;
 
 use rp\data\faction\FactionEditor;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
-use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core

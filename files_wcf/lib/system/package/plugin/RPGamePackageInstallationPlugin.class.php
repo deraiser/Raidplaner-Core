@@ -1,10 +1,9 @@
 <?php
 
-namespace wcf\data\package\installation\plugin;
+namespace wcf\system\package\plugin;
 
 use rp\data\game\GameEditor;
-use wcf\data\option\OptionEditor;
-use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
@@ -33,7 +32,7 @@ use wcf\system\WCF;
  * @author      Marco Daries
  * @package     WoltLabSuite\Core\System\Package\Plugin
  */
-class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
+class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin
 {
     /**
      * @inheritDoc
@@ -114,41 +113,10 @@ class RPGamePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
     /**
      * @inheritDoc
      */
-    protected function postImport(): void
-    {
-        // set default game
-        if (!\defined('RP_DEFAULT_GAME_ID') || !RP_DEFAULT_GAME_ID) {
-            $sql = "SELECT  gameID
-                    FROM    rp" . WCF_N . "_game";
-            $statement = WCF::getDB()->prepareStatement($sql, 1);
-            $statement->execute();
-            $gameID = $statement->fetchSingleColumn();
-
-            if ($gameID !== false) {
-                $sql = "UPDATE  wcf" . WCF_N . "_option
-                        SET     optionValue = ?
-                        WHERE   optionName = ?";
-                $statement = WCF::getDB()->prepareStatement($sql);
-                $statement->execute([
-                    $gameID,
-                    'rp_default_game_id',
-                ]);
-
-                // update options.inc.php
-                OptionEditor::resetCache();
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function prepareImport(array $data): array
     {
         return [
-            'icon' => $data['elements']['icon'] ?? '',
             'identifier' => $data['attributes']['identifier'],
-            'maxLevel' => $data['elements']['maxLevel'],
         ];
     }
 }
