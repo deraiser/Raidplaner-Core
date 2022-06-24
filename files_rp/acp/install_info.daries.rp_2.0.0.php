@@ -1,11 +1,5 @@
 <?php
 
-namespace rp\system;
-
-use rp\data\game\GameCache;
-use rp\system\game\IGame;
-use wcf\system\application\AbstractApplication;
-
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -27,12 +21,25 @@ use wcf\system\application\AbstractApplication;
  */
 
 /**
- * This class extends the main WCF class by raidplaner specific functions.
- *
  * @author      Marco Daries
- * @package     Daries\RP\System
+ * @package     Daries\RP
  */
-class RPCore extends AbstractApplication
-{
-    
-}
+// set default game
+$sql = "SELECT  gameID
+        FROM    rp" . WCF_N . "_game
+        WHERE   identifier = ?";
+$statement = WCF::getDB()->prepareStatement($sql, 1);
+$statement->execute(['default']);
+$gameID = $statement->fetchSingleColumn();
+
+$sql = "UPDATE  wcf" . WCF_N . "_option
+        SET     optionValue = ?
+        WHERE   optionName = ?";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+    $gameID,
+    'rp_default_game_id',
+]);
+
+// update options.inc.php
+OptionEditor::resetCache();

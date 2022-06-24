@@ -31,11 +31,9 @@ use wcf\util\StringUtil;
  * @author      Marco Daries
  * @package     Daries\RP\Data\Game
  * 
- * @property-read   int         $gameID             unique id of the game
- * @property-read   int         $packageID          id of the package which delivers the game
- * @property-read   string      $identifier         unique textual identifier of the game
- * @property-read   int         $maxLevel           max level of the game
- * @property-read   string      $icon               icon of the game
+ * @property-read   int         $gameID         unique id of the game
+ * @property-read   int         $packageID      id of the package which delivers the game
+ * @property-read   string      $identifier     unique textual identifier of the game
  */
 class Game extends DatabaseObject implements ITitledObject
 {
@@ -56,7 +54,7 @@ class Game extends DatabaseObject implements ITitledObject
      */
     public function getIconPath(): string
     {
-        return WCF::getPath('rp') . 'images/' . $this->identifier . '/' . $this->icon . '.png';
+        return WCF::getPath('rp') . 'images/' . $this->identifier . '/' . $this->identifier . '.png';
     }
 
     /**

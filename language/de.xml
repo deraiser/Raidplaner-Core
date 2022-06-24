@@ -9,6 +9,31 @@
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
         </category>
         
+        <category name="rp.classification">
+            <item name="rp.classification.title"><![CDATA[Klasse]]></item>
+        </category>
+    
+        <category name="rp.faction">
+            <item name="rp.faction.title"><![CDATA[Fraktion]]></item>
+        </category>
+    
+        <category name="rp.game">
+            <item name="rp.game.default"><![CDATA[Standard]]></item>
+            <item name="rp.game.title"><![CDATA[Spiel]]></item>
+        </category>
+    
+        <category name="rp.race">
+            <item name="rp.race.title"><![CDATA[Rasse]]></item>
+        </category>
+    
+        <category name="rp.role">
+            <item name="rp.role.title"><![CDATA[Rolle]]></item>
+        </category>
+    
+        <category name="rp.server">
+            <item name="rp.server.title"><![CDATA[Server]]></item>
+        </category>
+        
         <category name="wcf.acp.group">
             <item name="wcf.acp.group.option.admin.rp.canAddCharacter"><![CDATA[Kann Charaktere erstellen]]></item>
             <item name="wcf.acp.group.option.admin.rp.canDeleteCharacter"><![CDATA[Kann Charaktere löschen]]></item>

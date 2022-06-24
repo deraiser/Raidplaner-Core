@@ -46,6 +46,23 @@ class GameCache extends SingletonFactory
     protected array $cachedGames = [];
 
     /**
+     * Returns the current selected game.
+     */
+    public function getCurrentGame(): Game
+    {
+        $game = $this->getGameByID(RP_DEFAULT_GAME_ID);
+
+        if ($game === null) {
+            // fallback to default game
+            $game = new Game(null, [
+                'identifier' => 'default',
+            ]);
+        }
+
+        return $game;
+    }
+
+    /**
      * Returns the game with the given game id or `null` if no such game exists.
      */
     public function getGameByID(int $gameID): ?Game

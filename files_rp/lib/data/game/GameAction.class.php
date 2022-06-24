@@ -3,6 +3,8 @@
 namespace rp\data\game;
 
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\option\OptionEditor;
+use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -60,4 +62,30 @@ class GameAction extends AbstractDatabaseObjectAction
      */
     protected $requireACP = ['create', 'delete', 'update'];
 
+    public function delete()
+    {
+        $return = parent::delete();
+
+        // set default game
+        $sql = "SELECT  gameID
+                FROM    rp" . WCF_N . "_game
+                WHERE   identifier = ?";
+        $statement = WCF::getDB()->prepareStatement($sql, 1);
+        $statement->execute(['default']);
+        $gameID = $statement->fetchSingleColumn();
+
+        $sql = "UPDATE  wcf" . WCF_N . "_option
+                SET     optionValue = ?
+                WHERE   optionName = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([
+            $gameID,
+            'rp_default_game_id',
+        ]);
+
+        // update options.inc.php
+        OptionEditor::resetCache();
+        
+        return $return;
+    }
 }

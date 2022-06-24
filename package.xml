@@ -24,16 +24,23 @@
     </excludedpackages>
 
     <instructions type="install">
+		<instruction type="file" application="wcf">files_wcf.tar</instruction>
+        
+		<instruction type="packageInstallationPlugin" />
+        
+		<instruction type="sql" />
+        
+        <instruction type="acpTemplate" application="rp">acptemplates_rp.tar</instruction>
         <instruction type="file" application="rp">files_rp.tar</instruction>
+        <instruction type="template" application="rp">templates_rp.tar</instruction>
         
-        <instruction type="sql" run="standalone" />
-        
-        <instruction type="packageInstallationPlugin" />
-        
+        <instruction type="acpMenu" />
         <instruction type="templateListener" />
         
         <instruction type="option" />
         <instruction type="userGroupOption" />
+        
+        <instruction type="rpGame" />
         
         <instruction type="language" />
     </instructions>
