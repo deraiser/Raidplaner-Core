@@ -76,7 +76,7 @@ class AcpUiCharacterEditor {
     }
     
     private refreshCharacters(data: RefreshCharactersData): void {
-        document.querySelectorAll(".jsChracterRow").forEach((characterRow: HTMLTableRowElement) => {
+        document.querySelectorAll(".jsCharacterRow").forEach((characterRow: HTMLTableRowElement) => {
             const characterId = ~~characterRow.dataset.objectId!;
             
             if (data.characterIds.includes(characterId)) {
