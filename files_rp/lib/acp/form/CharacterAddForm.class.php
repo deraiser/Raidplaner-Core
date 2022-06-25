@@ -8,11 +8,11 @@ use rp\data\game\GameCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\container\TabTabMenuFormContainer;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -93,7 +93,7 @@ class CharacterAddForm extends AbstractFormBuilderForm
         $dataContainer = FormContainer::create('data')
             ->appendChildren([
             TextFormField::create('characterName')
-            ->label('wcf.global.name')
+            ->label('rp.character.name')
             ->required()
             ->autoFocus()
             ->maximumLength(100)
@@ -113,8 +113,13 @@ class CharacterAddForm extends AbstractFormBuilderForm
                             }
                         }
                     })),
+            TextFormField::create('guildName')
+            ->label('rp.character.guildName')
+            ->autoFocus()
+            ->maximumLength(100),
             WysiwygFormField::create('notes')
             ->label('rp.character.notes')
+            ->description('rp.character.notes.description')
             ->objectType('info.daries.rp.character.notes'),
         ]);
         $dataTab->appendChild($dataContainer);
@@ -124,20 +129,15 @@ class CharacterAddForm extends AbstractFormBuilderForm
         }
 
         // character tab
-        $characterTab = TabFormContainer::create('characterTab');
+        $characterTab = TabTabMenuFormContainer::create('characterTab');
         $characterTab->label('rp.character.category.character');
         $tabMenu->appendChild($characterTab);
 
-        $characterContainer = FormContainer::create('character');
-        $characterTab->appendChild($characterContainer);
-
-        EventHandler::getInstance()->fireAction(
-            $this,
-            'createForm',
-            [
-                'form' => $this->form,
-            ],
+        $characterGeneralTab = TabFormContainer::create('characterGeneralTab')
+            ->label('rp.character.category.character')
+            ->appendChild(FormContainer::create('characterGeneralSection'),
         );
+        $characterTab->appendChild($characterGeneralTab);
     }
 
     /**

@@ -1,12 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="en">
     <import>
+        <category name="rp.acp.character">
+            <item name="rp.acp.character.user"><![CDATA[Username]]></item>
+        </category>
+        
         <category name="rp.acp.menu">
             <item name="rp.acp.menu.link.character"><![CDATA[Character]]></item>
             <item name="rp.acp.menu.link.character.add"><![CDATA[Add Character]]></item>
             <item name="rp.acp.menu.link.character.list"><![CDATA[Characters]]></item>
             <item name="rp.acp.menu.link.character.search"><![CDATA[Search Characters]]></item>
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
+        </category>
+        
+        <category name="rp.character">
+            <item name="rp.character.add"><![CDATA[Add Character]]></item>
+            <item name="rp.character.category.character"><![CDATA[Character]]></item>
+            <item name="rp.character.delete.confirmMessage"><![CDATA[Do you really want to delete this character <span class="confirmationObject">{$character->getTitle()}</span>?]]></item>
+            <item name="rp.character.edit"><![CDATA[Edit Character]]></item>
+            <item name="rp.character.guildName"><![CDATA[Guild]]></item>
+            <item name="rp.character.list"><![CDATA[Characters]]></item>
+            <item name="rp.character.name"><![CDATA[Charactername]]></item>
+            <item name="rp.character.name.error.exists"><![CDATA[This character already exists for this game <span class="confirmationObject">{$character->getGame()->getTitle()}</span>.]]></item>
+            <item name="rp.character.notes"><![CDATA[Notes]]></item>
+            <item name="rp.character.notes.description"><![CDATA[Any notes on this character.]]></item>
+            <item name="rp.character.title"><![CDATA[Your Characters]]></item>
+            <item name="rp.character.unknownCharacter"><![CDATA[This character does not exist or has been deleted.]]></item>
         </category>
         
         <category name="rp.classification">
