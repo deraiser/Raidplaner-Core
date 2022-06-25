@@ -57,7 +57,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "./Action/Delet
             }
         }
         refreshCharacters(data) {
-            document.querySelectorAll(".jsChracterRow").forEach((characterRow) => {
+            document.querySelectorAll(".jsCharacterRow").forEach((characterRow) => {
                 const characterId = ~~characterRow.dataset.objectId;
                 if (data.characterIds.includes(characterId)) {
                     const characterStatusIcons = characterRow.querySelector(".characterStatusIcons");
