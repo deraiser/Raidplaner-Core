@@ -28,6 +28,7 @@
 import * as Core from "WoltLabSuite/Core/Core";
 import DeleteAction from "./Action/DeleteAction";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
+import * as Language from "WoltLabSuite/Core/Language";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 
 interface RefreshCharactersData {
@@ -85,6 +86,10 @@ class AcpUiCharacterEditor {
                 const isDisabled = !Core.stringToBool(characterRow.dataset.enabled!);
                 let iconIsDisabled = characterRow.querySelector(".jsCharacterDisabled") as HTMLElement;
                 if (isDisabled && iconIsDisabled === null) {
+                    iconIsDisabled = document.createElement("span");
+                    iconIsDisabled.className = "icon icon16 fa-power-off jsCharacterDisabled jsTooltip";
+                    iconIsDisabled.title = Language.get("rp.acp.character.isDisabled");
+                    characterStatusIcons.appendChild(iconIsDisabled);
                 } else if (!isDisabled && iconIsDisabled !== null) {
                     iconIsDisabled.remove();
                 }

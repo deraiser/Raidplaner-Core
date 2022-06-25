@@ -17,11 +17,12 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "./Action/DeleteAction", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DeleteAction_1, EventHandler, Simple_1) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "./Action/DeleteAction", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Dropdown/Simple"], function (require, exports, tslib_1, Core, DeleteAction_1, EventHandler, Language, Simple_1) {
     "use strict";
     Core = tslib_1.__importStar(Core);
     DeleteAction_1 = tslib_1.__importDefault(DeleteAction_1);
     EventHandler = tslib_1.__importStar(EventHandler);
+    Language = tslib_1.__importStar(Language);
     Simple_1 = tslib_1.__importDefault(Simple_1);
     class AcpUiCharacterEditor {
         /**
@@ -64,6 +65,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "./Action/Delet
                     const isDisabled = !Core.stringToBool(characterRow.dataset.enabled);
                     let iconIsDisabled = characterRow.querySelector(".jsCharacterDisabled");
                     if (isDisabled && iconIsDisabled === null) {
+                        iconIsDisabled = document.createElement("span");
+                        iconIsDisabled.className = "icon icon16 fa-power-off jsCharacterDisabled jsTooltip";
+                        iconIsDisabled.title = Language.get("rp.acp.character.isDisabled");
+                        characterStatusIcons.appendChild(iconIsDisabled);
                     }
                     else if (!isDisabled && iconIsDisabled !== null) {
                         iconIsDisabled.remove();
