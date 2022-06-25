@@ -47,9 +47,6 @@ CREATE TABLE rp1_game (
     gameID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
     packageID INT(10) NOT NULL,
     identifier VARCHAR(191) NOT NULL,
-    maxLevel INT(10) NOT NULL DEFAULT 0,
-    maxClass INT(10) NOT NULL DEFAULT 0,
-    icon VARCHAR(255) NOT NULL DEFAULT '',
     UNIQUE KEY identifier (identifier)
 );
 
@@ -60,13 +57,15 @@ CREATE TABLE rp1_member (
     characterName VARCHAR(191) NOT NULL DEFAULT '',
     userID INT(10),
     gameID INT(10) NOT NULL,
+    rankID INT(10),
     created INT(10) NOT NULL DEFAULT 0,
     lastUpdateTime INT(10) NOT NULL DEFAULT 0,
     notes MEDIUMTEXT,
     additionalData TEXT,
     guildName VARCHAR(255) NOT NULL DEFAULT '',
     isPrimary TINYINT(1) NOT NULL DEFAULT 0,
-    isDisabled TINYINT(1) NOT NULL DEFAULT 0
+    isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+    UNIQUE KEY characterName (characterName, gameID)
 );
 
 DROP TABLE IF EXISTS rp1_race;
@@ -85,6 +84,17 @@ CREATE TABLE rp1_race_to_faction (
     raceID INT(10) NOT NULL,
     factionID INT(10) NOT NULL,
     UNIQUE KEY(raceID, factionID)
+);
+
+DROP TABLE IF EXISTS rp1_rank;
+CREATE TABLE rp1_rank (
+    rankID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    rankName VARCHAR(100) NOT NULL DEFAULT '',
+    gameID INT(10) NOT NULL,
+    prefix VARCHAR(25) NOT NULL DEFAULT '',
+    suffix VARCHAR(25) NOT NULL DEFAULT '',
+    showOrder INT(10) NOT NULL DEFAULT 0,
+    isDefault TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS rp1_role;
@@ -127,12 +137,15 @@ ALTER TABLE rp1_faction ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 ALTER TABLE rp1_game ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE rp1_member ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
+ALTER TABLE rp1_member ADD FOREIGN KEY (rankID) REFERENCES rp1_rank (rankID) ON DELETE SET NULL;
 ALTER TABLE rp1_member ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE rp1_race ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_race ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (raceID) REFERENCES rp1_race (raceID) ON DELETE CASCADE;
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (factionID) REFERENCES rp1_faction (factionID) ON DELETE CASCADE;
+
+ALTER TABLE rp1_rank ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 
 ALTER TABLE rp1_role ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_role ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

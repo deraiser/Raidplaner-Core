@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/objectType.xsd">
     <import>
+        <!-- character search conditions -->
+        <type>
+            <name>info.daries.rp.characterID</name>
+            <definitionname>info.daries.rp.condition.characterSearch</definitionname>
+            <classname>rp\system\condition\character\CharacterIDCondition</classname>
+            <conditiongroup>general</conditiongroup>
+        </type>
+        <type>
+            <name>info.daries.rp.characterName</name>
+            <definitionname>info.daries.rp.condition.characterSearch</definitionname>
+            <classname>rp\system\condition\character\CharacterNameCondition</classname>
+            <conditiongroup>general</conditiongroup>
+        </type>
+        <!-- /character search conditions -->
+        
+        <!-- clipboard items -->
+        <type>
+            <name>info.daries.rp.character</name>
+            <definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+            <listclassname>rp\data\character\CharacterList</listclassname>
+        </type>
+        <!-- /clipboard items -->
+        
         <!-- message -->
         <type>
             <name>info.daries.rp.character.notes</name>

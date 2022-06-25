@@ -2,10 +2,13 @@
 
 namespace rp\data\character;
 
+use rp\data\rank\RankCache;
 use rp\system\character\CharacterHandler;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IClipboardAction;
 use wcf\data\IToggleAction;
 use wcf\data\TDatabaseObjectToggle;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\storage\UserStorageHandler;
 
@@ -38,7 +41,7 @@ use wcf\system\user\storage\UserStorageHandler;
  * @method      CharacterEditor[]   getObjects()
  * @method      CharacterEditor     getSingleObject()
  */
-class CharacterAction extends AbstractDatabaseObjectAction implements IToggleAction
+class CharacterAction extends AbstractDatabaseObjectAction implements IClipboardAction, IToggleAction
 {
     use TDatabaseObjectToggle;
     /**
@@ -66,19 +69,24 @@ class CharacterAction extends AbstractDatabaseObjectAction implements IToggleAct
      */
     public function create(): Character
     {
+        if (!isset($this->parameters['data']['rankID'])) {
+            $this->parameters['data']['rankID'] = (RankCache::getInstance()->getDefaultRank($this->parameters['data']['gameID']))->rankID;
+        }
+
         $this->parameters['data']['created'] = $this->parameters['data']['lastUpdateTime'] = TIME_NOW;
 
         if ($this->parameters['data']['userID'] !== null) {
             if (RequestHandler::getInstance()->isACPRequest()) {
                 $characterList = new CharacterList();
                 $characterList->getConditionBuilder()->add('userID = ?', [$this->parameters['data']['userID']]);
+                $characterList->getConditionBuilder()->add('gameID = ?', [RP_DEFAULT_GAME_ID]);
                 $characterList->getConditionBuilder()->add('isPrimary = ?', [1]);
-                $characterList->getConditionBuilder()->add('isDisabled = ?', [0]);
                 $this->parameters['data']['isPrimary'] = \intval(($characterList->countObjects() === 0));
             } else {
                 $this->parameters['data']['isPrimary'] = \intval((CharacterHandler::getInstance()->getPrimaryCharacter() === null));
             }
         } else {
+            $this->parameters['data']['isPrimary'] = 1;
             $this->parameters['data']['isDisabled'] = 1;
         }
 
@@ -113,7 +121,34 @@ class CharacterAction extends AbstractDatabaseObjectAction implements IToggleAct
     /**
      * @inheritDoc
      */
-    public function update()
+    public function unmarkAll(): void
+    {
+        ClipboardHandler::getInstance()->removeItems(ClipboardHandler::getInstance()->getObjectTypeID('info.daries.rp.character'));
+    }
+
+    /**
+     * Unmarks users.
+     *
+     * @param int[] $characterIDs
+     */
+    protected function unmarkItems(array $characterIDs = []): void
+    {
+        if (empty($characterIDs)) {
+            $characterIDs = $this->objectIDs;
+        }
+
+        if (!empty($characterIDs)) {
+            ClipboardHandler::getInstance()->unmark(
+                $characterIDs,
+                ClipboardHandler::getInstance()->getObjectTypeID('info.daries.rp.character')
+            );
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function update(): void
     {
         if (isset($this->parameters['data']) || isset($this->parameters['counters'])) {
             if ($this->parameters['data']['userID'] === null) {
@@ -126,5 +161,13 @@ class CharacterAction extends AbstractDatabaseObjectAction implements IToggleAct
                 $this->readObjects();
             }
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function validateUnmarkAll(): void
+    {
+        // does nothing
     }
 }

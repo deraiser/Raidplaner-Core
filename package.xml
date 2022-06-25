@@ -34,8 +34,10 @@
         <instruction type="file" application="rp">files_rp.tar</instruction>
         <instruction type="template" application="rp">templates_rp.tar</instruction>
         
+        <instruction type="objectTypeDefinition" />
         <instruction type="objectType" />
         <instruction type="acpMenu" />
+        <instruction type="clipboardAction" />
         <instruction type="templateListener" />
         
         <instruction type="option" />
@@ -44,5 +46,7 @@
         <instruction type="rpGame" />
         
         <instruction type="language" />
+        
+        <instruction type="script">acp/install_info.daries.rp.php</instruction>
     </instructions>
 </package>

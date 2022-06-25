@@ -1,6 +1,10 @@
 <?php
 
-namespace rp\data\character;
+namespace rp\system\cache\builder;
+
+use rp\data\rank\Rank;
+use wcf\system\cache\builder\AbstractCacheBuilder;
+use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -23,26 +27,37 @@ namespace rp\data\character;
  */
 
 /**
- * Represents a list of character profiles.
+ * Caches the ranks.
  * 
  * @author      Marco Daries
- * @package     Daries\RP\Data\Character
- *
- * @method      CharacterProfile        current()
- * @method      CharacterProfile[]      getObjects()
- * @method      CharacterProfile|null   search($objectID)
- * @property    CharacterProfile[]      $objects
+ * @package     Daries\RP\System\Cache\Builder
  */
-class CharacterProfileList extends CharacterList
+class RankCacheBuilder extends AbstractCacheBuilder
 {
-    /**
-     * @inheritDoc
-     */
-    public $sqlOrderBy = 'characterName';
 
     /**
      * @inheritDoc
      */
-    public $decoratorClassName = CharacterProfile::class;
+    protected function rebuild(array $parameters): array
+    {
+        $data = [
+            'default' => [],
+            'ranks' => [],
+        ];
 
+        // get ranks
+        $sql = "SELECT      *
+                FROM        rp" . WCF_N . "_rank
+                WHERE       gameID = ?";
+        $statement = WCF::getDB()->prepareStatement($sql);
+        $statement->execute([$parameters['gameID']]);
+
+        /** @var Rank $object */
+        while ($object = $statement->fetchObject(Rank::class)) {
+            $data['ranks'][$object->rankID] = $object;
+            if ($object->isDefault) $data['default'] = $object->rankID;
+        }
+
+        return $data;
+    }
 }

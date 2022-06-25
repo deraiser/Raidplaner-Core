@@ -42,6 +42,7 @@ use wcf\system\WCF;
  * @property-read   string      $characterName      name of the character
  * @property-read   int|null    $userID             id of the user who created the character, or `null` if not already assigned.
  * @property-read   int         $gameID             id of the game for created the character
+ * @property-read   int|null    $rankID             id of the rank for created the character, or `null` if not already assigned.
  * @property-read   int         $created            timestamp at which the character has been created
  * @property-read   int         $lastUpdateTime     timestamp at which the character has been updated the last time
  * @property-read   string      $notes              notes of the character
@@ -77,6 +78,26 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
         }
 
         if ($this->userID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.rp.canDeleteOwnCharacter')) {
+            $characters = self::getAllCharactersByUserID($this->userID);
+            if (\count($characters) == 1) return true;
+            elseif (!$this->isPrimary) return true;
+
+            return false;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the active user can edit this character.
+     */
+    public function canEdit(): bool
+    {
+        if (WCF::getSession()->getPermission('admin.rp.canEditCharacter')) {
+            return true;
+        }
+
+        if ($this->userID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.rp.canEditOwnCharacter')) {
             $characters = self::getAllCharactersByUserID($this->userID);
             if (\count($characters) == 1) return true;
             elseif (!$this->isPrimary) return true;

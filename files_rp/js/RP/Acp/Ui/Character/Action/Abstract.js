@@ -1,7 +1,3 @@
-<?php
-
-namespace rp\data\character;
-
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -21,28 +17,23 @@ namespace rp\data\character;
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/**
- * Represents a list of character profiles.
- * 
- * @author      Marco Daries
- * @package     Daries\RP\Data\Character
- *
- * @method      CharacterProfile        current()
- * @method      CharacterProfile[]      getObjects()
- * @method      CharacterProfile|null   search($objectID)
- * @property    CharacterProfile[]      $objects
- */
-class CharacterProfileList extends CharacterList
-{
+define(["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.AbstractCharacterAction = void 0;
     /**
-     * @inheritDoc
+     * An abstract action, to handle character actions.
+     *
+     * @author      Marco Daries
+     * @module      Daries/RP/Acp/Ui/Character/Action/Abstract
      */
-    public $sqlOrderBy = 'characterName';
-
-    /**
-     * @inheritDoc
-     */
-    public $decoratorClassName = CharacterProfile::class;
-
-}
+    class AbstractCharacterAction {
+        constructor(button, characterId, characterDataElement) {
+            this.button = button;
+            this.characterId = characterId;
+            this.characterDataElement = characterDataElement;
+        }
+    }
+    exports.AbstractCharacterAction = AbstractCharacterAction;
+    exports.default = AbstractCharacterAction;
+});

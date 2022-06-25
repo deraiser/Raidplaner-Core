@@ -32,3 +32,5 @@ define('RELATIVE_RP_DIR', '');
 
 // option constants
 \define('RP_DEFAULT_GAME_ID', 0);
+\define('RP_ENABLE_RANK', 1);
+\define('RP_SHOW_TWINKS', 1);

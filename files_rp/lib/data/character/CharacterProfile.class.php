@@ -4,6 +4,8 @@ namespace rp\data\character;
 
 use rp\data\game\Game;
 use rp\data\game\GameCache;
+use rp\data\rank\Rank;
+use rp\data\rank\RankCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
 use wcf\util\StringUtil;
@@ -51,6 +53,11 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     protected static $baseClass = Character::class;
 
     /**
+     * rank object
+     */
+    protected ?Rank $rank = null;
+
+    /**
      * Returns a HTML anchor link pointing to the decorated character.
      */
     public function getAnchorTag(): string
@@ -68,6 +75,15 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     }
 
     /**
+     * Returns a formatted title based on the rank.
+     */
+    public function getFormatedTitle(): string
+    {
+        if ($this->getRank() === null) return $this->getTitle();
+        return $this->getRank()->prefix . $this->getTitle() . $this->getRank()->suffix;
+    }
+
+    /**
      * Returns game object.
      */
     public function getGame(): Game
@@ -81,6 +97,18 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     public function getLink(): string
     {
         return $this->getDecoratedObject()->getLink();
+    }
+
+    /**
+     * Returns rank object.
+     */
+    public function getRank(): ?Rank
+    {
+        if ($this->rank === null && $this->rankID) {
+            $this->rank = RankCache::getInstance()->getRankByID($this->rankID);
+        }
+
+        return $this->rank;
     }
 
     /**

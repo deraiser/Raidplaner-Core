@@ -2,6 +2,14 @@
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/language.xsd" languagecode="de">
     <import>
         <category name="rp.acp.character">
+            <item name="rp.acp.character.condition.conditionGroup.general"><![CDATA[Allgemein]]></item>
+            <item name="rp.acp.character.isDisabled"><![CDATA[Charakter ist deaktiviert]]></item>
+            <item name="rp.acp.character.list"><![CDATA[Charakter]]></item>
+            <item name="rp.acp.character.owner"><![CDATA[Besitzer]]></item>
+            <item name="rp.acp.character.quickSearch"><![CDATA[Schnellsuche]]></item>
+            <item name="rp.acp.character.quickSearch.disabled"><![CDATA[Nicht aktivierte Charakter]]></item>
+            <item name="rp.acp.character.search"><![CDATA[Charakter suchen]]></item>
+            <item name="rp.acp.character.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Character gefunden.]]></item>
             <item name="rp.acp.character.user"><![CDATA[Benutzername]]></item>
         </category>
         
@@ -16,7 +24,8 @@
         <category name="rp.character">
             <item name="rp.character.add"><![CDATA[Charakter hinzufügen]]></item>
             <item name="rp.character.category.character"><![CDATA[Charakter]]></item>
-            <item name="rp.character.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Charakter <span class="confirmationObject">{$character->getTitle()}</span> wirklich löschen?]]></item>
+            <item name="rp.character.characterID"><![CDATA[Charakter-ID]]></item>
+            <item name="rp.character.created"><![CDATA[Erstellt]]></item>
             <item name="rp.character.edit"><![CDATA[Charakter bearbeiten]]></item>
             <item name="rp.character.guildName"><![CDATA[Gilde]]></item>
             <item name="rp.character.list"><![CDATA[Charaktere]]></item>
@@ -24,6 +33,8 @@
             <item name="rp.character.name.error.exists"><![CDATA[Dieser Charakter existiert für dieses Spiel <span class="confirmationObject">{$character->getGame()->getTitle()}</span> schon.]]></item>
             <item name="rp.character.notes"><![CDATA[Notizen]]></item>
             <item name="rp.character.notes.description"><![CDATA[Beliebige Notizen zu diesem Charakter.]]></item>
+            <item name="rp.character.primary"><![CDATA[Main]]></item>
+            <item name="rp.character.rank"><![CDATA[Rang]]></item>
             <item name="rp.character.title"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Charaktere]]></item>
             <item name="rp.character.unknownCharacter"><![CDATA[Dieser Charakter existiert nicht oder wurde gelöscht.]]></item>
         </category>
@@ -45,6 +56,10 @@
             <item name="rp.race.title"><![CDATA[Rasse]]></item>
         </category>
     
+        <category name="rp.rank">
+            <item name="rp.rank.title"><![CDATA[Rang]]></item>
+        </category>
+    
         <category name="rp.role">
             <item name="rp.role.title"><![CDATA[Rolle]]></item>
         </category>
@@ -58,6 +73,7 @@
             <item name="wcf.acp.group.option.admin.rp.canDeleteCharacter"><![CDATA[Kann Charaktere löschen]]></item>
             <item name="wcf.acp.group.option.admin.rp.canEditCharacter"><![CDATA[Kann Charaktere bearbeiten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageGame"><![CDATA[Kann Spiele verwalten]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canManageRank"><![CDATA[Kann Ränge verwalten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Kann Charaktere suchen]]></item>
             <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Charakter]]></item>
@@ -70,8 +86,18 @@
         
         <category name="wcf.acp.option">
             <item name="wcf.acp.option.category.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.option.category.rp.character"><![CDATA[Charakter]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Einstellungen]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Spiel [Standard]]]></item>
+            <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Ranks aktivieren]]></item>
+            <item name="wcf.acp.option.rp_show_twinks"><![CDATA[Twinks anzeigen]]></item>
+            <item name="wcf.acp.option.rp_show_twinks.description"><![CDATA[Wenn Twinks angezeigt werden sollen, erhält jeder Charakter nur seine eigenen Punkte. Um die Punkte von Twinks und Mains zusammen rechnen zulassen, musst du die Anzeige von Twinks hier deaktivieren werden.]]></item>
+        </category>
+        
+        <category name="wcf.clipboard">
+            <item name="wcf.clipboard.label.info.daries.rp.character.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Charakter{if $count != 1}e{/if}]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Löschen ({#$count})]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Charakter{if $count != 1}e{/if} löschen?]]></item>
         </category>
     </import>
 </language>

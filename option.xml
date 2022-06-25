@@ -5,6 +5,11 @@
             <category name="rp" />
             <category name="rp.settings">
                 <parent>rp</parent>
+                <showorder>1</showorder>
+            </category>
+            <category name="rp.character">
+                <parent>rp</parent>
+                <showorder>2</showorder>
             </category>
         </categories>
         
@@ -14,6 +19,20 @@
                 <categoryname>rp.settings</categoryname>
                 <optiontype>gameSelect</optiontype>
             </option>
+            <!-- /rp.settings -->
+            
+            <!-- rp.character -->
+            <option name="rp_show_twinks">
+                <categoryname>rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
+            <option name="rp_enable_rank">
+                <categoryname>rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
+            <!-- /rp.character -->
         </options>
     </import>
 </data>

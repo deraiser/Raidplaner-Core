@@ -5,6 +5,7 @@ namespace rp\acp\form;
 use rp\data\character\CharacterAction;
 use rp\data\character\CharacterProfile;
 use rp\data\game\GameCache;
+use rp\data\rank\RankCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
@@ -13,6 +14,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\container\TabTabMenuFormContainer;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\UserFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -62,6 +64,7 @@ class CharacterAddForm extends AbstractFormBuilderForm
         'characterName',
         'guildName',
         'notes',
+        'rankID',
         'userID'
     ];
 
@@ -126,6 +129,7 @@ class CharacterAddForm extends AbstractFormBuilderForm
 
         if (RequestHandler::getInstance()->isACPRequest()) {
             $this->userFormField($dataContainer);
+            if (RP_ENABLE_RANK) $this->rankFormField($dataContainer);
         }
 
         // character tab
@@ -138,6 +142,20 @@ class CharacterAddForm extends AbstractFormBuilderForm
             ->appendChild(FormContainer::create('characterGeneralSection'),
         );
         $characterTab->appendChild($characterGeneralTab);
+    }
+
+    /**
+     * Sets the SingleSelectionFormField for the field `rankID` into this FormContainer
+     */
+    protected function rankFormField(FormContainer $dataContainer): void
+    {
+        $dataContainer->appendChild(
+            SingleSelectionFormField::create('rankID')
+                ->label('rp.character.rank')
+                ->required()
+                ->options(RankCache::getInstance()->getRanks())
+                ->value(RankCache::getInstance()->getDefaultRank()->rankID)
+        );
     }
 
     /**

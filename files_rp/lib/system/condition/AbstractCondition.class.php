@@ -1,5 +1,10 @@
 <?php
 
+namespace rp\system\condition;
+
+use wcf\data\object\type\AbstractObjectTypeProcessor;
+use wcf\system\form\builder\IFormDocument;
+
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -21,25 +26,29 @@
  */
 
 /**
+ * Abstract implementation of a condition.
+ *
  * @author      Marco Daries
- * @package     Daries\RP
+ * @package     Daries\RP\System\Condition
  */
-// set default game
-$sql = "SELECT  gameID
-        FROM    rp" . WCF_N . "_game
-        WHERE   identifier = ?";
-$statement = WCF::getDB()->prepareStatement($sql, 1);
-$statement->execute(['default']);
-$gameID = $statement->fetchSingleColumn();
+abstract class AbstractCondition extends AbstractObjectTypeProcessor implements ICondition
+{
 
-$sql = "UPDATE  wcf" . WCF_N . "_option
-        SET     optionValue = ?
-        WHERE   optionName = ?";
-$statement = WCF::getDB()->prepareStatement($sql);
-$statement->execute([
-    $gameID,
-    'rp_default_game_id',
-]);
+    /**
+     * @inheritDoc
+     */
+    public function getValue(IFormDocument $form): mixed
+    {
+        $formField = $form->getNodeById($this->getID());
+        return $formField->getSaveValue();
+    }
 
-// update options.inc.php
-OptionEditor::resetCache();
+    /**
+     * @inheritDoc
+     */
+    public function setValue(mixed $value, IFormDocument $form): void
+    {
+        $formField = $form->getNodeById($this->getID());
+        $formField->value($value);
+    }
+}

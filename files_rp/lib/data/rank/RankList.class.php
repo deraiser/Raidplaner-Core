@@ -1,6 +1,8 @@
 <?php
 
-namespace rp\data\character;
+namespace rp\data\rank;
+
+use wcf\data\DatabaseObjectList;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -23,26 +25,26 @@ namespace rp\data\character;
  */
 
 /**
- * Represents a list of character profiles.
+ * Represents a list of ranks.
  * 
  * @author      Marco Daries
- * @package     Daries\RP\Data\Character
+ * @package     Daries\RP\Data\Rank
  *
- * @method      CharacterProfile        current()
- * @method      CharacterProfile[]      getObjects()
- * @method      CharacterProfile|null   search($objectID)
- * @property    CharacterProfile[]      $objects
+ * @method      Rank        current()
+ * @method      Rank[]      getObjects()
+ * @method      Rank|null   search($objectID)
+ * @property    Rank[]      $objects
  */
-class CharacterProfileList extends CharacterList
+class RankList extends DatabaseObjectList
 {
     /**
      * @inheritDoc
      */
-    public $sqlOrderBy = 'characterName';
+    public $className = Rank::class;
 
     /**
      * @inheritDoc
      */
-    public $decoratorClassName = CharacterProfile::class;
+    public $sqlOrderBy = 'showOrder';
 
 }

@@ -1,7 +1,3 @@
-<?php
-
-namespace rp\data\character;
-
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -21,28 +17,28 @@ namespace rp\data\character;
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-/**
- * Represents a list of character profiles.
- * 
- * @author      Marco Daries
- * @package     Daries\RP\Data\Character
- *
- * @method      CharacterProfile        current()
- * @method      CharacterProfile[]      getObjects()
- * @method      CharacterProfile|null   search($objectID)
- * @property    CharacterProfile[]      $objects
- */
-class CharacterProfileList extends CharacterList
-{
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Controller/Popover"], function (require, exports, tslib_1, ControllerPopover) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    exports.setup = void 0;
+    ControllerPopover = tslib_1.__importStar(ControllerPopover);
     /**
-     * @inheritDoc
+     * Initializes character profile popover.
      */
-    public $sqlOrderBy = 'characterName';
-
+    function _initCharacterPopover() {
+        ControllerPopover.init({
+            className: "rpCharacterLink",
+            dboAction: "rp\\data\\character\\CharacterProfileAction",
+            identifier: "info.daries.rp.character",
+        });
+    }
     /**
-     * @inheritDoc
+     * Bootstraps general modules and frontend exclusive ones.
      */
-    public $decoratorClassName = CharacterProfile::class;
-
-}
+    function setup(options) {
+        if (options.enableCharacterPopover) {
+            _initCharacterPopover();
+        }
+    }
+    exports.setup = setup;
+});

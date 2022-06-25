@@ -1,7 +1,3 @@
-<?php
-
-namespace rp\data\character;
-
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -23,26 +19,22 @@ namespace rp\data\character;
  */
 
 /**
- * Represents a list of character profiles.
- * 
- * @author      Marco Daries
- * @package     Daries\RP\Data\Character
+ * An abstract action, to handle character actions.
  *
- * @method      CharacterProfile        current()
- * @method      CharacterProfile[]      getObjects()
- * @method      CharacterProfile|null   search($objectID)
- * @property    CharacterProfile[]      $objects
+ * @author      Marco Daries
+ * @module      Daries/RP/Acp/Ui/Character/Action/Abstract
  */
-class CharacterProfileList extends CharacterList
-{
-    /**
-     * @inheritDoc
-     */
-    public $sqlOrderBy = 'characterName';
 
-    /**
-     * @inheritDoc
-     */
-    public $decoratorClassName = CharacterProfile::class;
+export abstract class AbstractCharacterAction {
+    protected readonly button: HTMLElement;
+    protected readonly characterDataElement: HTMLElement;
+    protected readonly characterId: number;
 
+    public constructor(button: HTMLElement, characterId: number, characterDataElement: HTMLElement) {
+        this.button = button;
+        this.characterId = characterId;
+        this.characterDataElement = characterDataElement;
+  }
 }
+
+export default AbstractCharacterAction;
