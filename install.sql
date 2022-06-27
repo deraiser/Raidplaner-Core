@@ -58,14 +58,41 @@ CREATE TABLE rp1_member (
     userID INT(10),
     gameID INT(10) NOT NULL,
     rankID INT(10),
+    avatarID INT(10),
     created INT(10) NOT NULL DEFAULT 0,
     lastUpdateTime INT(10) NOT NULL DEFAULT 0,
     notes MEDIUMTEXT,
+    notesHasEmbeddedObjects TINYINT(1) DEFAULT 0,
     additionalData TEXT,
     guildName VARCHAR(255) NOT NULL DEFAULT '',
+	profileHits INT(10) NOT NULL DEFAULT 0,
     isPrimary TINYINT(1) NOT NULL DEFAULT 0,
     isDisabled TINYINT(1) NOT NULL DEFAULT 0,
     UNIQUE KEY characterName (characterName, gameID)
+);
+
+DROP TABLE IF EXISTS rp1_member_avatar;
+CREATE TABLE rp1_member_avatar (
+    avatarID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    avatarName VARCHAR(255) NOT NULL DEFAULT '',
+    avatarExtension VARCHAR(7) NOT NULL DEFAULT '',
+    width SMALLINT(5) NOT NULL DEFAULT 0,
+    height SMALLINT(5) NOT NULL DEFAULT 0,
+    characterID INT(10) NOT NULL,
+    fileHash VARCHAR(40) NOT NULL DEFAULT '',
+    hasWebP TINYINT(1) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS rp1_member_profile_menu_item;
+CREATE TABLE rp1_member_profile_menu_item (
+    menuItemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    packageID INT(10) NOT NULL,
+    menuItem VARCHAR(191) NOT NULL DEFAULT '',
+    showOrder INT(10) NOT NULL DEFAULT 0,
+    permissions TEXT,
+    options TEXT,
+    className VARCHAR(255) NOT NULL DEFAULT '',
+    UNIQUE KEY (packageID, menuItem)
 );
 
 DROP TABLE IF EXISTS rp1_race;
@@ -136,9 +163,12 @@ ALTER TABLE rp1_faction ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE rp1_game ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE rp1_member ADD FOREIGN KEY (avatarID) REFERENCES rp1_member_avatar (avatarID) ON DELETE SET NULL;
 ALTER TABLE rp1_member ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_member ADD FOREIGN KEY (rankID) REFERENCES rp1_rank (rankID) ON DELETE SET NULL;
 ALTER TABLE rp1_member ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE rp1_member_avatar ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
+ALTER TABLE rp1_member_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE rp1_race ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_race ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

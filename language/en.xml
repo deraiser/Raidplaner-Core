@@ -23,18 +23,34 @@
         
         <category name="rp.character">
             <item name="rp.character.add"><![CDATA[Add Character]]></item>
+            <item name="rp.character.avatar"><![CDATA[Avatar]]></item>
+            <item name="rp.character.avatar.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.rp.characterAvatarAllowedFileExtensions')}” for avatar with a maximum file size of {@$__wcf->session->getPermission('user.rp.characterAvatarMaxSize')|filesize}. The minimum dimensions are 128×128 pixels.]]></item>
             <item name="rp.character.category.character"><![CDATA[Character]]></item>
             <item name="rp.character.characterID"><![CDATA[Charakter ID]]></item>
+            <item name="rp.character.characterName"><![CDATA[Charactername]]></item>
+            <item name="rp.character.characterName.error.exists"><![CDATA[This character already exists for this game <span class="confirmationObject">{$character->getGame()->getTitle()}</span>.]]></item>
+            <item name="rp.character.characters"><![CDATA[Charaktere]]></item>
+            <item name="rp.character.characters.filter"><![CDATA[Filter Characters]]></item>
+            <item name="rp.character.characters.noCharacters"><![CDATA[No characters matched your criteria. <a href="{link controller='CharactersList' application='rp'}{/link}">Reset the applied filters.</a>]]></item>
+            <item name="rp.character.characters.sort.letters"><![CDATA[First Letter]]></item>
+            <item name="rp.character.characters.sort.letters.all"><![CDATA[All]]></item>
+            <item name="rp.character.characters.sort.ownCharacters"><![CDATA[Show own characters]]></item>
+            <item name="rp.character.charactersList.created"><![CDATA[Added at {@$character->created|date}]]></item>
             <item name="rp.character.created"><![CDATA[Created]]></item>
             <item name="rp.character.edit"><![CDATA[Edit Character]]></item>
             <item name="rp.character.guildName"><![CDATA[Guild]]></item>
             <item name="rp.character.list"><![CDATA[Characters]]></item>
-            <item name="rp.character.name"><![CDATA[Charactername]]></item>
-            <item name="rp.character.name.error.exists"><![CDATA[This character already exists for this game <span class="confirmationObject">{$character->getGame()->getTitle()}</span>.]]></item>
             <item name="rp.character.notes"><![CDATA[Notes]]></item>
             <item name="rp.character.notes.description"><![CDATA[Any notes on this character.]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
+            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
+            <item name="rp.character.profile.menu.about"><![CDATA[About Character]]></item>
+            <item name="rp.character.profileHits"><![CDATA[Hits]]></item>
             <item name="rp.character.rank"><![CDATA[Rank]]></item>
+            <item name="rp.character.search"><![CDATA[Search Characters]]></item>
+            <item name="rp.character.search.results"><![CDATA[Search Results]]></item>
+            <item name="rp.character.sortField.characterName"><![CDATA[Charctername]]></item>
+            <item name="rp.character.sortField.created"><![CDATA[Created]]></item>
             <item name="rp.character.title"><![CDATA[Your Characters]]></item>
             <item name="rp.character.unknownCharacter"><![CDATA[This character does not exist or has been deleted.]]></item>
         </category>
@@ -81,13 +97,23 @@
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Character]]></item>
             <item name="wcf.acp.group.option.user.rp.canAddCharacter"><![CDATA[Can add characters]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditOwnCharacter"><![CDATA[Can edit own characters]]></item>
+            <item name="wcf.acp.group.option.user.rp.canUploadCharacterAvatar"><![CDATA[Can upload own avatar]]></item>
+            <item name="wcf.acp.group.option.user.rp.canViewCharactersList"><![CDATA[Can view characters list]]></item>
             <item name="wcf.acp.group.option.user.rp.canViewCharacterProfile"><![CDATA[Can view character profiles]]></item>
+            <item name="wcf.acp.group.option.user.rp.characterAvatarAllowedFileExtensions"><![CDATA[Allowed file extensions]]></item>
+            <item name="wcf.acp.group.option.user.rp.characterAvatarMaxSize"><![CDATA[Maximum file size]]></item>
         </category>
         
         <category name="wcf.acp.option">
             <item name="wcf.acp.option.category.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.option.category.rp.character"><![CDATA[Character]]></item>
+            <item name="wcf.acp.option.category.rp.character.list"><![CDATA[Character List]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Settings]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_field"><![CDATA[Sort by]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_field.description"><![CDATA[Choose default sort option of character list.]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_order"><![CDATA[Sort Order]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_order.description"><![CDATA[Choose default sort order of character list.]]></item>
+            <item name="wcf.acp.option.rp_characters_list_per_page"><![CDATA[Characters per Page]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Game [Default]]]></item>
             <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Enable ranks]]></item>
             <item name="wcf.acp.option.rp_show_twinks"><![CDATA[Show Twinks]]></item>
@@ -98,6 +124,11 @@
             <item name="wcf.clipboard.label.info.daries.rp.character.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} character{if $count != 1}s{/if}]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Delete ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[Do you really want to delete {if $count == 1}an{else}{#$count}{/if} character{if $count != 1}s{/if}?]]></item>
+        </category>
+        
+        <category name="wcf.page">
+            <item name="wcf.page.daries.rp.copyright"><![CDATA[<a href="https://daries.info/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Software: <strong>Raidplaner{if SHOW_VERSION_NUMBER} {$__rp->getPackage()->packageVersion}{/if}</strong>, developed by <strong>Daries.info Team</strong></a>]]></item>
+            <item name="wcf.page.onlineLocation.info.daries.rp.Character"><![CDATA[Character profile of <a href="{link controller='Character' object=$character}{/link}" class="rpCharacterLink" data-character-id="{@$character->characterID}">{$character->getTitle()}</a>]]></item>
         </category>
     </import>
 </language>

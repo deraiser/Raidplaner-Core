@@ -190,11 +190,15 @@ class CharacterSearchForm extends AbstractFormBuilderForm
                     'application' => 'rp',
                     'id' => $this->searchID
                 ],
-                'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder))
+                'sortField=' . \rawurlencode($this->sortField) . '&sortOrder=' . \rawurlencode($this->sortOrder)
+            )
         );
         exit;
     }
 
+    /**
+     * Search for characters which fit to the search values.
+     */
     protected function search(): void
     {
         $this->characterList = new CharacterList();

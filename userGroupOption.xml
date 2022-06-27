@@ -88,10 +88,38 @@
                 <admindefaultvalue>1</admindefaultvalue>
                 <usersonly>1</usersonly>
             </option>
+            <option name="user.rp.canViewCharactersList">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
             <option name="user.rp.canViewCharacterProfile">
                 <categoryname>user.rp.character</categoryname>
                 <optiontype>boolean</optiontype>
                 <defaultvalue>1</defaultvalue>
+            </option>
+            <option name="user.rp.canUploadCharacterAvatar">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+                <enableoptions>user.rp.characterAvatarMaxSize,user.rp.characterAvatarAllowedFileExtensions</enableoptions>
+            </option>
+            <option name="user.rp.characterAvatarMaxSize">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>fileSize</optiontype>
+                <defaultvalue>100000</defaultvalue>
+                <minvalue>10000</minvalue>
+                <usersonly>1</usersonly>
+            </option>
+            <option name="user.rp.characterAvatarAllowedFileExtensions">
+                <categoryname>user.rp.character</categoryname>
+                <optiontype>textarea</optiontype>
+                <defaultvalue>gif
+jpg
+jpeg
+png
+webp</defaultvalue>
+                <usersonly>1</usersonly>
             </option>
             <!-- /user.rp.character -->
         </options>

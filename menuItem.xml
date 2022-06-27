@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/menuItem.xsd">
+    <import>
+        <item identifier="info.daries.rp.Calendar">
+            <menu>com.woltlab.wcf.MainMenu</menu>
+            <title language="de">Kalender</title>
+            <title language="en">Calendar</title>
+            <page>info.daries.rp.Calendar</page>
+        </item>
+        <item identifier="info.daries.rp.CharactersList">
+            <menu>com.woltlab.wcf.MainMenu</menu>
+            <title language="de">Charaktere</title>
+            <title language="en">Characters</title>
+            <page>info.daries.rp.CharactersList</page>
+        </item>
+		<item identifier="info.daries.rp.CharacterSearch">
+			<parent>info.daries.rp.CharactersList</parent>
+			<title language="de">Charaktersuche</title>
+			<title language="en">Search Characters</title>
+			<page>info.daries.rp.CharacterSearch</page>
+		</item>
+    </import>
+</data>

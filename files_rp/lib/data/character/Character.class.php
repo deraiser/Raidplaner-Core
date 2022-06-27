@@ -2,11 +2,13 @@
 
 namespace rp\data\character;
 
+use rp\data\character\avatar\CharacterAvatar;
 use rp\system\cache\runtime\CharacterProfileRuntimeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\IPopoverObject;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
@@ -38,18 +40,21 @@ use wcf\system\WCF;
  * @author      Marco Daries
  * @package     Daries\RP\Data\Character
  * 
- * @property-read   int         $characterID        unique id of the character
- * @property-read   string      $characterName      name of the character
- * @property-read   int|null    $userID             id of the user who created the character, or `null` if not already assigned.
- * @property-read   int         $gameID             id of the game for created the character
- * @property-read   int|null    $rankID             id of the rank for created the character, or `null` if not already assigned.
- * @property-read   int         $created            timestamp at which the character has been created
- * @property-read   int         $lastUpdateTime     timestamp at which the character has been updated the last time
- * @property-read   string      $notes              notes of the character
- * @property-read   array       $additionalData     array with additional data of the character
- * @property-read   string      $guildName          guild name if character does not belong to this guild
- * @property-read   int         $isPrimary          is `1` if the character is primary character of this game, otherwise `0`
- * @property-read   int         $isDisabled         is `1` if the character is disabled and thus is not displayed, otherwise `0`
+ * @property-read   int         $characterID                unique id of the character
+ * @property-read   string      $characterName              name of the character
+ * @property-read   int|null    $userID                     id of the user who created the character, or `null` if not already assigned.
+ * @property-read   int         $gameID                     id of the game for created the character
+ * @property-read   int|null    $rankID                     id of the rank for created the character, or `null` if not already assigned.
+ * @property-read   int|null    $avatarID                   id of the character's avatar or null if they have no avatar
+ * @property-read   int         $created                    timestamp at which the character has been created
+ * @property-read   int         $lastUpdateTime             timestamp at which the character has been updated the last time
+ * @property-read   string      $notes                      notes of the character
+ * @property-read   int         $notesHasEmbeddedObjects    s `1` if there are embedded objects in the notes, otherwise `0`
+ * @property-read   array       $additionalData             array with additional data of the character
+ * @property-read   string      $guildName                  guild name if character does not belong to this guild
+ * @property-read   int         $profileHits                number of times the character's profile has been visited
+ * @property-read   int         $isPrimary                  is `1` if the character is primary character of this game, otherwise `0`
+ * @property-read   int         $isDisabled                 is `1` if the character is disabled and thus is not displayed, otherwise `0`
  */
 class Character extends DatabaseObject implements IPopoverObject, IRouteController
 {
@@ -137,6 +142,21 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
     }
 
     /**
+     * Returns the absolute location of the icon file.
+     *
+     * @return string[]
+     */
+    public function getAvatarFileUploadFileLocations(): ?array
+    {
+        if ($this->avatarID) {
+            $avatar = new CharacterAvatar($this->avatarID);
+            return [$avatar->getLocation()];
+        }
+
+        return null;
+    }
+
+    /**
      * Returns the character with the given character name.
      */
     public static function getCharacterByCharactername(string $name): Character
@@ -154,6 +174,23 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
         if (!$row) $row = [];
 
         return new Character(null, $row);
+    }
+
+    /**
+     * Returns the character's formatted notes.
+     */
+    public function getFormattedNotes(): string
+    {
+        $processor = new HtmlOutputProcessor();
+        $processor->enableUgc = false;
+        $processor->process(
+            $this->notes,
+            'info.daries.rp.character.notes',
+            $this->characterID,
+            false
+        );
+
+        return $processor->getHtml();
     }
 
     /**

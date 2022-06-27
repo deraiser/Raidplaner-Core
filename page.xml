@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/page.xsd">
+    <import>
+        <!-- dynamic -->
+        <page identifier="info.daries.rp.Calendar">
+            <pageType>system</pageType>
+            <controller>rp\page\CalendarPage</controller>
+            <name language="de">Kalender</name>
+            <name language="en">Calendar</name>
+            <handler>rp\system\page\handler\CalendarPageHandler</handler>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+            <content language="en">
+                <title>Calendar</title>
+            </content>
+            <content language="de">
+                <title>Kalender</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.CharactersList">
+            <pageType>system</pageType>
+            <controller>rp\page\CharactersListPage</controller>
+            <name language="de">Charaktere</name>
+            <name language="en">Characters</name>
+            <permissions>user.rp.canViewCharactersList</permissions>
+            <content language="en">
+                <title>Characters</title>
+            </content>
+            <content language="de">
+                <title>Charaktere</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.AddCharacter">
+            <pageType>system</pageType>
+            <controller>rp\form\CharacterAddForm</controller>
+            <name language="de">Charakter erstellen</name>
+            <name language="en">Add Character</name>
+            <hasFixedParent>1</hasFixedParent>
+            <parent>info.daries.rp.CharactersList</parent>
+            <content language="en">
+                <title>Add Character</title>
+            </content>
+            <content language="de">
+                <title>Charakter erstellen</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.CharacterEdit">
+            <pageType>system</pageType>
+            <controller>rp\form\CharacterEditForm</controller>
+            <name language="de">Charakter bearbeiten</name>
+            <name language="en">Edit Character</name>
+            <hasFixedParent>1</hasFixedParent>
+            <parent>info.daries.rp.CharactersList</parent>
+            <content language="en">
+                <title>Edit Character</title>
+            </content>
+            <content language="de">
+                <title>Charakter bearbeiten</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.CharacterSearch">
+            <pageType>system</pageType>
+            <controller>rp\form\CharacterSearchForm</controller>
+            <name language="de">Charakter suchen</name>
+            <name language="en">Search Characters</name>
+            <parent>info.daries.rp.CharactersList</parent>
+            <permissions>user.rp.canViewCharactersList</permissions>
+            <content language="en">
+                <title>Search Characters</title>
+            </content>
+            <content language="de">
+                <title>Charakter suchen</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.Character">
+            <pageType>system</pageType>
+            <controller>rp\page\CharacterPage</controller>
+            <name language="de">Charakterprofil</name>
+            <name language="en">Character Profile</name>
+            <handler>rp\system\page\handler\CharacterPageHandler</handler>
+            <parent>info.daries.rp.CharactersList</parent>
+            <requireObjectID>1</requireObjectID>
+        </page>
+    </import>
+</data>

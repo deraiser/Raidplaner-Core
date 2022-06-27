@@ -9,7 +9,7 @@
             <item name="rp.acp.character.quickSearch"><![CDATA[Schnellsuche]]></item>
             <item name="rp.acp.character.quickSearch.disabled"><![CDATA[Nicht aktivierte Charakter]]></item>
             <item name="rp.acp.character.search"><![CDATA[Charakter suchen]]></item>
-            <item name="rp.acp.character.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Character gefunden.]]></item>
+            <item name="rp.acp.character.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Charakter gefunden.]]></item>
             <item name="rp.acp.character.user"><![CDATA[Benutzername]]></item>
         </category>
         
@@ -23,18 +23,34 @@
         
         <category name="rp.character">
             <item name="rp.character.add"><![CDATA[Charakter hinzufügen]]></item>
+            <item name="rp.character.avatar"><![CDATA[Avatar]]></item>
+            <item name="rp.character.avatar.description"><![CDATA[Avatare dürfen die Dateiendungen {"\n"|str_replace:', ':$__wcf->session->getPermission('user.rp.characterAvatarAllowedFileExtensions')} und maximal eine Dateigröße von {@$__wcf->session->getPermission('user.rp.characterAvatarMaxSize')|filesize} besitzen. Die Mindestgröße für Avatare liegt bei 128×128 Pixel.]]></item>
             <item name="rp.character.category.character"><![CDATA[Charakter]]></item>
             <item name="rp.character.characterID"><![CDATA[Charakter-ID]]></item>
+            <item name="rp.character.characterName"><![CDATA[Charaktername]]></item>
+            <item name="rp.character.characterName.error.exists"><![CDATA[Dieser Charakter existiert für dieses Spiel <span class="confirmationObject">{$character->getGame()->getTitle()}</span> schon.]]></item>
+            <item name="rp.character.characters"><![CDATA[Charaktere]]></item>
+            <item name="rp.character.characters.filter"><![CDATA[Charaktere filtern]]></item>
+            <item name="rp.character.characters.noCharacters"><![CDATA[Es wurden keine Charaktere gefunden. <a href="{link controller='CharactersList' application='rp'}{/link}">Die aktiven Filter zurücksetzen.</a>]]></item>
+            <item name="rp.character.characters.sort.letters"><![CDATA[Anfangsbuchstabe]]></item>
+            <item name="rp.character.characters.sort.letters.all"><![CDATA[Alle]]></item>
+            <item name="rp.character.characters.sort.ownCharacters"><![CDATA[Eigene Charaktere anzeigen]]></item>
+            <item name="rp.character.charactersList.created"><![CDATA[Hinzugefügt am {@$character->created|date}]]></item>
             <item name="rp.character.created"><![CDATA[Erstellt]]></item>
             <item name="rp.character.edit"><![CDATA[Charakter bearbeiten]]></item>
             <item name="rp.character.guildName"><![CDATA[Gilde]]></item>
             <item name="rp.character.list"><![CDATA[Charaktere]]></item>
-            <item name="rp.character.name"><![CDATA[Charaktername]]></item>
-            <item name="rp.character.name.error.exists"><![CDATA[Dieser Charakter existiert für dieses Spiel <span class="confirmationObject">{$character->getGame()->getTitle()}</span> schon.]]></item>
             <item name="rp.character.notes"><![CDATA[Notizen]]></item>
             <item name="rp.character.notes.description"><![CDATA[Beliebige Notizen zu diesem Charakter.]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
+            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine Informationen hinterlegt.{else}Der Charakter hat noch keine Informationen hinterlegt.{/if}]]></item>
+            <item name="rp.character.profile.menu.about"><![CDATA[Über Charakter]]></item>
+            <item name="rp.character.profileHits"><![CDATA[Aufrufe]]></item>
             <item name="rp.character.rank"><![CDATA[Rang]]></item>
+            <item name="rp.character.search"><![CDATA[Charaktersuche]]></item>
+            <item name="rp.character.search.results"><![CDATA[Suchergebnisse]]></item>
+            <item name="rp.character.sortField.characterName"><![CDATA[Charctername]]></item>
+            <item name="rp.character.sortField.created"><![CDATA[Erstellt]]></item>
             <item name="rp.character.title"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Charaktere]]></item>
             <item name="rp.character.unknownCharacter"><![CDATA[Dieser Charakter existiert nicht oder wurde gelöscht.]]></item>
         </category>
@@ -81,13 +97,23 @@
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Charakter]]></item>
             <item name="wcf.acp.group.option.user.rp.canAddCharacter"><![CDATA[Kann Charaktere hinzufügen]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditOwnCharacter"><![CDATA[Kann eigene Charaktere bearbeiten]]></item>
+            <item name="wcf.acp.group.option.user.rp.canUploadCharacterAvatar"><![CDATA[Kann eigenen Avatar hochladen]]></item>
+            <item name="wcf.acp.group.option.user.rp.canViewCharactersList"><![CDATA[Kann Charakter-Liste sehen]]></item>
             <item name="wcf.acp.group.option.user.rp.canViewCharacterProfile"><![CDATA[Kann Charakter Profile sehen]]></item>
+            <item name="wcf.acp.group.option.user.rp.characterAvatarAllowedFileExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
+            <item name="wcf.acp.group.option.user.rp.characterAvatarMaxSize"><![CDATA[Maximale Dateigröße]]></item>
         </category>
         
         <category name="wcf.acp.option">
             <item name="wcf.acp.option.category.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.option.category.rp.character"><![CDATA[Charakter]]></item>
+            <item name="wcf.acp.option.category.rp.character.list"><![CDATA[Charakterliste]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Einstellungen]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_field.description"><![CDATA[]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
+            <item name="wcf.acp.option.rp_characters_list_default_sort_order.description"><![CDATA[]]></item>
+            <item name="wcf.acp.option.rp_characters_list_per_page"><![CDATA[Charaktere pro Seite]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Spiel [Standard]]]></item>
             <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Ranks aktivieren]]></item>
             <item name="wcf.acp.option.rp_show_twinks"><![CDATA[Twinks anzeigen]]></item>
@@ -98,6 +124,11 @@
             <item name="wcf.clipboard.label.info.daries.rp.character.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Charakter{if $count != 1}e{/if}]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Löschen ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Charakter{if $count != 1}e{/if} löschen?]]></item>
+        </category>
+        
+        <category name="wcf.page">
+            <item name="wcf.page.daries.rp.copyright"><![CDATA[<a href="https://daries.info/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Software: <strong>Raidplaner{if SHOW_VERSION_NUMBER} {$__rp->getPackage()->packageVersion}{/if}</strong>, entwickelt von <strong>Daries.info Team</strong></a>]]></item>
+            <item name="wcf.page.onlineLocation.info.daries.rp.Character"><![CDATA[Charakterprofil von <a href="{link controller='Character' object=$character}{/link}" class="rpCharacterLink" data-character-id="{@$character->characterID}">{$character->getTitle()}</a>]]></item>
         </category>
     </import>
 </language>

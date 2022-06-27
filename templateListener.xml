@@ -10,6 +10,18 @@
         </templatelistener>
         
          <!-- user -->
+        <templatelistener name="characterInformationHeadline">
+            <environment>user</environment>
+            <templatename>characterInformationHeadline</templatename>
+            <eventname>afterHeadline</eventname>
+            <templatecode><![CDATA[{include file='__swtorCharacterInformationHeadline' application='rp'}]]></templatecode>
+        </templatelistener>
+        <templatelistener name="copyright">
+            <environment>user</environment>
+            <templatename>pageFooterCopyright</templatename>
+            <eventname>copyright</eventname>
+            <templatecode><![CDATA[{if $__rp->isActiveApplication() && !'DARIES_RP_BRANDING_5_4'|defined}<div class="copyright">{lang}wcf.page.daries.rp.copyright{/lang}</div>{/if}]]></templatecode>
+        </templatelistener>
         <templatelistener name="javascriptInit">
             <environment>user</environment>
             <templatename>headInclude</templatename>

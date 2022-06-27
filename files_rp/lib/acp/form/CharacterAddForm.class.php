@@ -2,10 +2,12 @@
 
 namespace rp\acp\form;
 
+use rp\data\character\avatar\CharacterAvatar;
 use rp\data\character\CharacterAction;
 use rp\data\character\CharacterProfile;
 use rp\data\game\GameCache;
 use rp\data\rank\RankCache;
+use rp\system\form\builder\field\character\avatar\CharacterAvatarUploadFormField;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
@@ -96,7 +98,7 @@ class CharacterAddForm extends AbstractFormBuilderForm
         $dataContainer = FormContainer::create('data')
             ->appendChildren([
             TextFormField::create('characterName')
-            ->label('rp.character.name')
+            ->label('rp.character.characterName')
             ->required()
             ->autoFocus()
             ->maximumLength(100)
@@ -124,6 +126,17 @@ class CharacterAddForm extends AbstractFormBuilderForm
             ->label('rp.character.notes')
             ->description('rp.character.notes.description')
             ->objectType('info.daries.rp.character.notes'),
+            CharacterAvatarUploadFormField::create('avatarFile')
+            ->label('rp.character.avatar')
+            ->description('rp.character.avatar.description')
+            ->maximum(1)
+            ->imageOnly(true)
+            ->allowSvgImage(true)
+            ->minimumImageWidth(CharacterAvatar::AVATAR_SIZE)
+            ->minimumImageHeight(CharacterAvatar::AVATAR_SIZE)
+            ->maximumFilesize(WCF::getSession()->getPermission('user.rp.characterAvatarMaxSize'))
+            ->setAcceptableFiles(\explode("\n", WCF::getSession()->getPermission('user.rp.characterAvatarAllowedFileExtensions')))
+            ->available(($this->formObject === null || ($this->formObject !== null && WCF::getSession()->getPermission('user.rp.canEditOwnCharacter'))) && WCF::getSession()->getPermission('user.rp.canUploadCharacterAvatar')),
         ]);
         $dataTab->appendChild($dataContainer);
 

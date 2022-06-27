@@ -2,8 +2,8 @@
 
 namespace rp\system;
 
-use rp\data\game\GameCache;
-use rp\system\game\IGame;
+use rp\system\character\CharacterHandler;
+use rp\system\menu\character\profile\CharacterProfileMenu;
 use wcf\system\application\AbstractApplication;
 
 /*  Project:    Raidplaner: Core
@@ -34,5 +34,20 @@ use wcf\system\application\AbstractApplication;
  */
 class RPCore extends AbstractApplication
 {
-    
+
+    /**
+     * Returns the character handler of the current user
+     */
+    public function getCharacter(): CharacterHandler
+    {
+        return CharacterHandler::getInstance();
+    }
+
+    /**
+     * Returns the character profile menu
+     */
+    public function getCharacterProfileMenu(): CharacterProfileMenu
+    {
+        return CharacterProfileMenu::getInstance();
+    }
 }

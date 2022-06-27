@@ -4,10 +4,10 @@ namespace rp\system\condition\character;
 
 use rp\data\character\CharacterList;
 use rp\system\condition\AbstractCondition;
+use rp\system\form\builder\field\character\CharacterNameFormField;
 use wcf\data\DatabaseObjectList;
 use wcf\system\exception\InvalidObjectArgument;
 use wcf\system\form\builder\field\IFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 
 /*  Project:    Raidplaner: Core
@@ -44,7 +44,6 @@ class CharacterNameCondition extends AbstractCondition
      */
     public function addObjectListCondition(DatabaseObjectList $objectList, IFormDocument $form, array $conditionData = []): void
     {
-
         if (!($objectList instanceof CharacterList)) {
             throw new InvalidObjectArgument($objectList, CharacterList::class, 'Object list');
         }
@@ -63,8 +62,8 @@ class CharacterNameCondition extends AbstractCondition
      */
     public function getFormField(): IFormField
     {
-        return TextFormField::create($this->getID())
-                ->label('rp.character.name')
+        return CharacterNameFormField::create($this->getID())
+                ->label('rp.character.characterName')
                 ->maximumLength(255);
     }
 

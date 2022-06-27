@@ -37,12 +37,14 @@
         <instruction type="objectTypeDefinition" />
         <instruction type="objectType" />
         <instruction type="acpMenu" />
+        <instruction type="page" />
+        <instruction type="menuItem" />
         <instruction type="clipboardAction" />
         <instruction type="templateListener" />
-        
         <instruction type="option" />
         <instruction type="userGroupOption" />
         
+        <instruction type="rpCharacterProfileMenu" />
         <instruction type="rpGame" />
         
         <instruction type="language" />

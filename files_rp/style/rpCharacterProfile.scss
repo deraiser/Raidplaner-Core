@@ -1,0 +1,28 @@
+.characterProfilePreview {
+    position: relative;
+
+    .characterInformation {
+        margin-bottom: 20px;
+    }
+
+    .buttonGroupNavigation {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+.characterRankBadge {
+    max-width: 154px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@include screen-md-up {
+    .characterProfileCharacter {
+        .contentHeaderIcon {
+            flex: 0 0 128px;
+            margin-right: 20px;
+        }
+    }
+}

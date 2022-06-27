@@ -2,12 +2,19 @@
 
 namespace rp\data\character;
 
+use rp\data\character\avatar\CharacterAvatar;
+use rp\data\character\avatar\CharacterAvatarDecorator;
+use rp\data\character\avatar\DefaultCharacterAvatar;
+use rp\data\character\avatar\ICharacterAvatar;
 use rp\data\game\Game;
 use rp\data\game\GameCache;
 use rp\data\rank\Rank;
 use rp\data\rank\RankCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
+use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\util\StringUtil;
 
 /*  Project:    Raidplaner: Core
@@ -48,6 +55,11 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     const GENDER_OTHER = 3;
 
     /**
+     * character avatar
+     */
+    protected ?CharacterAvatarDecorator $avatar = null;
+
+    /**
      * @inheritDoc
      */
     protected static $baseClass = Character::class;
@@ -63,6 +75,69 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     public function getAnchorTag(): string
     {
         return '<a href="' . $this->getLink() . '" class="rpCharacterLink" data-object-id="' . $this->getObjectID() . '">' . StringUtil::encodeHTML($this->getTitle()) . '</a>';
+    }
+
+    /**
+     * Returns the character's avatar.
+     */
+    public function getAvatar(): CharacterAvatarDecorator
+    {
+        if ($this->avatar === null) {
+            $avatar = null;
+            
+            if ($this->avatarID) {
+                if (!$this->fileHash) {
+                    $avatars = [];
+
+                    if ($this->userID) {
+                        $data = UserStorageHandler::getInstance()->getField('charactersAvatar', $this->userID);
+                        if ($data !== null) {
+                            $avatars = \unserialize($data);
+                        }
+
+                        if (isset($avatars[$this->characterID])) {
+                            $avatar = $avatars[$this->characterID];
+                        } else {
+                            $avatar = new CharacterAvatar($this->avatarID);
+
+                            $avatars[$this->characterID] = $avatar;
+                            UserStorageHandler::getInstance()->update(
+                                $this->userID,
+                                'charactersAvatar',
+                                \serialize($avatars)
+                            );
+                        }
+                    } else {
+                        $avatar = new CharacterAvatar($this->avatarID);
+                    }
+                } else {
+                    $avatar = new CharacterAvatar(null, $this->getDecoratedObject()->data);
+                }
+            } else {
+                $parameters = ['avatar' => null];
+                EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
+
+                if ($parameters['avatar'] !== null) {
+                    if (!($parameters['avatar'] instanceof ICharacterAvatar)) {
+                        throw new ImplementationException(
+                                \get_class($parameters['avatar']),
+                                ICharacterAvatar::class
+                        );
+                    }
+
+                    $avatar = $parameters['avatar'];
+                }
+            }
+
+            // use default avatar
+            if ($avatar === null) {
+                $avatar = new DefaultCharacterAvatar($this->characterName ?: '');
+            }
+
+            $this->avatar = new CharacterAvatarDecorator($avatar);
+        }
+
+        return $this->avatar;
     }
 
     /**
