@@ -180,7 +180,7 @@ class EventAppointment {
             switch (appointment.status) {
                 case "accepted":
                     document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = <number>~~appointment.dataset.objectId;
+                        const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
@@ -188,7 +188,7 @@ class EventAppointment {
                     break;
                 case "canceled":
                     document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = <number>~~appointment.dataset.objectId;
+                        const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
@@ -196,7 +196,7 @@ class EventAppointment {
                     break;
                 case "maybe":
                     document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = <number>~~appointment.dataset.objectId;
+                        const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
