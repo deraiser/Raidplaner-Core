@@ -5,9 +5,7 @@ namespace rp\system\option;
 use rp\data\game\Game;
 use rp\data\game\GameCache;
 use wcf\data\option\Option;
-use wcf\system\exception\UserInputException;
 use wcf\system\option\SelectOptionType;
-use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -40,51 +38,19 @@ class GameSelectOptionType extends SelectOptionType
 
     /**
      * @inheritDoc
-     */
-    public function getFormElement(Option $option, $value): string
-    {
-        $options = $this->parseEnableOptions($option);
-
-        $selectOptions = $this->parseSelectOptions();
-        \uasort($selectOptions, [$this, 'sortByTitle']);
-
-        WCF::getTPL()->assign([
-            'disableOptions' => $options['disableOptions'],
-            'enableOptions' => $options['enableOptions'],
-            'option' => $option,
-            'selectOptions' => $selectOptions,
-            'value' => $value
-        ]);
-        return WCF::getTPL()->fetch('selectOptionType');
-    }
-
-    /**
-     * @inheritDoc
      * @return  Game[]
      */
-    public function parseSelectOptions(): array
+    protected function getSelectOptions(Option $option): array
     {
-        return GameCache::getInstance()->getGames();
-    }
+        $games = GameCache::getInstance()->getGames();
 
-    /**
-     * Sorts results by title.
-     */
-    protected function sortByTitle($objectA, $objectB): mixed
-    {
-        return \strcmp($objectA->getTitle(), $objectB->getTitle());
-    }
+        \uasort($games, function (Game $a, Game $b) {
+            return \strcmp(
+            $a->getTitle(),
+            $b->getTitle()
+            );
+        });
 
-    /**
-     * @inheritDoc
-     */
-    public function validate(Option $option, $newValue): void
-    {
-        if (!empty($newValue)) {
-            $options = $this->parseSelectOptions();
-            if (!isset($options[$newValue])) {
-                throw new UserInputException($option->optionName, 'validationFailed');
-            }
-        }
+        return $games;
     }
 }

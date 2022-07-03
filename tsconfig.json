@@ -4,7 +4,6 @@
         "ts/**/*"
     ],
     "compilerOptions": {
-        "allowJs": true,
         "target": "es2019",
         "module": "amd",
         "rootDir": "ts/",
@@ -26,6 +25,5 @@
         },
         "importHelpers": true,
         "newLine": "lf"
-    },
-    "compileOnSave": true
+    }
 }

@@ -47,6 +47,6 @@ class CalendarPageHandler extends AbstractMenuPageHandler
      */
     public function isVisible($objectID = null)
     {
-        return WCF::getSession()->getPermission('user.rp.canViewCalendar');
+        return WCF::getSession()->getPermission('user.rp.canReadEvent');
     }
 }

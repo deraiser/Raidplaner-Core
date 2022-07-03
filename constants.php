@@ -31,10 +31,12 @@ define('RP_DIR', '');
 define('RELATIVE_RP_DIR', '');
 
 // option constants
+\define('RP_CALENDAR_MAX_EVENT_LENGTH', 1);
 \define('RP_CHARACTERS_LIST_DEFAULT_SORT_FIELD', 'characterName');
 \define('RP_CHARACTERS_LIST_DEFAULT_SORT_ORDER', 'DESC');
 \define('RP_CHARACTERS_LIST_PER_PAGE', 30);
 \define('RP_DEFAULT_GAME_ID', 0);
+\define('RP_DEFAULT_EVENT_TYPE_SELECTED', '');
 \define('RP_ENABLE_RANK', 1);
 \define('RP_SHOW_TWINKS', 1);
 

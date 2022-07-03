@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/eventListener.xsd">
+    <import>
+        <!-- admin -->
+		<eventlistener name="userMerge">
+			<eventclassname>wcf\acp\form\UserMergeForm</eventclassname>
+			<eventname>save</eventname>
+			<listenerclassname>rp\system\event\listener\UserMergeListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
+        <!-- /admin -->
+        
+        <!-- all -->
+		<eventlistener name="userRenameUser">
+			<eventclassname>wcf\data\user\UserAction</eventclassname>
+			<eventname>rename</eventname>
+			<listenerclassname>rp\system\event\listener\UserActionRenameListener</listenerclassname>
+			<environment>all</environment>
+		</eventlistener>
+        <!-- /all -->
+    </import>
+</data>

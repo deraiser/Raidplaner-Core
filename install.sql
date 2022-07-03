@@ -31,6 +31,29 @@ CREATE TABLE rp1_classification_to_role (
     UNIQUE KEY (classificationID, roleID)
 );
 
+DROP TABLE IF EXISTS rp1_event;
+CREATE TABLE rp1_event (
+    eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    objectTypeID INT(10) NOT NULL,
+    title VARCHAR(191) NOT NULL DEFAULT '',
+    userID INT(10),
+    username VARCHAR(255) NOT NULL DEFAULT '',
+    created INT(10) NOT NULL DEFAULT 0,
+    startTime INT(10) NOT NULL DEFAULT 0,
+    endTime INT(10) NOT NULL DEFAULT 0,
+    isFullDay TINYINT(1) NOT NULL DEFAULT 0,
+    notes MEDIUMTEXT,
+    views MEDIUMINT(7) NOT NULL DEFAULT 0,
+    enableComments TINYINT(1) NOT NULL DEFAULT 0,
+    comments SMALLINT(5) NOT NULL DEFAULT 0,
+    hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
+	deleteTime INT(10) NOT NULL DEFAULT 0,
+	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
+    isClosed TINYINT(1) NOT NULL DEFAULT 0,
+    isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+    additionalData TEXT
+);
+
 DROP TABLE IF EXISTS rp1_faction;
 CREATE TABLE rp1_faction (
     factionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -157,6 +180,9 @@ ALTER TABLE rp1_classification_to_race ADD FOREIGN KEY (classificationID) REFERE
 ALTER TABLE rp1_classification_to_race ADD FOREIGN KEY (raceID) REFERENCES rp1_race (raceID) ON DELETE CASCADE;
 ALTER TABLE rp1_classification_to_role ADD FOREIGN KEY (classificationID) REFERENCES rp1_classification (classificationID) ON DELETE CASCADE;
 ALTER TABLE rp1_classification_to_role ADD FOREIGN KEY (roleID) REFERENCES rp1_role (roleID) ON DELETE CASCADE;
+
+ALTER TABLE rp1_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+ALTER TABLE rp1_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 
 ALTER TABLE rp1_faction ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_faction ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;

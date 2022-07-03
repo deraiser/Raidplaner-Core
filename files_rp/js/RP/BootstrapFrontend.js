@@ -33,11 +33,24 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Controller/Popover"], 
         });
     }
     /**
+     * Initializes event popover.
+     */
+    function _initEventPopover() {
+        ControllerPopover.init({
+            className: "rpEventLink",
+            dboAction: "rp\\data\\event\\EventAction",
+            identifier: "info.daries.rp.event",
+        });
+    }
+    /**
      * Bootstraps general modules and frontend exclusive ones.
      */
     function setup(options) {
         if (options.enableCharacterPopover) {
             _initCharacterPopover();
+        }
+        if (options.enableEventPopover) {
+            _initEventPopover();
         }
     }
     exports.setup = setup;

@@ -49,6 +49,7 @@ jobs:
         node-version: "18"
         cache: "npm"
     - run: npm install
+    - run: rm -r files_rp/js/RP/
     - run: npx tsc
     - run: echo "::add-matcher::.github/diff.json"
     - name: Show diff

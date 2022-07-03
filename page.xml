@@ -16,6 +16,45 @@
                 <title>Kalender</title>
             </content>
         </page>
+		<page identifier="info.daries.rp.Event">
+			<pageType>system</pageType>
+			<controller>rp\page\EventPage</controller>
+			<name language="de">Termin</name>
+			<name language="en">Event</name>
+			<handler>rp\system\page\handler\EventPageHandler</handler>
+			<parent>info.daries.rp.Calendar</parent>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
+		</page>
+		<page identifier="info.daries.rp.EventAdd">
+			<pageType>system</pageType>
+			<controller>rp\form\EventAddForm</controller>
+			<name language="de">Termin hinzufügen</name>
+			<name language="en">Add Event</name>
+			<parent>info.daries.rp.Calendar</parent>
+			<permissions>user.rp.canCreateEvent</permissions>
+			<content language="en">
+				<title>Add Event</title>
+			</content>
+			<content language="de">
+				<title>Termin hinzufügen</title>
+			</content>
+		</page>
+		<page identifier="info.daries.rp.EventEdit">
+			<pageType>system</pageType>
+			<controller>rp\form\EventEditForm</controller>
+			<name language="de">Termin bearbeiten</name>
+			<name language="en">Edit Event</name>
+			<parent>info.daries.rp.Event</parent>
+			<hasFixedParent>1</hasFixedParent>
+			<permissions>user.rp.canCreateEvent</permissions>
+			<content language="en">
+				<title>Edit Event</title>
+			</content>
+			<content language="de">
+				<title>Termin bearbeiten</title>
+			</content>
+		</page>
         <page identifier="info.daries.rp.CharactersList">
             <pageType>system</pageType>
             <controller>rp\page\CharactersListPage</controller>

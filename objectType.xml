@@ -24,11 +24,75 @@
         </type>
         <!-- /clipboard items -->
         
+        <!-- event controllers -->
+        <type>
+            <name>info.daries.rp.event.default</name>
+            <definitionname>info.daries.rp.eventController</definitionname>
+            <classname>rp\system\event\DefaultEventController</classname>
+        </type>
+        <type>
+            <name>info.daries.rp.event.appointment</name>
+            <definitionname>info.daries.rp.eventController</definitionname>
+            <classname>rp\system\event\AppointmentEventController</classname>
+        </type>
+        <!-- /event controllers -->
+        
         <!-- message -->
         <type>
             <name>info.daries.rp.character.notes</name>
             <definitionname>com.woltlab.wcf.message</definitionname>
         </type>
+        <type>
+            <name>info.daries.rp.event.notes</name>
+            <definitionname>com.woltlab.wcf.message</definitionname>
+        </type>
         <!-- /message -->
+                
+		<!-- moderation -->
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.moderation.activation</definitionname>
+			<classname>rp\system\moderation\queue\activation\EventModerationQueueActivationHandler</classname>
+		</type>
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname>rp\system\moderation\queue\report\EventModerationQueueReportHandler</classname>
+		</type>
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.deletedContent</definitionname>
+			<classname>rp\system\moderation\DeletedEventProvider</classname>
+		</type>
+        <!-- /moderation -->
+        
+		<!-- Modification Log -->
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.modifiableContent</definitionname>
+			<classname>rp\system\log\modification\EventModificationLogHandler</classname>
+		</type>
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.deletedContent</definitionname>
+			<classname>rp\system\moderation\DeletedEventProvider</classname>
+		</type>
+		<!-- /Modification Log -->
+        
+        <!-- searchable object type -->
+		<type>
+			<name>info.daries.rp.event</name>
+			<definitionname>com.woltlab.wcf.searchableObjectType</definitionname>
+			<classname>rp\system\search\EventSearch</classname>
+			<searchindex>rp1_event_search_index</searchindex>
+		</type>
+        <!-- /searchable object type -->
+        
+        <!-- Visit Tracker -->
+        <type>
+            <name>info.daries.rp.event</name>
+            <definitionname>com.woltlab.wcf.visitTracker.objectType</definitionname>
+        </type>
+        <!-- /Visit Tracker -->
     </import>
 </data>

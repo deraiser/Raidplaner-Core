@@ -1,0 +1,146 @@
+.eventNavigation {
+    @include screen-md-up {
+        > nav > ul {
+            display: flex;
+        }
+    }
+
+    .previousEventButton,
+    .nextEventButton {
+        display: flex;
+
+        @include screen-md-up {
+            flex: 0 0 50%;
+        }
+
+        > a {
+            color: $wcfContentText;
+            display: flex;
+
+            &::before {
+                align-self: center;
+                display: block;
+                flex: 0 0 auto;
+                font-family: FontAwesome;
+                font-size: 36px;
+            }
+
+            > div {
+                flex: 1 1 auto;
+            }
+
+            .eventNavigationEntityName,
+            .eventNavigationEventTitle {
+                display: block;
+            }
+
+            .eventNavigationEntityName {
+                text-transform: uppercase;
+            }
+
+            .eventNavigationEventTitle {
+                margin-top: 3px;
+
+                @include wcfFontHeadline;
+            }
+
+            .eventNavigationEventImage {
+                > img {
+                    border-radius: 2px;
+                    opacity: .85;
+                    transition: .2s ease opacity;
+                }
+            }
+
+            &:hover {
+                &::before {
+                    color: $wcfContentLinkActive;
+                }
+
+                .eventNavigationEventTitle {
+                    color: $wcfContentLinkActive;
+                }
+
+                .eventNavigationEventImage {
+                    > img {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    .previousEventButton {
+        @include screen-md-up {
+            padding-right: 10px;
+        }
+
+        > a {
+            &::before {
+                content: $fa-var-chevron-left;
+            }
+
+            > div {
+                margin-left: 10px;
+            }
+        }
+    }
+
+    .nextEventButton {
+        justify-content: flex-end;
+        text-align: right;
+
+        @include screen-md-up {
+            margin-left: 50%;
+            padding-left: 10px;
+        }
+
+        .eventNavigationEventImage {
+            order: 1;
+            margin-left: 15px;
+            margin-right: 0;
+        }
+
+        > a {
+            &::before {
+                content: $fa-var-chevron-right;
+                order: 1;
+            }
+
+            > div {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .previousEventButton + .nextEventButton {
+        @include screen-sm-down {
+            margin-top: 20px;
+        }
+
+        @include screen-md-up {
+            margin-left: 0;
+        }
+    }
+}
+
+/* fix icons in rtl design */
+html[dir="rtl"] {
+    .eventNavigation {
+        .previousEventButton {
+            > a {
+                &::before {
+                    content: $fa-var-chevron-right;
+                }
+            }
+        }
+
+        .nextEventButton {
+            > a {
+                &::before {
+                    content: $fa-var-chevron-left;
+                }
+            }
+        }
+    }
+}

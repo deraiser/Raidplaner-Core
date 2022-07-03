@@ -1,0 +1,145 @@
+.rpCalendar {
+    display: flex;
+    flex-flow: column;
+
+    .rpDays {
+        border: 1px solid $wcfContentBorder;
+        display: flex;
+        flex-flow: wrap;
+
+        .rpDay {
+            border: 1px solid $wcfContentBorder;
+            color: $wcfContentText;
+            display: flex;
+            flex-flow: column;
+            font-weight: bold;
+            min-height: 100px;
+            padding: 5px;
+            width: calc(100% / 7);
+
+            > span {
+                display: inline-flex;
+                font-size: 14px;
+                width: 30px;
+
+            }
+
+            .rpEvent {
+                display: flex;
+                background-color: $wcfContentBackground;
+                border: 1px solid $wcfContentBorder;
+                border-radius: 10px;
+                color: $wcfContentText;
+                font-weight: 500;
+                font-size: 12px;
+                height: 20px;
+                word-wrap: break-word;
+
+                &.rpEventDeleted {
+                    border: 1px solid red;
+                }
+
+                &:not(:first-child) {
+                    margin-top: 3px;
+                }
+
+                > .icon,
+                > img {
+                    margin-left: 5px;
+                    padding-top: 0.1em;
+                }
+
+                > span + a,
+                > img + a {
+                    padding-left: 5px;
+                }
+
+                > a {
+                    display: block;
+                    padding: 0px 5px;
+                    overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                    background: transparent;
+                }
+
+                &.rpEventCenter {
+                    border-left: 1px solid $wcfContentBackground;
+                    border-right: 1px solid $wcfContentBackground;
+                    margin-left: -6px;
+                    margin-right: -6px;
+                    border-radius: 0px;
+                }
+
+                &.rpEventEnd {
+                    border-left: 1px solid $wcfContentBackground;
+                    margin-left: -6px;
+                    border-top-left-radius: 0px;
+                    border-bottom-left-radius: 0px;
+                }
+
+                &.rpEventStart {
+                    border-right: 1px solid $wcfContentBackground;
+                    margin-right: -6px;
+                    border-top-right-radius: 0px;
+                    border-bottom-right-radius: 0px;
+                }
+
+                &.rpEventCenter,
+                &.rpEventStart {
+                    > a {
+                        overflow: visible;
+                    }
+                }
+
+                &.rpEventCenter,
+                &.rpEventEnd,
+                &.rpEventStart {
+                    > a {
+                        position: relative;
+                    }
+                }
+            }
+
+
+            &.ignore,
+            &.selected {
+                background-color: $wcfContentBorderInner;
+            }
+
+            &.ignore {
+                color: $wcfContentDimmedText;
+            }
+
+            &:hover {
+                background-color: $wcfContentBorderInner;
+            }
+        }
+
+        .rpDay[first-day-of-week="1"] {
+            .rpEventCenter,
+            .rpEventEnd, {
+                border-left: 1px solid !important;
+            }
+        }
+
+        .rpDay[last-day-of-week="1"] {
+            .rpEventCenter,
+            .rpEventStart {
+                border-right: 1px solid !important;
+            }
+        }
+
+        .rpDayName {
+            background-color: $wcfContentContainerBackground;
+            border: 1px solid $wcfContentBorder;
+            color: $wcfContentText;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            width: calc(100% / 7);
+        }
+    }
+}

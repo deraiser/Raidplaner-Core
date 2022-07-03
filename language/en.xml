@@ -21,6 +21,11 @@
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
         </category>
         
+        <category name="rp.calendar">
+            <item name="rp.calendar.list"><![CDATA[Calendar]]></item>
+            <item name="rp.calendar.today"><![CDATA[Today]]></item>
+        </category>
+        
         <category name="rp.character">
             <item name="rp.character.add"><![CDATA[Add Character]]></item>
             <item name="rp.character.avatar"><![CDATA[Avatar]]></item>
@@ -59,6 +64,60 @@
             <item name="rp.classification.title"><![CDATA[Class]]></item>
         </category>
     
+        <category name="rp.event">
+            <item name="rp.event.accepted"><![CDATA[Accepted]]></item>
+            <item name="rp.event.add"><![CDATA[Create Event]]></item>
+            <item name="rp.event.backEvent"><![CDATA[Back to the event]]></item>
+            <item name="rp.event.canceled"><![CDATA[Canceled]]></item>
+            <item name="rp.event.dateFormat"><![CDATA[l, j. F Y]]></item>
+            <item name="rp.event.delete"><![CDATA[Delete]]></item>
+            <item name="rp.event.delete.confirmMessage"><![CDATA[Do you really want to delete this event?]]></item>
+            <item name="rp.event.deleted"><![CDATA[This event was deleted {if $event->userID == $event->getLogEntry()->userID}by the user themselves{else}by {if $event->getLogEntry()->userID}<a href="{link controller='User' id=$event->getLogEntry()->userID title=$event->getLogEntry()->username}{/link}" class="userLink" data-object-id="{@$event->getLogEntry()->userID}">{$event->getLogEntry()->username}</a>{else}{$event->getLogEntry()->username}{/if}{/if}{if $event->getLogEntry()->reason}: {$event->getLogEntry()->reason}{/if} ({@$event->getLogEntry()->time|time}).]]></item>
+            <item name="rp.event.disable"><![CDATA[Disable]]></item>
+            <item name="rp.event.edit"><![CDATA[Edit event]]></item>
+            <item name="rp.event.enable"><![CDATA[Approve]]></item>
+            <item name="rp.event.endTime"><![CDATA[End Time]]></item>
+            <item name="rp.event.endTime.error.invalid"><![CDATA[You have specified an invalid date for the end of the event. The end of the event must not be before the start.]]></item>
+            <item name="rp.event.endTime.error.tooLong"><![CDATA[The duration of the event is too long. The maximum allowed duration is {#RP_CALENDAR_MAX_EVENT_LENGTH} days.]]></item>
+            <item name="rp.event.events"><![CDATA[Events]]></item>
+            <item name="rp.event.eventViews"><![CDATA[{#$event->views} View{if $event->views != 1}s{/if}]]></item>
+            <item name="rp.event.expired"><![CDATA[The registration deadline for this event has already passed.]]></item>
+            <item name="rp.event.isFullDay"><![CDATA[Full day event]]></item>
+            <item name="rp.event.maybe"><![CDATA[Maybe]]></item>
+            <item name="rp.event.moderation.info"><![CDATA[Newly created events will remain inaccessible until approved by a moderator.]]></item>
+            <item name="rp.event.moderation.redirect"><![CDATA[Your event has been created and will be displayed once approved.]]></item>
+            <item name="rp.event.nextEvent"><![CDATA[Next Event]]></item>
+            <item name="rp.event.notes"><![CDATA[Note]]></item>
+            <item name="rp.event.participation"><![CDATA[Participation]]></item>
+            <item name="rp.event.preset"><![CDATA[The event <a href="{link controller='Event' application='rp' object=$presetEvent}{/link}">{$presetEvent->getTitle()}</a> is being used as a preset, the fields below have been pre-populated.]]></item>
+            <item name="rp.event.previousEvent"><![CDATA[Previous Event]]></item>
+            <item name="rp.event.restore"><![CDATA[Restore]]></item>
+            <item name="rp.event.settings"><![CDATA[Settings]]></item>
+            <item name="rp.event.startTime"><![CDATA[Start time]]></item>
+            <item name="rp.event.startTime.error.invalid"><![CDATA[You have specified an invalid date for the start of the event.]]></item>
+            <item name="rp.event.startTime.error.tooLong"><![CDATA[The duration of the event is too long. The maximum allowed duration is {#RP_CALENDAR_MAX_EVENT_LENGTH} days.]]></item>
+            <item name="rp.event.trash"><![CDATA[Move to Trash]]></item>
+            <item name="rp.event.trash.confirmMessage"><![CDATA[Do you really want to move this event to the trash?]]></item>
+            <item name="rp.event.trash.reason"><![CDATA[Reason (optional)]]></item>
+            <item name="rp.event.type"><![CDATA[Event Type]]></item>
+            <item name="rp.event.useAsPreset"><![CDATA[Use as Preset]]></item>
+        </category>
+        
+        <category name="rp.event.log">
+            <item name="rp.event.log.delete"><![CDATA[Deleted a event.]]></item>
+            <item name="rp.event.log.disable"><![CDATA[Disabled the <a href="$event->getLink()}" class="rpEventLink" data-object-id="{@$event->eventID}">Event{if $event->getTitle()} “{$event->getTitle()}”{/if}</a> by <a href="{link controller='User' id=$event->userID title=$event->username}{/link}" class="userLink" data-object-id="{@$event->userID}">{$event->username}</a>.]]></item>
+            <item name="rp.event.log.edit"><![CDATA[Edited the <a href="$event->getLink()}" class="rpEventLink" data-object-id="{@$event->eventID}">Event{if $event->getTitle()} “{$event->getTitle()}”{/if}</a> by <a href="{link controller='User' id=$event->userID title=$event->username}{/link}" class="userLink" data-object-id="{@$event->userID}">{$event->username}</a>.]]></item>
+            <item name="rp.event.log.enable"><![CDATA[Approved the <a href="$event->getLink()}" class="rpEventLink" data-object-id="{@$event->eventID}">Event{if $event->getTitle()} “{$event->getTitle()}”{/if}</a> by <a href="{link controller='User' id=$event->userID title=$event->username}{/link}" class="userLink" data-object-id="{@$event->userID}">{$event->username}</a>.]]></item>
+            <item name="rp.event.log.restore"><![CDATA[Restored the <a href="$event->getLink()}" class="rpEventLink" data-object-id="{@$event->eventID}">Event{if $event->getTitle()} “{$event->getTitle()}”{/if}</a> by <a href="{link controller='User' id=$event->userID title=$event->username}{/link}" class="userLink" data-object-id="{@$event->userID}">{$event->username}</a>.]]></item>
+            <item name="rp.event.log.trash"><![CDATA[Moved the <a href="$event->getLink()}" class="rpEventLink" data-object-id="{@$event->eventID}">Event{if $event->getTitle()} “{$event->getTitle()}”{/if}</a> by <a href="{link controller='User' id=$event->userID title=$event->username}{/link}" class="userLink" data-object-id="{@$event->userID}">{$event->username}</a> to the trash{if $additionalData[reason]}: {$additionalData[reason]} {/if}.]]></item>
+        </category>
+        
+        <category name="rp.event.controller">
+            <item name="rp.event.controller.info.daries.rp.event.appointment"><![CDATA[Appointment with registration]]></item>
+            <item name="rp.event.controller.info.daries.rp.event.default"><![CDATA[Default]]></item>
+            <item name="rp.event.controller.info.daries.rp.event.raid"><![CDATA[Raid]]></item>
+        </category>
+    
         <category name="rp.faction">
             <item name="rp.faction.title"><![CDATA[Fraction]]></item>
         </category>
@@ -93,27 +152,64 @@
             <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Can search characters]]></item>
             <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Character]]></item>
+            <item name="wcf.acp.group.option.category.mod.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.category.mod.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.user.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.category.user.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Character]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canDeleteComment"><![CDATA[Can delete comments]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canDeleteEvent"><![CDATA[Can move events to trash]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canDeleteEventCompletely"><![CDATA[Can delete events]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canEditComment"><![CDATA[Can edit comments]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canEditEvent"><![CDATA[Can edit events]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canModerateComment"><![CDATA[Can moderate comments]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canModerateEvent"><![CDATA[Can moderate events]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canRestoreEvent"><![CDATA[Can restore events]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canViewDeletedEvent"><![CDATA[Can view deleted events]]></item>
             <item name="wcf.acp.group.option.user.rp.canAddCharacter"><![CDATA[Can add characters]]></item>
+            <item name="wcf.acp.group.option.user.rp.canAddComment"><![CDATA[Can create comments]]></item>
+            <item name="wcf.acp.group.option.user.rp.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
+            <item name="wcf.acp.group.option.user.rp.canCreateEvent"><![CDATA[Can create events]]></item>
+            <item name="wcf.acp.group.option.user.rp.canCreateEventWithoutModeration"><![CDATA[Can create events without approval]]></item>
+            <item name="wcf.acp.group.option.user.rp.canDeleteComment"><![CDATA[Can delete their comments]]></item>
+            <item name="wcf.acp.group.option.user.rp.canDeleteEvent"><![CDATA[Can move their events to trash]]></item>
+            <item name="wcf.acp.group.option.user.rp.canDisableCommentFunction"><![CDATA[Can disable comments on their events]]></item>
+            <item name="wcf.acp.group.option.user.rp.canEditComment"><![CDATA[Can edit their comments]]></item>
+            <item name="wcf.acp.group.option.user.rp.canEditEvent"><![CDATA[Can edit their events]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditOwnCharacter"><![CDATA[Can edit own characters]]></item>
+            <item name="wcf.acp.group.option.user.rp.maxEventMessageLength"><![CDATA[Maximum Event Description Length]]></item>
+            <item name="wcf.acp.group.option.user.rp.canReadEvent"><![CDATA[Can view events]]></item>
             <item name="wcf.acp.group.option.user.rp.canUploadCharacterAvatar"><![CDATA[Can upload own avatar]]></item>
             <item name="wcf.acp.group.option.user.rp.canViewCharactersList"><![CDATA[Can view characters list]]></item>
             <item name="wcf.acp.group.option.user.rp.canViewCharacterProfile"><![CDATA[Can view character profiles]]></item>
             <item name="wcf.acp.group.option.user.rp.characterAvatarAllowedFileExtensions"><![CDATA[Allowed file extensions]]></item>
             <item name="wcf.acp.group.option.user.rp.characterAvatarMaxSize"><![CDATA[Maximum file size]]></item>
         </category>
+
+        <category name="wcf.acp.modificationLog">
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.delete"><![CDATA[Event deleted]]></item>
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.disable"><![CDATA[Event disabled]]></item>
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.edit"><![CDATA[Event edited]]></item>
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.enable"><![CDATA[Event approved]]></item>
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.restore"><![CDATA[Event restored]]></item>
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.trash"><![CDATA[Event moved to the trash bin]]></item>
+        </category>
         
         <category name="wcf.acp.option">
             <item name="wcf.acp.option.category.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.option.category.rp.calendar"><![CDATA[Calendar]]></item>
+            <item name="wcf.acp.option.category.rp.calendar.event"><![CDATA[Events]]></item>
             <item name="wcf.acp.option.category.rp.character"><![CDATA[Character]]></item>
             <item name="wcf.acp.option.category.rp.character.list"><![CDATA[Character List]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Settings]]></item>
+            <item name="wcf.acp.option.rp_calendar_max_event_length"><![CDATA[Maximum event length]]></item>
+            <item name="wcf.acp.option.rp_calendar_max_event_length.description"><![CDATA[Maximum time between start and end of an event.]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_field"><![CDATA[Sort by]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_field.description"><![CDATA[Choose default sort option of character list.]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_order"><![CDATA[Sort Order]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_order.description"><![CDATA[Choose default sort order of character list.]]></item>
             <item name="wcf.acp.option.rp_characters_list_per_page"><![CDATA[Characters per Page]]></item>
+            <item name="wcf.acp.option.rp_default_event_type_selected"><![CDATA[Termin Type [Default]]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Game [Default]]]></item>
             <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Enable ranks]]></item>
             <item name="wcf.acp.option.rp_show_twinks"><![CDATA[Show Twinks]]></item>
@@ -124,6 +220,12 @@
             <item name="wcf.clipboard.label.info.daries.rp.character.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} character{if $count != 1}s{/if}]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Delete ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[Do you really want to delete {if $count == 1}an{else}{#$count}{/if} character{if $count != 1}s{/if}?]]></item>
+        </category>
+        
+        <category name="wcf.moderation">
+            <item name="wcf.moderation.type.info.daries.rp.event"><![CDATA[Event]]></item>
+            <item name="wcf.moderation.deletedContent.info.daries.rp.event"><![CDATA[Deleted Events]]></item>
+            <item name="wcf.moderation.deletedContent.objectType.info.daries.rp.event"><![CDATA[Events]]></item>
         </category>
         
         <category name="wcf.page">

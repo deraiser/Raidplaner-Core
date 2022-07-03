@@ -39,14 +39,29 @@ function _initCharacterPopover(): void {
 }
 
 /**
+ * Initializes event popover.
+ */
+function _initEventPopover(): void {
+    ControllerPopover.init({
+        className: "rpEventLink",
+        dboAction: "rp\\data\\event\\EventAction",
+        identifier: "info.daries.rp.event",
+    });
+}
+
+/**
  * Bootstraps general modules and frontend exclusive ones.
  */
 export function setup(options: BootstrapOptions): void {
     if (options.enableCharacterPopover) {
         _initCharacterPopover();
     }
+    if (options.enableEventPopover) {
+        _initEventPopover();
+    }
 }
 
 interface BootstrapOptions {
     enableCharacterPopover: boolean;
+    enableEventPopover: boolean;
 }
