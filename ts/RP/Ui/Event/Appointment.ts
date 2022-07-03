@@ -132,20 +132,19 @@ class EventAppointment {
             switch(data.actionName) {
                 case "disable":
                 case "trash":
-                        this.disableButton(this.acceptedButton);
-                        this.disableButton(this.canceledButton);
-                        this.disableButton(this.maybeButton);
-                        break;
+                    this.disableButton(this.acceptedButton);
+                    this.disableButton(this.canceledButton);
+                    this.disableButton(this.maybeButton);
+                    break;
                 case "enable":
                 case "restore":
-                    const appointment = appointments.get(this.userId) as AppointmentData;
-                    if (appointment?.status !== "accepted") {
+                    if (appointments.get(this.userId)?.status !== "accepted") {
                         this.enableButton(this.acceptedButton);
                     }
-                    if (appointment?.status !== "canceled") {
+                    if (appointments.get(this.userId)?.status !== "canceled") {
                         this.enableButton(this.canceledButton);
                     }
-                    if (appointment?.status !== "maybe") {
+                    if (appointments.get(this.userId)?.status !== "maybe") {
                         this.enableButton(this.maybeButton);
                     }
                     break;
@@ -181,7 +180,7 @@ class EventAppointment {
             switch (appointment.status) {
                 case "accepted":
                     document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = ~~appointment!.dataset.objectId;
+                        const userId = <number>~~appointment.dataset.objectId;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
@@ -189,7 +188,7 @@ class EventAppointment {
                     break;
                 case "canceled":
                     document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = ~~appointment!.dataset.objectId;
+                        const userId = <number>~~appointment.dataset.objectId;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
@@ -197,7 +196,7 @@ class EventAppointment {
                     break;
                 case "maybe":
                     document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment: HTMLLIElement) => {
-                        const userId = ~~appointment!.dataset.objectId;
+                        const userId = <number>~~appointment.dataset.objectId;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
                         }
