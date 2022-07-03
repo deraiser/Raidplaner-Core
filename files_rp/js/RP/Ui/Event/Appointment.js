@@ -175,7 +175,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             switch (data.returnValues.status) {
                 case "accepted":
                     this.disableButton(this.acceptedButton);
-                    const object = document.querySelector(".jsEventAccepted .containerList");
+                    let object = document.querySelector(".jsEventAccepted .containerList");
                     if (object === undefined) {
                         document.querySelector(".jsEventAccepted .info").remove();
                         document.querySelector(".jsEventAccepted").appendChild(this._newObject());
@@ -184,7 +184,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     break;
                 case "canceled":
                     this.disableButton(this.canceledButton);
-                    const object1 = document.querySelector(".jsEventCanceled .containerList");
+                    let object1 = document.querySelector(".jsEventCanceled .containerList");
                     if (object1 === undefined) {
                         document.querySelector(".jsEventCanceled .info").remove();
                         document.querySelector(".jsEventCanceled").appendChild(this._newObject());
@@ -193,7 +193,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     break;
                 case "maybe":
                     this.disableButton(this.maybeButton);
-                    const object2 = document.querySelector(".jsEventMaybe .containerList");
+                    let object2 = document.querySelector(".jsEventMaybe .containerList");
                     if (object2 === undefined) {
                         document.querySelector(".jsEventMaybe .info").remove();
                         document.querySelector(".jsEventMaybe").appendChild(this._newObject());

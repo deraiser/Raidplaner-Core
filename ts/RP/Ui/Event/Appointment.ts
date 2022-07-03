@@ -209,7 +209,7 @@ class EventAppointment {
             case "accepted":
                 this.disableButton(this.acceptedButton);
 
-                const object = document.querySelector(".jsEventAccepted .containerList") as HTMLOListElement | undefined;
+                let object = document.querySelector(".jsEventAccepted .containerList") as HTMLOListElement;
                 if (object === undefined) {
                     document.querySelector(".jsEventAccepted .info")!.remove();
                     document.querySelector(".jsEventAccepted")!.appendChild(this._newObject());
@@ -219,7 +219,7 @@ class EventAppointment {
             case "canceled":
                 this.disableButton(this.canceledButton);
 
-                const object1 = document.querySelector(".jsEventCanceled .containerList") as HTMLOListElement | undefined;
+                let object1 = document.querySelector(".jsEventCanceled .containerList") as HTMLOListElement;
                 if (object1 === undefined) {
                     document.querySelector(".jsEventCanceled .info")!.remove();
                     document.querySelector(".jsEventCanceled")!.appendChild(this._newObject());
@@ -229,7 +229,7 @@ class EventAppointment {
             case "maybe":
                 this.disableButton(this.maybeButton);
 
-                const object2 = document.querySelector(".jsEventMaybe .containerList") as HTMLOListElement | undefined;
+                let object2 = document.querySelector(".jsEventMaybe .containerList") as HTMLOListElement;
                 if (object2 === undefined) {
                     document.querySelector(".jsEventMaybe .info")!.remove();
                     document.querySelector(".jsEventMaybe")!.appendChild(this._newObject());
