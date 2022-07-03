@@ -93,6 +93,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             });
         }
         managerSuccess(data) {
+            var _a, _b, _c;
             let hasEvent = false;
             Array.from(data.objectIDs).forEach((objectId) => {
                 if (objectId === this.eventId)
@@ -108,14 +109,13 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                         break;
                     case "enable":
                     case "restore":
-                        const appointment = appointments.get(this.userId);
-                        if ((appointment === null || appointment === void 0 ? void 0 : appointment.status) !== "accepted") {
+                        if (((_a = appointments.get(this.userId)) === null || _a === void 0 ? void 0 : _a.status) !== "accepted") {
                             this.enableButton(this.acceptedButton);
                         }
-                        if ((appointment === null || appointment === void 0 ? void 0 : appointment.status) !== "canceled") {
+                        if (((_b = appointments.get(this.userId)) === null || _b === void 0 ? void 0 : _b.status) !== "canceled") {
                             this.enableButton(this.canceledButton);
                         }
-                        if ((appointment === null || appointment === void 0 ? void 0 : appointment.status) !== "maybe") {
+                        if (((_c = appointments.get(this.userId)) === null || _c === void 0 ? void 0 : _c.status) !== "maybe") {
                             this.enableButton(this.maybeButton);
                         }
                         break;
@@ -176,7 +176,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 case "accepted":
                     this.disableButton(this.acceptedButton);
                     const object = document.querySelector(".jsEventAccepted .containerList");
-                    if (!object) {
+                    if (object === undefined) {
                         document.querySelector(".jsEventAccepted .info").remove();
                         document.querySelector(".jsEventAccepted").appendChild(this._newObject());
                     }
@@ -185,7 +185,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 case "canceled":
                     this.disableButton(this.canceledButton);
                     const object1 = document.querySelector(".jsEventCanceled .containerList");
-                    if (!object1) {
+                    if (object1 === undefined) {
                         document.querySelector(".jsEventCanceled .info").remove();
                         document.querySelector(".jsEventCanceled").appendChild(this._newObject());
                     }
@@ -194,7 +194,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 case "maybe":
                     this.disableButton(this.maybeButton);
                     const object2 = document.querySelector(".jsEventMaybe .containerList");
-                    if (!object2) {
+                    if (object2 === undefined) {
                         document.querySelector(".jsEventMaybe .info").remove();
                         document.querySelector(".jsEventMaybe").appendChild(this._newObject());
                     }
