@@ -26,8 +26,8 @@ define(["require", "exports", "tslib", "./Autobind", "WoltLabSuite/Core/Core"], 
             this.configure();
         }
         configure() {
-            this.element.addEventListener('dragstart', this.dragStartHandler);
-            this.element.addEventListener('dragend', this.dragEndHandler);
+            this.element.addEventListener('dragstart', (event) => this.dragStartHandler(event));
+            this.element.addEventListener('dragend', (event) => this.dragEndHandler(event));
         }
         dragEndHandler(_) {
             document.querySelectorAll(".attendeeBox").forEach((attendeeBox) => {

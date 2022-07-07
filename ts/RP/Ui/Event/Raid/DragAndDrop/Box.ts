@@ -41,9 +41,9 @@ class DragAndDropBox implements DragTarget {
     }
     
     protected configure(): void {
-        this.element.addEventListener('dragover', this.dragOverHandler);
-        this.element.addEventListener('drop', this.dropHandler);
-        this.element.addEventListener('dragleave', this.dragLeaveHandler);
+        this.element.addEventListener('dragover', (event) => this.dragOverHandler(event));
+        this.element.addEventListener('drop', (event) => this.dropHandler(event));
+        this.element.addEventListener('dragleave', (event) => this.dragLeaveHandler(event));
     }
     
     @Autobind

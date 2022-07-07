@@ -40,8 +40,8 @@ class DragAndDropItem implements Draggable {
     }
     
     protected configure(): void {
-        this.element.addEventListener('dragstart', this.dragStartHandler);
-        this.element.addEventListener('dragend', this.dragEndHandler);
+        this.element.addEventListener('dragstart', (event) => this.dragStartHandler(event));
+        this.element.addEventListener('dragend', (event) => this.dragEndHandler(event));
     }
     
     @Autobind

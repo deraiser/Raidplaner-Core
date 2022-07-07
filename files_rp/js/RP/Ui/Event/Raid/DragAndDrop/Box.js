@@ -28,9 +28,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "./Autobind", "
             this.configure();
         }
         configure() {
-            this.element.addEventListener('dragover', this.dragOverHandler);
-            this.element.addEventListener('drop', this.dropHandler);
-            this.element.addEventListener('dragleave', this.dragLeaveHandler);
+            this.element.addEventListener('dragover', (event) => this.dragOverHandler(event));
+            this.element.addEventListener('drop', (event) => this.dropHandler(event));
+            this.element.addEventListener('dragleave', (event) => this.dragLeaveHandler(event));
         }
         dragOverHandler(event) {
             if (!event.dataTransfer || event.dataTransfer.effectAllowed !== "move")
