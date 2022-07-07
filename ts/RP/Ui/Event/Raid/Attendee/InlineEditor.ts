@@ -31,14 +31,12 @@ import * as ControllerClipboard from "WoltLabSuite/Core/Controller/Clipboard";
 import * as Core from "WoltLabSuite/Core/Core";
 import DragAndDropItem from "../DragAndDrop/Item";
 import * as DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
-import * as DomUtil from "WoltLabSuite/Core/Dom/Util";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import * as Language from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "WoltLabSuite/Core/Ui/Confirmation";
 import * as UiDialog from "WoltLabSuite/Core/Ui/Dialog";
 import * as UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
-import User from "WoltLabSuite/Core/User";
 
 const attendees = new Map<number, AttendeeData>();
 
@@ -93,7 +91,7 @@ class AttendeeInlineEditor {
      */
     private initAttendee(attendee: HTMLElement | undefined, objectId: number): void {
         if (!attendee && ~~objectId > 0) {
-            attendee = document.getElementById("attendee" + objectId) as HTMLElement;
+            attendee = document.getElementById(`attendee${objectId}`) as HTMLElement;
         } 
         if (!attendee) return;
         objectId = ~~attendee.dataset.objectId!;
@@ -216,7 +214,6 @@ class AttendeeInlineEditor {
             
             if (attendee) {
                 const currentDistributionId = attendee.element!.dataset.distributionId;
-                const dropdownId = `attendreeDropdown${attendeeId}`;
                 
                 document.querySelectorAll(".attendeeBox").forEach((attendeeBox: HTMLElement) => {
                     if (attendeeBox.dataset.objectId === currentDistributionId &&

@@ -55,7 +55,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "./Autobind", "
             if (status === event.dataTransfer.getData("currentStatus") &&
                 distributionId === event.dataTransfer.getData("distributionID"))
                 return;
-            const attendeeId = event.dataTransfer.getData("attendeeID");
+            const attendeeId = ~~event.dataTransfer.getData("attendeeID");
             Ajax.apiOnce({
                 data: {
                     actionName: "updateStatus",
@@ -66,7 +66,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "./Autobind", "
                         status: status,
                     }
                 },
-                success: (data) => {
+                success: () => {
                     const attendeeList = this.element.querySelector(".attendeeList");
                     const attendee = document.getElementById(event.dataTransfer.getData("id"));
                     attendeeList.insertAdjacentElement("beforeend", attendee);

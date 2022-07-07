@@ -39,6 +39,7 @@ define(["require", "exports", "tslib", "./DragAndDrop/Box", "./DragAndDrop/Item"
         if (!_didInit) {
             setup();
         }
+        _didInit = true;
     }
     exports.init = init;
 });

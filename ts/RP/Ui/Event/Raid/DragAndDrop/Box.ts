@@ -29,11 +29,10 @@ import * as Ajax from "WoltLabSuite/Core/Ajax";
 import  { Autobind } from "./Autobind";
 import * as Core from "WoltLabSuite/Core/Core";
 import { DragTarget } from "./Data";
-import * as DomUtil from "WoltLabSuite/Core/Dom/Util";
 import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
 
 class DragAndDropBox implements DragTarget {
-    element: HTMLElement;
+    private readonly element: HTMLElement;
     
     constructor(element: HTMLElement) {
         this.element = element;
@@ -48,24 +47,24 @@ class DragAndDropBox implements DragTarget {
     }
     
     @Autobind
-    dragOverHandler(event: DragEvent): void {
+    public dragOverHandler(event: DragEvent): void {
         if (!event.dataTransfer || event.dataTransfer.effectAllowed !== "move") return; 
         event.preventDefault();
         
-        const droppable = <string>this.element.dataset.droppable;
-        const droppableTo = <string>event.dataTransfer.getData("droppableTo");
+        const droppable = this.element.dataset.droppable!;
+        const droppableTo = event.dataTransfer.getData("droppableTo");
         if (droppableTo.indexOf(droppable) < 0) return;
         
         this.element.classList.add("selected");
     }
     
     @Autobind
-    dropHandler(event: DragEvent): void {
+    public dropHandler(event: DragEvent): void {
         if (!event.dataTransfer || event.dataTransfer.effectAllowed !== "move") return; 
         event.preventDefault();
         
-        const droppable = <string>this.element.dataset.droppable;
-        const droppableTo = <string>event.dataTransfer.getData("droppableTo");
+        const droppable = this.element.dataset.droppable!;
+        const droppableTo = event.dataTransfer.getData("droppableTo");
         if (droppableTo.indexOf(droppable) < 0) return;
         
         const status = this.element.dataset.status;
@@ -74,7 +73,7 @@ class DragAndDropBox implements DragTarget {
         if (status === event.dataTransfer.getData("currentStatus") &&
             distributionId === event.dataTransfer.getData("distributionID")) return
         
-        const attendeeId = <string>event.dataTransfer.getData("attendeeID");
+        const attendeeId = ~~event.dataTransfer.getData("attendeeID");
         Ajax.apiOnce({
             data: {
                 actionName: "updateStatus",
@@ -85,7 +84,7 @@ class DragAndDropBox implements DragTarget {
                     status: status,
                 }
             },
-            success: (data) => {
+            success: () => {
                 const attendeeList = this.element.querySelector(".attendeeList") as HTMLElement;
                 const attendee = document.getElementById(event.dataTransfer!.getData("id")) as HTMLElement;
                 attendeeList.insertAdjacentElement("beforeend", attendee);
@@ -96,7 +95,7 @@ class DragAndDropBox implements DragTarget {
     }
     
     @Autobind
-    dragLeaveHandler(event: DragEvent): void {
+    public dragLeaveHandler(event: DragEvent): void {
         if (!event.dataTransfer || event.dataTransfer.effectAllowed !== "move") return; 
         event.preventDefault();
         

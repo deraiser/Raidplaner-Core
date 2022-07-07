@@ -29,10 +29,9 @@
 import { Autobind } from "./Autobind";
 import * as Core from "WoltLabSuite/Core/Core";
 import { Draggable } from "./Data";
-import * as DomUtil from "WoltLabSuite/Core/Dom/Util";
 
 class DragAndDropItem implements Draggable {
-    element: HTMLElement;
+    private readonly element: HTMLElement;
     
     constructor(element: HTMLElement) {
         this.element = element;

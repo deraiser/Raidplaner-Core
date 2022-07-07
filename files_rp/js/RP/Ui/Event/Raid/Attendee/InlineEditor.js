@@ -71,7 +71,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
          */
         initAttendee(attendee, objectId) {
             if (!attendee && ~~objectId > 0) {
-                attendee = document.getElementById("attendee" + objectId);
+                attendee = document.getElementById(`attendee${objectId}`);
             }
             if (!attendee)
                 return;
@@ -172,7 +172,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
                 const attendee = attendees.get(attendeeId);
                 if (attendee) {
                     const currentDistributionId = attendee.element.dataset.distributionId;
-                    const dropdownId = `attendreeDropdown${attendeeId}`;
                     document.querySelectorAll(".attendeeBox").forEach((attendeeBox) => {
                         if (attendeeBox.dataset.objectId === currentDistributionId &&
                             ~~attendeeBox.dataset.status === status) {

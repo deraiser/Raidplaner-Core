@@ -46,4 +46,6 @@ export function init(): void {
     if (!_didInit) {
         setup();
     }
+    
+    _didInit = true;
 }
