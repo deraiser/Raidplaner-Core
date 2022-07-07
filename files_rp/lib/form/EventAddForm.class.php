@@ -4,6 +4,8 @@ namespace rp\form;
 
 use rp\data\event\Event;
 use rp\data\event\EventAction;
+use rp\data\game\GameCache;
+use rp\data\raid\event\RaidEventCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -78,22 +80,24 @@ class EventAddForm extends AbstractFormBuilderForm
      * object type id
      */
     public int $objectTypeID = 0;
-	/**
-	 * preset event object
-	 */
-	public ?Event $presetEvent = null;
-	/**
-	 * preset event id
-	 */
-	public int $presetEventID = 0;
-    
+
+    /**
+     * preset event object
+     */
+    public ?Event $presetEvent = null;
+
+    /**
+     * preset event id
+     */
+    public int $presetEventID = 0;
+
     public function assignVariables()
     {
         parent::assignVariables();
-        
+
         WCF::getTPL()->assign([
-			'presetEvent' => $this->presetEvent,
-			'presetEventID' => $this->presetEventID,
+            'presetEvent' => $this->presetEvent,
+            'presetEventID' => $this->presetEventID,
         ]);
     }
 
@@ -124,14 +128,14 @@ class EventAddForm extends AbstractFormBuilderForm
         if (!$this->objectTypeID) $this->objectTypeID = (\current($availableEventControllers))->objectTypeID;
         $this->eventController = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
     }
-    
+
     public function readData()
     {
         parent::readData();
-        
+
         if ($this->presetEventID) {
             $this->form->updatedObject($this->presetEvent, true);
-            
+
             $this->eventController->getProcessor()->setEvent($this->presetEvent);
             $this->eventController->getProcessor()->setFormObjectData($this->form);
         }
@@ -143,22 +147,43 @@ class EventAddForm extends AbstractFormBuilderForm
     public function readParameters(): void
     {
         parent::readParameters();
-        
+
         // preset event
-		if (isset($_GET['presetEventID'])) $this->presetEventID = \intval($_GET['presetEventID']);
-		if ($this->presetEventID) {
-			$this->presetEvent = new Event($this->presetEventID);
-			if (!$this->presetEvent->eventID) {
-				throw new IllegalLinkException();
-			}
-			else if (!$this->presetEvent->canEdit()) {
-				throw new PermissionDeniedException();
-			}
-            
+        if (isset($_GET['presetEventID'])) $this->presetEventID = \intval($_GET['presetEventID']);
+        if ($this->presetEventID) {
+            $this->presetEvent = new Event($this->presetEventID);
+            if (!$this->presetEvent->eventID) {
+                throw new IllegalLinkException();
+            } else if (!$this->presetEvent->canEdit()) {
+                throw new PermissionDeniedException();
+            }
+
             $_REQUEST['objectTypeID'] = $this->presetEvent->objectTypeID;
-		}
+        }
 
         $this->readEventControllerSetting();
+
+        if ($this->eventController->objectType === 'info.daries.rp.event.raid') {
+            $raidEvents = RaidEventCache::getInstance()->getRaidEvents();
+            if (!\count($raidEvents)) {
+                HeaderUtil::delayedRedirect(
+                    LinkHandler::getInstance()->getLink(
+                        'Calendar',
+                        [
+                            'application' => 'rp',
+                        ]
+                    ),
+                    WCF::getLanguage()->getDynamicVariable(
+                        'rp.event.raid.noRaidEvents',
+                        [
+                            'game' => GameCache::getInstance()->getCurrentGame(),
+                        ]
+                    ),
+                    10,
+                    'error'
+                );
+            }
+        }
     }
 
     /**
@@ -207,7 +232,7 @@ class EventAddForm extends AbstractFormBuilderForm
         } else {
             HeaderUtil::redirect($event->getLink());
         }
-            exit;
+        exit;
     }
 
     /**

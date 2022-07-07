@@ -13,8 +13,20 @@
 
         <script data-relocate="true">
             require(['Language', 'Daries/RP/Ui/Event/Appointment'], function(Language, EventAppointment) {
-                new EventAppointment({@$eventID}, {@$__wcf->user->userID})
+                new EventAppointment({@$eventID}, {@$__wcf->user->userID});
             });
         </script>
     {/if}
+{/if}
+
+{if $event->getController()->getObjectTypeName() == 'info.daries.rp.event.raid'}
+    <li class="jsButtonAttendee" style="display: none;"></li>
+    
+    <script data-relocate="true">
+        require(['Language', 'Daries/RP/Ui/Event/Raid/Attendee/Button'], function(Language, EventRaidAttendeeButton) {
+            new EventRaidAttendeeButton({
+                hasAttendee: {if $event->getController()->getContentData('hasAttendee')}true{else}false{/if},
+            });
+        });
+    </script>
 {/if}

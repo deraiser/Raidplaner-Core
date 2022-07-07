@@ -22,18 +22,28 @@
             <definitionname>com.woltlab.wcf.clipboardItem</definitionname>
             <listclassname>rp\data\character\CharacterList</listclassname>
         </type>
+        <type>
+            <name>info.daries.rp.raid.attendee</name>
+            <definitionname>com.woltlab.wcf.clipboardItem</definitionname>
+            <listclassname>rp\data\event\raid\attendee\EventRaidAttendeeList</listclassname>
+        </type>
         <!-- /clipboard items -->
         
         <!-- event controllers -->
+        <type>
+            <name>info.daries.rp.event.appointment</name>
+            <definitionname>info.daries.rp.eventController</definitionname>
+            <classname>rp\system\event\AppointmentEventController</classname>
+        </type>
         <type>
             <name>info.daries.rp.event.default</name>
             <definitionname>info.daries.rp.eventController</definitionname>
             <classname>rp\system\event\DefaultEventController</classname>
         </type>
         <type>
-            <name>info.daries.rp.event.appointment</name>
+            <name>info.daries.rp.event.raid</name>
             <definitionname>info.daries.rp.eventController</definitionname>
-            <classname>rp\system\event\AppointmentEventController</classname>
+            <classname>rp\system\event\RaidEventController</classname>
         </type>
         <!-- /event controllers -->
         
@@ -78,6 +88,15 @@
 			<classname>rp\system\moderation\DeletedEventProvider</classname>
 		</type>
 		<!-- /Modification Log -->
+        
+        <!-- notification -->
+        <type>
+            <name>info.daries.rp.raid.event.notification</name>
+            <definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+            <classname>rp\system\user\notification\object\type\EventRaidUserNotificationObjectType</classname>
+            <category>info.daries.rp.event.raid</category>
+        </type>
+        <!-- /notification -->
         
         <!-- searchable object type -->
 		<type>

@@ -95,5 +95,5 @@ interface IEventController
     /**
      * Sets the form data based on the form object.
      */
-    public function setFormObjectData(IFormDocument $form): void;
+    public function setFormObjectData(IFormDocument $form, array $fields = []): void;
 }

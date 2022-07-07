@@ -57,5 +57,17 @@ $statement->execute([
     'Default',
     GameCache::getInstance()->getGameByIdentifier('default')->gameID,
     1,
-    1
+    1,
+]);
+
+// Default Point Account
+$sql = "INSERT INTO rp" . WCF_N . "_point_account
+                    (pointAccountName, description, gameID, showOrder)
+        VALUES      (?, ?, ?, ?)";
+$statement = WCF::getDB()->prepareStatement($sql);
+$statement->execute([
+    'Default',
+    'Default-Pool',
+    GameCache::getInstance()->getGameByIdentifier('default')->gameID,
+    1,
 ]);

@@ -2,21 +2,11 @@
 
 namespace rp\system\event;
 
+use rp\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
-use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
-use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\DateFormField;
-use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
-use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
-use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\WCF;
-use wcf\util\DateUtil;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -69,198 +59,24 @@ class DefaultEventController extends AbstractEventController
      */
     public function createForm(IFormDocument $form): void
     {
-        $isFullDay = BooleanFormField::create('isFullDay')
-            ->label('rp.event.isFullDay')
-            ->value(0);
-
         $dataContainer = FormContainer::create('data')
             ->label('wcf.global.form.data')
-            ->appendChildren([
+            ->appendChild(
             TitleFormField::create()
             ->required()
-            ->maximumLength(255),
-            $isFullDay,
-            DateFormField::create('startTime')
-            ->label('rp.event.startTime')
-            ->required()
-            ->supportTime()
-            ->value(TIME_NOW)
-            ->addValidator(new FormFieldValidator('uniqueness', function (DateFormField $formField) {
-                        $value = $formField->getSaveValue();
-
-                        if ($value === null || $value < -2147483647 || $value > 2147483647) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'invalid',
-                                    'rp.event.startTime.error.invalid'
-                                )
-                            );
-                        }
-                    }))
-            ->addDependency(
-                EmptyFormFieldDependency::create('isFullDay')
-                ->field($isFullDay)
-            ),
-            DateFormField::create('endTime')
-            ->label('rp.event.endTime')
-            ->required()
-            ->supportTime()
-            ->value(TIME_NOW + 7200) // 2h
-            ->addValidator(new FormFieldValidator('uniqueness', function (DateFormField $formField) {
-                        /** @var DateFormField $startFormField */
-                        $startFormField = $formField->getDocument()->getNodeById('startTime');
-                        $startValue = $startFormField->getSaveValue();
-
-                        $value = $formField->getSaveValue();
-
-                        if ($value === null || $value <= $startValue || $value > 2147483647) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'invalid',
-                                    'rp.event.endTime.error.invalid'
-                                )
-                            );
-                        } else if ($value - $startValue > RP_CALENDAR_MAX_EVENT_LENGTH * 86400) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'tooLong',
-                                    'rp.event.endTime.error.tooLong'
-                                )
-                            );
-                        }
-                    }))
-            ->addDependency(
-                EmptyFormFieldDependency::create('isFullDay')
-                ->field($isFullDay)
-            ),
-            DateFormField::create('fStartTime')
-            ->label('rp.event.startTime')
-            ->required()
-            ->value(TIME_NOW)
-            ->addValidator(new FormFieldValidator('uniqueness', function (DateFormField $formField) {
-                        $value = $formField->getSaveValue();
-
-                        if ($value === null || $value < -2147483647 || $value > 2147483647) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'invalid',
-                                    'rp.event.startTime.error.invalid'
-                                )
-                            );
-                        }
-                    }))
-            ->addDependency(
-                NonEmptyFormFieldDependency::create('isFullDay')
-                ->field($isFullDay)
-            ),
-            DateFormField::create('fEndTime')
-            ->label('rp.event.endTime')
-            ->required()
-            ->value(TIME_NOW + 7200) // 2h
-            ->addValidator(new FormFieldValidator('uniqueness', function (DateFormField $formField) {
-                        /** @var DateFormField $startFormField */
-                        $startFormField = $formField->getDocument()->getNodeById('fStartTime');
-                        $startValue = $startFormField->getSaveValue();
-
-                        $value = $formField->getSaveValue();
-
-                        if ($value === null || $value < $startValue || $value > 2147483647) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'invalid',
-                                    'rp.event.endTime.error.invalid'
-                                )
-                            );
-                        } else if ($value - $startValue > RP_CALENDAR_MAX_EVENT_LENGTH * 86400) {
-                            $formField->addValidationError(
-                                new FormFieldValidationError(
-                                    'tooLong',
-                                    'rp.event.endTime.error.tooLong'
-                                )
-                            );
-                        }
-                    }))
-            ->addDependency(
-                NonEmptyFormFieldDependency::create('isFullDay')
-                ->field($isFullDay)
-            ),
-            SingleSelectionFormField::create('timezone')
-            ->label('rp.event.timezone')
-            ->options(static function () {
-                $availableTimezones = [];
-                foreach (DateUtil::getAvailableTimezones() as $timezone) {
-                    $availableTimezones[$timezone] = WCF::getLanguage()
-                        ->get('wcf.date.timezone.' . \str_replace('/', '.', \strtolower($timezone)));
-                }
-                return $availableTimezones;
-            }, false, false)
-            ->value(WCF::getUser()->getTimeZone()->getName()),
-            WysiwygFormField::create('notes')
-            ->label('rp.event.notes')
-            ->objectType('info.daries.rp.event.notes')
-        ]);
+            ->maximumLength(255)
+        );
         $form->appendChild($dataContainer);
 
-        $form->getDataHandler()->addProcessor(new VoidFormDataProcessor('fStartTime'));
-        $form->getDataHandler()->addProcessor(new VoidFormDataProcessor('fEndTime'));
-        $form->getDataHandler()->addProcessor(new VoidFormDataProcessor('timezone'));
+        $this->formEventDate($dataContainer, true);
 
-        $form->getDataHandler()->addProcessor(
-            new CustomFormDataProcessor(
-                'eventDate',
-                static function (IFormDocument $document, array $parameters) {
-                    $parameters['data']['timezone'] = WCF::getUser()->getTimeZone()->getName();
-
-                    /** @var BooleanFormField $isFullDay */
-                    $isFullDay = $document->getNodeById('isFullDay');
-                    /** @var DateFormField $startTime */
-                    $startTime = $document->getNodeById($isFullDay->getSaveValue() ? 'fStartTime' : 'startTime');
-                    /** @var DateFormField $endTime */
-                    $endTime = $document->getNodeById($isFullDay->getSaveValue() ? 'fEndTime' : 'endTime');
-                    /** @var SingleSelectionFormField $timezone */
-                    $timezone = $document->getNodeById('timezone');
-
-                    $st = $et = null;
-
-                    if ($isFullDay->getSaveValue()) {
-                        $st = \DateTime::createFromFormat(
-                                DateFormField::DATE_FORMAT,
-                                $startTime->getValue(),
-                                new \DateTimeZone('UTC')
-                        );
-                        $st->setTime(0, 0);
-
-                        $et = \DateTime::createFromFormat(
-                                DateFormField::DATE_FORMAT,
-                                $endTime->getValue(),
-                                new \DateTimeZone('UTC')
-                        );
-                        $et->setTime(23, 59);
-                    } else {
-                        $st = \DateTime::createFromFormat(
-                                DateFormField::TIME_FORMAT,
-                                $startTime->getValue(),
-                                new \DateTimeZone($timezone->getSaveValue())
-                        );
-
-                        $et = \DateTime::createFromFormat(
-                                DateFormField::TIME_FORMAT,
-                                $endTime->getValue(),
-                                new \DateTimeZone($timezone->getSaveValue())
-                        );
-
-                        $st->setTimezone(WCF::getUser()->getTimeZone());
-                        $et->setTimezone(WCF::getUser()->getTimeZone());
-                    }
-
-                    $parameters['data']['endTime'] = $et->getTimestamp();
-                    $parameters['data']['startTime'] = $st->getTimestamp();
-                    $parameters['data']['timezone'] = $isFullDay->getSaveValue() ? 'UTC' : $timezone->getSaveValue();
-
-                    return $parameters;
-                }
-            )
+        $dataContainer->appendChild(
+            WysiwygFormField::create('notes')
+                ->label('rp.event.notes')
+                ->objectType('info.daries.rp.event.notes')
         );
+
+        parent::createForm($form);
     }
 
     /**
@@ -277,19 +93,5 @@ class DefaultEventController extends AbstractEventController
     public function getModerationTemplate(): string
     {
         return 'moderationEventDefault';
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function setFormObjectData(IFormDocument $form): void
-    {
-        /** @var DateFormField $startTime */
-        $startTime = $form->getNodeById('fStartTime');
-        $startTime->value($this->getEvent()->startTime);
-
-        /** @var DateFormField $endTime */
-        $endTime = $form->getNodeById('fEndTime');
-        $endTime->value($this->getEvent()->endTime);
     }
 }

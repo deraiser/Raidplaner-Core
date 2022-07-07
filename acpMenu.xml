@@ -29,5 +29,25 @@
             <permissions>admin.rp.canAddCharacter</permissions>
             <icon>fa-plus</icon>
         </acpmenuitem>
+        
+        <!-- event -->
+        <acpmenuitem name="rp.acp.menu.link.raid">
+            <parent>rp.acp.menu.link.rp</parent>
+            <showOrder>3</showOrder>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.point.account.list">
+            <controller>rp\acp\page\PointAccountListPage</controller>
+            <parent>rp.acp.menu.link.raid</parent>
+            <showorder>3</showorder>
+            <permissions>admin.rp.canManagePointAccount</permissions>
+            <options>rp_item_account_easymode_disabled</options>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.point.account.add">
+            <controller>rp\acp\form\PointAccountAddForm</controller>
+            <parent>rp.acp.menu.link.point.account.list</parent>
+            <permissions>admin.rp.canManagePointAccount</permissions>
+            <options>rp_item_account_easymode_disabled</options>
+            <icon>fa-plus</icon>
+        </acpmenuitem>
     </import>
 </data>

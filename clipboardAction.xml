@@ -10,5 +10,22 @@
 			</pages>
 		</action>
         <!-- /info.daries.rp.character -->
+        
+        <!-- info.daries.rp.raid.attendee -->
+        <action name="updateStatus">
+            <actionclassname>rp\system\clipboard\action\EventRaidAttendeeClipboardAction</actionclassname>
+            <showorder>1</showorder>
+            <pages>
+                <page>rp\page\EventPage</page>
+            </pages>
+        </action>
+        <action name="delete">
+            <actionclassname>rp\system\clipboard\action\EventRaidAttendeeClipboardAction</actionclassname>
+            <showorder>2</showorder>
+            <pages>
+                <page>rp\page\EventPage</page>
+            </pages>
+        </action>
+        <!-- /info.daries.rp.raid.attendee -->
     </import>
 </data>

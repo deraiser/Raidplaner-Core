@@ -22,6 +22,10 @@
                 <parent>rp.character</parent>
                 <showorder>1</showorder>
             </category>
+            <category name="rp.points">
+                <parent>rp</parent>
+                <showorder>3</showorder>
+            </category>
         </categories>
         
         <options>
@@ -86,6 +90,37 @@ created:rp.character.created</selectoptions>
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
             <!-- /rp.character.list -->
+            
+            <!-- rp.points -->
+            <option name="rp_points_enabled">
+                <categoryname>rp.points</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
+            <option name="rp_points_name">
+                <categoryname>rp.points</categoryname>
+                <optiontype>text</optiontype>
+                <defaultvalue>DKP</defaultvalue>
+            </option>
+            <option name="rp_round_points">
+                <categoryname>rp.points</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+                <enableoptions>rp_round_points_precision</enableoptions>
+            </option>
+            <option name="rp_round_points_precision">
+                <categoryname>rp.points</categoryname>
+                <optiontype>integer</optiontype>
+                <defaultvalue>2</defaultvalue>
+                <min>0</min>
+                <max>2</max>
+            </option>
+            <option name="rp_item_account_easymode_disabled">
+                <categoryname>rp.points</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>1</defaultvalue>
+            </option>
+            <!-- /rp.points -->
         </options>
     </import>
 </data>

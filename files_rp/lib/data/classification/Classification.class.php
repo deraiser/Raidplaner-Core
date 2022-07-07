@@ -61,7 +61,7 @@ class Classification extends DatabaseObject implements ITitledObject
         if (empty($this->icon)) return '';
         if ($size === null) $size = $this->size;
 
-        return '<img src="' . StringUtil::encodeHTML($this->getIconPath()) . '" style="width: ' . $size . 'px; height: ' . $size . 'px" alt="" class="gameIcon jsTooltip" title="' . $this->getTitle() . '">';
+        return '<img src="' . StringUtil::encodeHTML($this->getIconPath()) . '" style="width: ' . $size . 'px; height: ' . $size . 'px" alt="" class="gameIcon jsTooltip" title="' . $this->getTitle() . '" loading="lazy">';
     }
 
     /**

@@ -98,8 +98,13 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         if (WCF::getSession()->getPermission('mod.rp.canEditEvent')) {
             return true;
         }
-
-        // check user permissions
+        
+        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+            if ($this->getController()->isLeader()) {
+                return true;
+            }
+        } 
+        
         if ($this->userID && $this->userID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.rp.canEditEvent')) {
             return true;
         }
@@ -115,6 +120,12 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         // check mod permissions
         if (WCF::getSession()->getPermission('mod.rp.canDeleteEventCompletely')) {
             return true;
+        }
+        
+        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+            if ($this->getController()->isLeader()) {
+                return true;
+            }
         }
 
         return false;
@@ -329,12 +340,12 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
 
         $user = null;
         if (!$this->isFullDay) {
-            $startDateTime->setTimezone($local ? $this->getEvent()->getTimeZone() : WCF::getUser()->getTimeZone());
-            $endDateTime->setTimezone($local ? $this->getEvent()->getTimeZone() : WCF::getUser()->getTimeZone());
+            $startDateTime->setTimezone($local ? $this->getTimeZone() : WCF::getUser()->getTimeZone());
+            $endDateTime->setTimezone($local ? $this->getTimeZone() : WCF::getUser()->getTimeZone());
 
             if ($local) {
                 // fake user to show local timezone
-                $user = new User(null, ['timezone' => $this->getEvent()->getTimeZone()->getName()]);
+                $user = new User(null, ['timezone' => $this->getTimeZone()->getName()]);
             }
         }
 
@@ -442,9 +453,9 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
     public function getTimeZone(): \DateTimeZone
     {
         if ($this->timezoneObj === null) {
-            if (!empty($this->eventDateData['timezone'])) {
+            if (!empty($this->timezone)) {
                 try {
-                    $this->timezoneObj = new \DateTimeZone($this->eventDateData['timezone']);
+                    $this->timezoneObj = new \DateTimeZone($this->timezone);
                 } catch (\Exception $e) {
                     
                 }

@@ -1,3 +1,68 @@
+.attendeeBox {
+    .contentItemLink {
+        display: flex;
+
+        .contentItemImage {
+            flex: 0 0 24px;
+        }
+
+        .contentItemContent {
+            flex: 0 auto;
+        }
+    }
+
+    .attendeeList {
+        padding: 5px 15px;
+
+        > li {
+            position: relative;
+            transition: background-color 0.2s;
+
+            &.draggable {
+                &:hover {
+                    border: 1px solid $wcfContentBorder !important;
+                    background-color: $wcfTabularBoxBackgroundActive;
+                    cursor: pointer;
+                }
+            }
+
+            &:not(:first-child) {
+                margin-top: 5px;
+            }
+        }
+
+        .box24 {
+            align-items: center;
+            min-height: 20px;
+        }
+
+        .attendeeName {
+            flex: 1 auto;
+
+            > img:first-child {
+                height: auto;
+            }
+
+            // prevents text being hidden when displayed in user panel
+            > span {
+                display: inline !important;
+            }
+        }
+
+        .statusDisplay {
+            flex: 0 auto;
+        }
+    }
+
+    &.droppable {
+        border: 1px solid $wcfContentBorder;
+
+        &.selected {
+            background-color: $wcfTabularBoxBackgroundActive;
+        }
+    }
+}
+
 .eventNavigation {
     @include screen-md-up {
         > nav > ul {

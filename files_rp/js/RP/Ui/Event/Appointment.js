@@ -172,10 +172,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                         break;
                 }
             }
+            let object;
             switch (data.returnValues.status) {
                 case "accepted":
                     this.disableButton(this.acceptedButton);
-                    let object = document.querySelector(".jsEventAccepted .containerList");
+                    object = document.querySelector(".jsEventAccepted .containerList");
                     if (object === undefined) {
                         document.querySelector(".jsEventAccepted .info").remove();
                         document.querySelector(".jsEventAccepted").appendChild(this._newObject());
@@ -184,8 +185,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     break;
                 case "canceled":
                     this.disableButton(this.canceledButton);
-                    let object1 = document.querySelector(".jsEventCanceled .containerList");
-                    if (object1 === undefined) {
+                    object = document.querySelector(".jsEventCanceled .containerList");
+                    if (object === undefined) {
                         document.querySelector(".jsEventCanceled .info").remove();
                         document.querySelector(".jsEventCanceled").appendChild(this._newObject());
                     }
@@ -193,8 +194,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     break;
                 case "maybe":
                     this.disableButton(this.maybeButton);
-                    let object2 = document.querySelector(".jsEventMaybe .containerList");
-                    if (object2 === undefined) {
+                    object = document.querySelector(".jsEventMaybe .containerList");
+                    if (object === undefined) {
                         document.querySelector(".jsEventMaybe .info").remove();
                         document.querySelector(".jsEventMaybe").appendChild(this._newObject());
                     }
