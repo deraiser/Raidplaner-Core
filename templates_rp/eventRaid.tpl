@@ -42,13 +42,13 @@
 
 {if $__wcf->user->userID}
     <script data-relocate="true">
-        require(['WoltLabSuite/Core/Language', 'Daries/RP/Ui/Event/Raid/Attendee/InlineEditor'], 
-        function(Language, AttendeeInlineEditor) {
+        require(['WoltLabSuite/Core/Language', 'Daries/RP/Ui/Event/Raid/InlineEditor'], 
+        function(Language, EventRaidInlineEditor) {
             Language.addObject({
                 'rp.event.raid.updateStatus': '{jslang}rp.event.raid.updateStatus{/jslang}',
             });
 
-            new AttendeeInlineEditor({
+            new EventRaidInlineEditor({
                 canEdit: {if $event->canEdit()}true{else}false{/if},
             });
         });

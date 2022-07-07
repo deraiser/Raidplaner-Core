@@ -19,17 +19,34 @@
  */
 
 /**
- * Manages the 'log in/log out' buttons in the raid event.
+ * Manages the participate button in the raid event.
  *
  * @author      Marco Daries
- * @module      Daries/RP/Ui/Event/Raid/Attendee/Button
+ * @module      Daries/RP/Ui/Event/Raid/Participate
  */
 
 import * as Core from "WoltLabSuite/Core/Core";
 
-class EventRaidAttendeeButton {
+class EventRaidParticipateButton {
+    private readonly options: ButtonOptions;
+    
+    /**
+     * Initializes the event raid participate button.
+     */
+    constructor(options: ButtonOptions) {
+        this.options = Core.extend(
+            {
+                hasAttendee: false,
+            }, 
+            options,
+        ) as ButtonOptions;
+    }
 }
 
-Core.enableLegacyInheritance(EventRaidAttendeeButton);
+Core.enableLegacyInheritance(EventRaidParticipateButton);
 
-export = EventRaidAttendeeButton;
+export = EventRaidParticipateButton;
+
+interface ButtonOptions {
+    hasAttendee: boolean;
+}

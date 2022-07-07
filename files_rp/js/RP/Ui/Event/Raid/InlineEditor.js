@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Controller/Clipboard", "WoltLabSuite/Core/Core", "../DragAndDrop/Item", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Dialog", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Item_1, DomChangeListener, EventHandler, Language, UiConfirmation, UiDialog, UiDropdownSimple, UiNotification) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Controller/Clipboard", "WoltLabSuite/Core/Core", "./DragAndDrop/Item", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Dialog", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Item_1, DomChangeListener, EventHandler, Language, UiConfirmation, UiDialog, UiDropdownSimple, UiNotification) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
@@ -31,7 +31,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
     UiDropdownSimple = tslib_1.__importStar(UiDropdownSimple);
     UiNotification = tslib_1.__importStar(UiNotification);
     const attendees = new Map();
-    class AttendeeInlineEditor {
+    class EventRaidInlineEditor {
         /**
          * Initializes the event raid inline editor for attendees.
          */
@@ -41,7 +41,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             }, permissions);
             EventHandler.add("com.woltlab.wcf.clipboard", "info.daries.rp.raid.attendee", (data) => this.clipboardAction(data));
             EventHandler.add("info.daries.rp.raid.attendee", "initAttendee", (attendeeId) => this.initAttendee(undefined, ~~attendeeId));
-            DomChangeListener.add("Daries/RP/Ui/Event/Raid/Attendee/InlineEditor", () => this.reloadAttendees());
+            DomChangeListener.add("Daries/RP/Ui/Event/Raid/InlineEditor", () => this.reloadAttendees());
         }
         /**
          * Reacts to executed clipboard actions.
@@ -211,6 +211,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             ControllerClipboard.reload();
         }
     }
-    Core.enableLegacyInheritance(AttendeeInlineEditor);
-    return AttendeeInlineEditor;
+    Core.enableLegacyInheritance(EventRaidInlineEditor);
+    return EventRaidInlineEditor;
 });

@@ -20,8 +20,16 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Core"], function (require, exports, tslib_1, Core) {
     "use strict";
     Core = tslib_1.__importStar(Core);
-    class EventRaidAttendeeButton {
+    class EventRaidParticipateButton {
+        /**
+         * Initializes the event raid participate button.
+         */
+        constructor(options) {
+            this.options = Core.extend({
+                hasAttendee: false,
+            }, options);
+        }
     }
-    Core.enableLegacyInheritance(EventRaidAttendeeButton);
-    return EventRaidAttendeeButton;
+    Core.enableLegacyInheritance(EventRaidParticipateButton);
+    return EventRaidParticipateButton;
 });

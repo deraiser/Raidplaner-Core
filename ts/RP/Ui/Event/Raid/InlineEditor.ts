@@ -22,14 +22,14 @@
  * Handles attendee updateStatus and delete.
  *
  * @author      Marco Daries
- * @module      Daries/RP/Ui/Event/Raid/Attendee/InlineEditor
+ * @module      Daries/RP/Ui/Event/Raid/InlineEditor
  */
 
 import * as Ajax from "WoltLabSuite/Core/Ajax";
 import { AjaxCallbackSetup, DatabaseObjectActionResponse } from "WoltLabSuite/Core/Ajax/Data";
 import * as ControllerClipboard from "WoltLabSuite/Core/Controller/Clipboard";
 import * as Core from "WoltLabSuite/Core/Core";
-import DragAndDropItem from "../DragAndDrop/Item";
+import DragAndDropItem from "./DragAndDrop/Item";
 import * as DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import * as Language from "WoltLabSuite/Core/Language";
@@ -40,8 +40,9 @@ import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
 
 const attendees = new Map<number, AttendeeData>();
 
-class AttendeeInlineEditor {
+class EventRaidInlineEditor {
     private readonly permissions: InlineEditorPermissions;
+    
     /**
      * Initializes the event raid inline editor for attendees.
      */
@@ -57,7 +58,7 @@ class AttendeeInlineEditor {
         EventHandler.add("com.woltlab.wcf.clipboard", "info.daries.rp.raid.attendee", (data) => this.clipboardAction(data));
         EventHandler.add("info.daries.rp.raid.attendee", "initAttendee", (attendeeId) => this.initAttendee(undefined, ~~attendeeId));
         
-        DomChangeListener.add("Daries/RP/Ui/Event/Raid/Attendee/InlineEditor", () => this.reloadAttendees());
+        DomChangeListener.add("Daries/RP/Ui/Event/Raid/InlineEditor", () => this.reloadAttendees());
     }
     
     /**
@@ -262,9 +263,9 @@ class AttendeeInlineEditor {
     }
 }
 
-Core.enableLegacyInheritance(AttendeeInlineEditor);
+Core.enableLegacyInheritance(EventRaidInlineEditor);
 
-export = AttendeeInlineEditor;
+export = EventRaidInlineEditor;
 
 interface AttendeeData {
     buttons: {
