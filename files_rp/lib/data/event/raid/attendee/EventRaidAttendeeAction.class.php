@@ -2,13 +2,26 @@
 
 namespace rp\data\event\raid\attendee;
 
+use rp\data\classification\ClassificationCache;
+use rp\data\event\Event;
+use rp\data\role\RoleCache;
+use rp\system\cache\runtime\CharacterRuntimeCache;
 use rp\system\cache\runtime\EventRaidAttendeeRuntimeCache;
+use rp\system\cache\runtime\EventRuntimeCache;
 use rp\system\user\notification\object\EventRaidUserNotificationObject;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IPopoverAction;
 use wcf\system\clipboard\ClipboardHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\DialogFormDocument;
+use wcf\system\form\builder\field\EmailFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 
@@ -44,10 +57,17 @@ use wcf\system\WCF;
 class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IPopoverAction
 {
     /**
+     * add dialog form document
+     */
+    protected ?DialogFormDocument $addDialog = null;
+
+    /**
      * @inheritDoc
      */
     protected $allowGuestAccess = [
+        'createAddDialog',
         'getPopover',
+        'submitAddDialong',
     ];
 
     protected ?EventRaidAttendee $attendee = null;
@@ -58,6 +78,11 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
     protected $className = EventRaidAttendeeEditor::class;
 
     /**
+     * event object
+     */
+    protected ?Event $event = null;
+
+    /**
      * @inheritDoc
      */
     public function create(): EventRaidAttendee
@@ -65,6 +90,14 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         $this->parameters['data']['created'] = TIME_NOW;
 
         return parent::create();
+    }
+
+    public function createAddDialog(): array
+    {
+        return [
+            'dialog' => $this->getAddDialog()->getHtml(),
+            'formId' => 'addDialog'
+        ];
     }
 
     /**
@@ -91,6 +124,110 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         return [
             'objectIDs' => $this->objectIDs
         ];
+    }
+
+    /**
+     * Creates a dialog and is returned.
+     */
+    protected function getAddDialog(): DialogFormDocument
+    {
+        if ($this->addDialog === null) {
+            $this->addDialog = DialogFormDocument::create('addDialog');
+            $this->addDialog->cancelable(false);
+
+            $dataContainer = FormContainer::create('addDialogData');
+            $this->addDialog->appendChild($dataContainer);
+
+            if (WCF::getUser()->userID) {
+                $dataContainer->appendChildren([
+                        SingleSelectionFormField::create('character')
+                        ->label('rp.event.raid.attendee.character')
+                        ->required()
+                        ->options(function () {
+                            $characters = $this->event->getController()->getContentData('characters');
+
+                            $options = [];
+                            foreach ($characters as $id => $character) {
+                                $options[] = [
+                                    'depth' => 0,
+                                    'label' => $character['characterLabel'],
+                                    'value' => $id,
+                                ];
+                            }
+                            return $options;
+                        }, true),
+                        SingleSelectionFormField::create('status')
+                        ->label('rp.event.raid.status')
+                        ->required()
+                        ->options($this->event->getController()->getContentData('raidStatus'))
+                ]);
+            } else {
+                $dataContainer->appendChildren([
+                        TextFormField::create('characterName')
+                        ->label('rp.event.raid.attendee.character')
+                        ->required()
+                        ->autoFocus()
+                        ->maximumLength(100),
+                        EmailFormField::create('eMail')
+                        ->label('rp.event.raid.attendee.email')
+                        ->required()
+                        ->autoFocus(),
+                        SingleSelectionFormField::create('roleID')
+                        ->label('rp.role.title')
+                        ->required()
+                        ->options(['' => 'wcf.global.noSelection'] + RoleCache::getInstance()->getRoles())
+                        ->addValidator(new FormFieldValidator('uniqueness', function (SingleSelectionFormField $formField) {
+                                    $value = $formField->getSaveValue();
+
+                                    if (empty($value)) {
+                                        $formField->addValidationError(new FormFieldValidationError('empty'));
+                                    } else {
+                                        $role = RoleCache::getInstance()->getRoleByID($value);
+                                        if ($role === null) {
+                                            $formField->addValidationError(new FormFieldValidationError(
+                                                    'invalid',
+                                                    'rp.role.error.invalid'
+                                            ));
+                                        }
+                                    }
+                                })),
+                        SingleSelectionFormField::create('classificationID')
+                        ->label('rp.classification.title')
+                        ->required()
+                        ->options(['' => 'wcf.global.noSelection'] + ClassificationCache::getInstance()->getClassifications())
+                        ->addValidator(new FormFieldValidator('uniqueness', function (SingleSelectionFormField $formField) {
+                                    $value = $formField->getSaveValue();
+
+                                    if (empty($value)) {
+                                        $formField->addValidationError(new FormFieldValidationError('empty'));
+                                    } else {
+                                        $role = ClassificationCache::getInstance()->getClassificationByID($value);
+                                        if ($role === null) {
+                                            $formField->addValidationError(new FormFieldValidationError(
+                                                    'invalid',
+                                                    'rp.classification.error.invalid'
+                                            ));
+                                        }
+                                    }
+                                })),
+                ]);
+            }
+
+            $dataContainer->appendChild(
+                TextFormField::create('notes')
+                    ->label('rp.event.raid.attendee.notes')
+                    ->autoFocus()
+                    ->maximumLength(255)
+            );
+
+            $this->addDialog->build();
+
+            if (!WCF::getUser()->userID) {
+                $this->addDialog->getButton('submitButton')->label('rp.event.raid.button.attendee.guest');
+            }
+        }
+
+        return $this->addDialog;
     }
 
     /**
@@ -138,6 +275,82 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         return [
             'template' => WCF::getTPL()->fetch('eventRaidAttendeeStatusDialog', 'rp', [
                 'statusData' => $statusData,
+            ])
+        ];
+    }
+
+    /**
+     * Saves the attendee add dialog.
+     */
+    public function submitAddDialog(): ?array
+    {
+        if ($this->getAddDialog()->hasValidationErrors()) {
+            return [
+                'dialog' => $this->getAddDialog()->getHtml(),
+                'formId' => 'addDialog'
+            ];
+        }
+
+        $formData = $this->getAddDialog()->getData();
+
+        if (WCF::getUser()->userID) {
+            $characterID = $formData['data']['character'];
+
+            $parameters = [
+                'characterID' => $characterID,
+                'eventID' => $this->event->eventID,
+                'saveData' => [],
+            ];
+            EventHandler::getInstance()->fireAction($this, 'submitAddDialog', $parameters);
+
+            if ($parameters['characterID'] === null) $saveData = $parameters['saveData'];
+            else {
+                $character = CharacterRuntimeCache::getInstance()->getObject($formData['data']['character']);
+
+                $saveData = [
+                    'characterID' => $character->characterID,
+                    'characterName' => $character->characterName,
+                    'classificationID' => $character->classificationID,
+                    'roleID' => $character->roleID,
+                ];
+            }
+
+            $saveData['status'] = $formData['data']['status'];
+        } else {
+            $saveData = [
+                'characterName' => $formData['data']['characterName'],
+                'email' => $formData['data']['eMail'],
+                'classificationID' => $formData['data']['classificationID'],
+                'roleID' => $formData['data']['roleID'],
+                'status' => EventRaidAttendee::STATUS_LOGIN,
+            ];
+        }
+
+        $saveData['eventID'] = $this->event->eventID;
+        $saveData['notes'] = $formData['data']['notes'];
+
+        $action = new EventRaidAttendeeAction([], 'create', ['data' => $saveData]);
+        /** @var EventRaidAttendee $attendee */
+        $attendee = $action->executeAction()['returnValues'];
+
+        $distributionID = 0;
+        switch ($this->event->distributionMode) {
+            case 'class':
+                $distributionID = $attendee->classificationID;
+                break;
+            case 'role':
+                $distributionID = $attendee->roleID;
+                break;
+        }
+
+        return [
+            'attendeeId' => $attendee->attendeeID,
+            'distributionId' => $distributionID,
+            'status' => $attendee->status,
+            'template' => WCF::getTPL()->fetch('eventRaidAttendeeItems', 'rp', [
+                'attendee' => $attendee,
+                'event' => $this->event,
+                '__availableDistributionID' => $distributionID,
             ])
         ];
     }
@@ -191,6 +404,23 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         return [
             'status' => $this->parameters['status'],
         ];
+    }
+
+    /**
+     * Validates the 'createAddDialog' action.
+     */
+    public function validateCreateAddDialog(): void
+    {
+        $this->readBoolean('eventID');
+
+        if (!WCF::getSession()->getPermission('user.rp.canParticipate')) {
+            throw new PermissionDeniedException();
+        }
+
+        $this->event = EventRuntimeCache::getInstance()->getObject($this->parameters['eventID']);
+        if ($this->event === null) {
+            throw new UserInputException('eventID');
+        }
     }
 
     /**
@@ -252,6 +482,28 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
             $this->attendee->getEvent()->getController()->isExpired()) {
             throw new PermissionDeniedException();
         }
+    }
+
+    /**
+     * Validates the 'submitAddDialong' action.
+     */
+    public function validateSubmitAddDialog(): void
+    {
+        $this->readInteger('eventID');
+
+        if (!WCF::getSession()->getPermission('user.rp.canParticipate')) {
+            throw new PermissionDeniedException();
+        }
+
+        $this->event = EventRuntimeCache::getInstance()->getObject(($this->parameters['eventID']));
+        if ($this->event === null) {
+            throw new UserInputException('eventID');
+        }
+
+        $dialog = $this->getAddDialog();
+        $dialog->requestData($this->parameters['data']);
+        $dialog->readValues();
+        $dialog->validate();
     }
 
     /**

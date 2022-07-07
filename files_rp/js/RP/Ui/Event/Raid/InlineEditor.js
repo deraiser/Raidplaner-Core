@@ -17,7 +17,7 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Controller/Clipboard", "WoltLabSuite/Core/Core", "./DragAndDrop/Item", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Event/Handler", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Dialog", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Item_1, DomChangeListener, EventHandler, Language, UiConfirmation, UiDialog, UiDropdownSimple, UiNotification) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Controller/Clipboard", "WoltLabSuite/Core/Core", "./DragAndDrop/Item", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Event/Handler", "./Participate", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Dialog", "WoltLabSuite/Core/Ui/Dropdown/Simple", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, ControllerClipboard, Core, Item_1, DomChangeListener, EventHandler, EventRaidParticipate, Language, UiConfirmation, UiDialog, UiDropdownSimple, UiNotification) {
     "use strict";
     Ajax = tslib_1.__importStar(Ajax);
     ControllerClipboard = tslib_1.__importStar(ControllerClipboard);
@@ -25,6 +25,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
     Item_1 = tslib_1.__importDefault(Item_1);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
     EventHandler = tslib_1.__importStar(EventHandler);
+    EventRaidParticipate = tslib_1.__importStar(EventRaidParticipate);
     Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     UiDialog = tslib_1.__importStar(UiDialog);
@@ -40,7 +41,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
                 canEdit: false,
             }, permissions);
             EventHandler.add("com.woltlab.wcf.clipboard", "info.daries.rp.raid.attendee", (data) => this.clipboardAction(data));
-            EventHandler.add("info.daries.rp.raid.attendee", "initAttendee", (attendeeId) => this.initAttendee(undefined, ~~attendeeId));
             DomChangeListener.add("Daries/RP/Ui/Event/Raid/InlineEditor", () => this.reloadAttendees());
         }
         /**
@@ -69,13 +69,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         /**
          * Initializes an attendee element.
          */
-        initAttendee(attendee, objectId) {
-            if (!attendee && ~~objectId > 0) {
-                attendee = document.getElementById(`attendee${objectId}`);
-            }
-            if (!attendee)
-                return;
-            objectId = ~~attendee.dataset.objectId;
+        initAttendee(attendee) {
+            const objectId = ~~attendee.dataset.objectId;
             if (attendees.has(objectId))
                 return;
             const dropdownId = `attendreeDropdown${objectId}`;
@@ -130,7 +125,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             document.querySelectorAll(".attendee").forEach((attendee) => {
                 if (attendees.has(~~attendee.dataset.objectId))
                     return;
-                this.initAttendee(attendee, 0);
+                this.initAttendee(attendee);
                 if (this.permissions.canEdit) {
                     new Item_1.default(attendee);
                 }
@@ -162,6 +157,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             }
             attendee.element.remove();
             attendees.delete(attendeeId);
+            EventRaidParticipate.toogleButton(false);
         }
         /**
          * Handles an attendee being update status.

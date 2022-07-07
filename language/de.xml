@@ -143,6 +143,12 @@
         </category>
         
         <category name="rp.event.raid">
+            <item name="rp.event.raid.attendee.add"><![CDATA[Anmeldung]]></item>
+            <item name="rp.event.raid.attendee.character"><![CDATA[Charakter]]></item>
+            <item name="rp.event.raid.attendee.email"><![CDATA[E-Mail-Addresse]]></item>
+            <item name="rp.event.raid.attendee.guest"><![CDATA[Gast]]></item>
+            <item name="rp.event.raid.attendee.guest.button"><![CDATA[Als Gastteilnehmer bewerben]]></item>
+            <item name="rp.event.raid.attendee.notes"><![CDATA[Notiz]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Teilnahme löschen]]></item>
             <item name="rp.event.raid.closed"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
             <item name="rp.event.raid.condition"><![CDATA[Voraussetzung]]></item>
@@ -159,9 +165,12 @@
             <item name="rp.event.raid.distribution.role"><![CDATA[Rollenverteilung]]></item>
             <item name="rp.event.raid.leader"><![CDATA[Raidleiter]]></item>
             <item name="rp.event.raid.noRaidEvents"><![CDATA[Für das Spiel „{$game->getTitle()}“ sind keine Raid Events vorhanden.]]></item>
-            <item name="rp.event.raid.participant"><![CDATA[Teilnehmer]]></item>
+            <item name="rp.event.raid.participate"><![CDATA[Teilnehmen]]></item>
+            <item name="rp.event.raid.participate.remove"><![CDATA[Nicht mehr Teilnehmen]]></item>
+            <item name="rp.event.raid.participants"><![CDATA[Teilnehmer]]></item>
             <item name="rp.event.raid.points"><![CDATA[Punkte]]></item>
             <item name="rp.event.raid.points.description"><![CDATA[Punkte für diesen Event]]></item>
+            <item name="rp.event.raid.status"><![CDATA[Status]]></item>
             <item name="rp.event.raid.updateStatus"><![CDATA[Status aktualisieren]]></item>
         </category>
     
@@ -216,6 +225,7 @@
             <item name="wcf.acp.group.option.category.user.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.user.rp.calendar"><![CDATA[Kalender]]></item>
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Charakter]]></item>
+            <item name="wcf.acp.group.option.category.user.rp.raid"><![CDATA[Raids]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteComment"><![CDATA[Kann Kommentare löschen]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteEvent"><![CDATA[Kann Termine löschen]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteEventCompletely"><![CDATA[Kann Termine endgültig löschen]]></item>
@@ -236,6 +246,7 @@
             <item name="wcf.acp.group.option.user.rp.canDeleteComment"><![CDATA[Kann eigene Kommentare löschen]]></item>
             <item name="wcf.acp.group.option.user.rp.canDeleteEvent"><![CDATA[Kann eigene Termine löschen]]></item>
             <item name="wcf.acp.group.option.user.rp.canDisableCommentFunction"><![CDATA[Kann für eigene Termine die Kommentar-Funktion abschalten]]></item>
+            <item name="wcf.acp.group.option.user.rp.canParticipate"><![CDATA[Kann an Raids teilnehmen]]></item>
             <item name="wcf.acp.group.option.user.rp.canReadEvent"><![CDATA[Kann Termine sehen]]></item>
             <item name="wcf.acp.group.option.user.rp.canUploadCharacterAvatar"><![CDATA[Kann eigenen Avatar hochladen]]></item>
             <item name="wcf.acp.group.option.user.rp.canViewCharactersList"><![CDATA[Kann Charakter-Liste sehen]]></item>

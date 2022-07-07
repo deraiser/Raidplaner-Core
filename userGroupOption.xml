@@ -28,6 +28,9 @@
             <category name="user.rp.calendar">
                 <parent>user.rp</parent>
             </category>
+            <category name="user.rp.raid">
+                <parent>user.rp</parent>
+            </category>
         </categories>
         <options>
             <!-- admin.rp -->
@@ -286,6 +289,15 @@ webp</defaultvalue>
                 <usersonly>1</usersonly>
             </option>
             <!-- /user.rp.character -->
+            
+            <!-- user.rp.raid -->
+            <option name="user.rp.canParticipate">
+                <categoryname>user.rp.raid</categoryname>
+                <optiontype>boolean</optiontype>
+                <defaultvalue>0</defaultvalue>
+                <admindefaultvalue>1</admindefaultvalue>
+            </option>
+            <!-- /user.rp.raid -->
         </options>
     </import>
 </data>

@@ -1,9 +1,5 @@
 {if $event->isClosed}
     <p class="error">{lang}rp.event.raid.closed{/lang}</p>
-{/if}
-
-{if $hasAttendee}
-    <p class="warning">{lang}rp.event.raid.hasAttendee{/lang}</p>
 {else if !$characters|count}
     <p class="error">{lang}rp.event.attendee.noCharacters{/lang}</p>
 {/if}
@@ -15,7 +11,7 @@
 
             <div class="contentItemList">
                 {if $event->distributionMode === 'none'}
-                    {include file='eventRaidItems' application='rp' __availableDistributionID='0' __title='rp.event.raid.participant'|language}
+                    {include file='eventRaidItems' application='rp' __availableDistributionID='0' __title='rp.event.raid.participants'|language}
                 {else}
                     {foreach from=$availableDistributions item=availableDistribution}
                         {include file='eventRaidItems' application='rp' __availableDistributionID=$availableDistribution->getObjectID() __title=$availableDistribution->getTitle()}

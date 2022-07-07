@@ -57,7 +57,7 @@ class RaidEventController extends AbstractEventController
     /**
      * content datas
      */
-    protected ?array $contentData = null;
+    protected static ?array $contentData = null;
 
     /**
      * @inheritDoc
@@ -284,10 +284,10 @@ class RaidEventController extends AbstractEventController
      */
     public function getContentData(?string $key = null): mixed
     {
-        if ($this->contentData === null) {
-            $this->contentData = [];
+        if (self::$contentData === null) {
+            self::$contentData = [];
 
-            $hasAttendee = false;
+            $hasAttendee = 0;
 
             $attendees = [];
             $attendeeList = new EventRaidAttendeeList();
@@ -295,7 +295,7 @@ class RaidEventController extends AbstractEventController
             $attendeeList->readObjects();
             /** @var EventRaidAttendee $attendee */
             foreach ($attendeeList as $attendee) {
-                if ($attendee->getCharacter()->userID === WCF::getUser()->userID) $hasAttendee = true;
+                if ($attendee->getCharacter()->userID === WCF::getUser()->userID) $hasAttendee = $attendee->attendeeID;
 
                 if (!isset($attendees[$attendee->status])) $attendees[$attendee->status] = [];
 
@@ -329,7 +329,7 @@ class RaidEventController extends AbstractEventController
                 'characters' => CharacterHandler::getInstance()->getCharacters(),
             ];
             EventHandler::getInstance()->fireAction($this, 'availableCharacters', $parameters);
-            $characters = $parameters['availableCharacters'] ?? [];
+            $characters = $parameters['availableCharacters'] ?? $parameters['characters'];
 
             $raidStatus = [
                 EventRaidAttendee::STATUS_CONFIRMED => WCF::getLanguage()->get('rp.event.raid.container.confirmed'),
@@ -338,7 +338,7 @@ class RaidEventController extends AbstractEventController
                 EventRaidAttendee::STATUS_LOGOUT => WCF::getLanguage()->get('rp.event.raid.container.logout'),
             ];
 
-            $this->contentData = [
+            self::$contentData = [
                 'attendees' => $attendees,
                 'availableDistributions' => $distributions,
                 'characters' => $characters,
@@ -348,9 +348,9 @@ class RaidEventController extends AbstractEventController
             ];
         }
 
-        if (\is_null($key)) return $this->contentData;
-        return $this->contentData[$key] ?? null;
-    }
+        if (\is_null($key)) return self::$contentData;
+        return self::$contentData[$key] ?? null;        
+        }
 
     /**
      * @inheritDoc

@@ -32,11 +32,19 @@ import * as Core from "WoltLabSuite/Core/Core";
 import DragAndDropItem from "./DragAndDrop/Item";
 import * as DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
+import * as EventRaidParticipate from "./Participate";
 import * as Language from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "WoltLabSuite/Core/Ui/Confirmation";
 import * as UiDialog from "WoltLabSuite/Core/Ui/Dialog";
 import * as UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
 import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
+import { 
+    AttendeeData, 
+    AttendeeObjectActionResponse, 
+    ClipboardActionData, 
+    ClipboardResponseData, 
+    InlineEditorPermissions 
+} from "./InlineEditor/Data";
 
 const attendees = new Map<number, AttendeeData>();
 
@@ -56,7 +64,6 @@ class EventRaidInlineEditor {
         
         
         EventHandler.add("com.woltlab.wcf.clipboard", "info.daries.rp.raid.attendee", (data) => this.clipboardAction(data));
-        EventHandler.add("info.daries.rp.raid.attendee", "initAttendee", (attendeeId) => this.initAttendee(undefined, ~~attendeeId));
         
         DomChangeListener.add("Daries/RP/Ui/Event/Raid/InlineEditor", () => this.reloadAttendees());
     }
@@ -90,12 +97,8 @@ class EventRaidInlineEditor {
     /**
      * Initializes an attendee element.
      */
-    private initAttendee(attendee: HTMLElement | undefined, objectId: number): void {
-        if (!attendee && ~~objectId > 0) {
-            attendee = document.getElementById(`attendee${objectId}`) as HTMLElement;
-        } 
-        if (!attendee) return;
-        objectId = ~~attendee.dataset.objectId!;
+    private initAttendee(attendee: HTMLElement): void {
+        const objectId = ~~attendee.dataset.objectId!;
         
         if (attendees.has(objectId)) return;
         
@@ -164,7 +167,7 @@ class EventRaidInlineEditor {
         document.querySelectorAll(".attendee").forEach((attendee: HTMLElement) => {
             if (attendees.has(~~attendee.dataset.objectId!)) return;
             
-            this.initAttendee(attendee, 0)
+            this.initAttendee(attendee)
             
             if (this.permissions.canEdit) {
                 new DragAndDropItem(attendee);
@@ -202,6 +205,8 @@ class EventRaidInlineEditor {
         
         attendee.element!.remove();
         attendees.delete(attendeeId);
+        
+        EventRaidParticipate.toogleButton(false);
     }
     
     /**
@@ -266,37 +271,3 @@ class EventRaidInlineEditor {
 Core.enableLegacyInheritance(EventRaidInlineEditor);
 
 export = EventRaidInlineEditor;
-
-interface AttendeeData {
-    buttons: {
-        delete: HTMLAnchorElement | null;
-        updateStatus: HTMLAnchorElement | null;
-    },
-    element: HTMLElement | undefined;
-}
-
-interface AttendeeObjectActionResponse extends DatabaseObjectActionResponse {
-    returnValues: {
-        status: number;
-        template?: string;
-    }
-}
-
-interface ClipboardActionData {
-    data: {
-        actionName: string;
-        internalData: {
-            objectIDs: number[];
-            template: string;
-        };
-    };
-    responseData: ClipboardResponseData | null;
-}
-
-interface ClipboardResponseData {
-    objectIDs: number[];
-}
-
-interface InlineEditorPermissions {
-    canEdit: boolean;
-}

@@ -23,8 +23,16 @@
     <li class="jsButtonAttendee" style="display: none;"></li>
     
     <script data-relocate="true">
-        require(['Language', 'Daries/RP/Ui/Event/Raid/Attendee/Button'], function(Language, EventRaidAttendeeButton) {
-            new EventRaidAttendeeButton({
+        require(['Language', 'Daries/RP/Ui/Event/Raid/Participate'], function(Language, EventRaidParticipate) {
+            Language.addObject({
+                'rp.event.raid.attendee.add': '{jslang}rp.event.raid.attendee.add{/jslang}',
+                'rp.event.raid.participate': '{jslang}rp.event.raid.participate{/jslang}',
+                'rp.event.raid.participate.remove': '{jslang}rp.event.raid.participate.remove{/jslang}',
+            });
+        
+            EventRaidParticipate.setup({@$event->eventID}, {
+                attendeeId: {@$event->getController()->getContentData('hasAttendee')},
+                canParticipate:  {if $__wcf->session->getPermission('user.rp.canParticipate') && $event->getController()->getContentData('characters')|count}true{else}false{/if},
                 hasAttendee: {if $event->getController()->getContentData('hasAttendee')}true{else}false{/if},
             });
         });
