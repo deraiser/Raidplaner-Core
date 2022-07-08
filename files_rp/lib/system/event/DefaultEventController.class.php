@@ -39,6 +39,10 @@ class DefaultEventController extends AbstractEventController
     /**
      * @inheritDoc
      */
+    protected string $eventNodesPosition = 'center';
+    /**
+     * @inheritDoc
+     */
     protected string $objectTypeName = 'info.daries.rp.event.default';
 
     /**

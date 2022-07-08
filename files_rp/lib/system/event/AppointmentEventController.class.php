@@ -36,6 +36,11 @@ class AppointmentEventController extends DefaultEventController
     /**
      * @inheritDoc
      */
+    protected string $eventNodesPosition = 'right';
+
+    /**
+     * @inheritDoc
+     */
     protected string $objectTypeName = 'info.daries.rp.event.appointment';
 
     /**
@@ -85,7 +90,7 @@ class AppointmentEventController extends DefaultEventController
 
         return false;
     }
-    
+
     public function isExpired(): bool
     {
         if ($this->getEvent()->startTime < TIME_NOW) return true;

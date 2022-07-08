@@ -71,6 +71,7 @@
             <item name="rp.character.list"><![CDATA[Charaktere]]></item>
             <item name="rp.character.notes"><![CDATA[Notizen]]></item>
             <item name="rp.character.notes.description"><![CDATA[Beliebige Notizen zu diesem Charakter.]]></item>
+            <item name="rp.character.otherCharacters"><![CDATA[Andere Charaktere]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
             <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine Informationen hinterlegt.{else}Der Charakter hat noch keine Informationen hinterlegt.{/if}]]></item>
             <item name="rp.character.profile.menu.about"><![CDATA[Über Charakter]]></item>
@@ -149,6 +150,7 @@
             <item name="rp.event.raid.attendee.guest"><![CDATA[Gast]]></item>
             <item name="rp.event.raid.attendee.guest.button"><![CDATA[Als Gastteilnehmer bewerben]]></item>
             <item name="rp.event.raid.attendee.notes"><![CDATA[Notiz]]></item>
+            <item name="rp.event.raid.attendee.registration"><![CDATA[Raid Anmeldung]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Teilnahme löschen]]></item>
             <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich die Teilnahme absagen?]]></item>
             <item name="rp.event.raid.closed"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
@@ -165,6 +167,7 @@
             <item name="rp.event.raid.distribution.none"><![CDATA[keine Verteilung]]></item>
             <item name="rp.event.raid.distribution.role"><![CDATA[Rollenverteilung]]></item>
             <item name="rp.event.raid.leader"><![CDATA[Raidleiter]]></item>
+            <item name="rp.event.raid.leaders"><![CDATA[Raidleiters]]></item>
             <item name="rp.event.raid.noRaidEvents"><![CDATA[Für das Spiel „{$game->getTitle()}“ sind keine Raid Events vorhanden.]]></item>
             <item name="rp.event.raid.participate"><![CDATA[Teilnehmen]]></item>
             <item name="rp.event.raid.participate.remove"><![CDATA[Nicht mehr Teilnehmen]]></item>

@@ -96,4 +96,10 @@ interface IEventController
      * Sets the form data based on the form object.
      */
     public function setFormObjectData(IFormDocument $form, array $fields = []): void;
+    
+    /**
+     * Returns `true` if the position matches the event nodes position present in 
+     * the controller, otherwise `false`.
+     */
+    public function showEventNodesPosition(string $position): bool;
 }

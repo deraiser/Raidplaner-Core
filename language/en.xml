@@ -71,6 +71,7 @@
             <item name="rp.character.list"><![CDATA[Characters]]></item>
             <item name="rp.character.notes"><![CDATA[Notes]]></item>
             <item name="rp.character.notes.description"><![CDATA[Any notes on this character.]]></item>
+            <item name="rp.character.otherCharacters"><![CDATA[Other Characters]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
             <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
             <item name="rp.character.profile.menu.about"><![CDATA[About Character]]></item>
@@ -149,6 +150,7 @@
             <item name="rp.event.raid.attendee.guest"><![CDATA[Guest]]></item>
             <item name="rp.event.raid.attendee.guest.button"><![CDATA[Apply as a guest attendee]]></item>
             <item name="rp.event.raid.attendee.notes"><![CDATA[Notes]]></item>
+            <item name="rp.event.raid.attendee.registration"><![CDATA[Raid registration]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Delete attendance]]></item>
             <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[Do you really want to cancel the attendance?]]></item>
             <item name="rp.event.raid.closed"><![CDATA[The raid was cancelled by a raid leader.]]></item>
@@ -165,6 +167,7 @@
             <item name="rp.event.raid.distribution.none"><![CDATA[No distribution]]></item>
             <item name="rp.event.raid.distribution.role"><![CDATA[Role distribution]]></item>
             <item name="rp.event.raid.leader"><![CDATA[Raid leader]]></item>
+            <item name="rp.event.raid.leaders"><![CDATA[Raidleaders]]></item>
             <item name="rp.event.raid.noRaidEvents"><![CDATA[There are no raid events for the game "{$game->getTitle()}".]]></item>
             <item name="rp.event.raid.participate"><![CDATA[Participate]]></item>
             <item name="rp.event.raid.participate.remove"><![CDATA[No longer participate]]></item>

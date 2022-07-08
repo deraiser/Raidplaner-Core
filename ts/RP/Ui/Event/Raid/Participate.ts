@@ -122,6 +122,11 @@ class EventRaidParticipate {
         return button;
     }
     
+    public showButton(show: boolean): void {
+        if (show) DomUtil.show(this._buttonContainer);
+        else DomUtil.hide(this._buttonContainer);
+    }
+    
     public toogleButton(hasAttendee: boolean): void {
         if (hasAttendee) {
             this._buttonContainer.replaceChildren(this._removeButton);
@@ -157,6 +162,9 @@ export function setup(eventId: number, options: ButtonOptions): void {
         _didInit = true;
         
     _participate = new EventRaidParticipate(eventId, options);
+}
+export function showButton(show: boolean): void {
+    _participate?.showButton(show);
 }
 
 export function toogleButton(hasAttendee: boolean): void {

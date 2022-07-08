@@ -26,3 +26,33 @@
         }
     }
 }
+
+.characterPreviewTab {
+    @include wcfFontSmall;
+
+    margin-top: 5px;
+
+    .otherCharacters {
+        .box24 {
+            > :first-child:not(:last-child) {
+                margin-right: 4px;
+            }
+        }
+        
+        .characterName {
+            @include wcfFontDefault;
+        }
+    }
+    
+    .tabMenu {
+        margin-bottom: 5px;
+
+        > ul {
+            > li {
+                > a {
+                    @include wcfFontHeadline;
+                }
+            }
+        }
+    }
+}

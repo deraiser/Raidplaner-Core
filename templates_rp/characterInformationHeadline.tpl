@@ -14,5 +14,3 @@
     
     {event name='characterData'}
 </ul>
-
-{event name='afterHeadline'}

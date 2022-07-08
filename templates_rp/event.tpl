@@ -9,6 +9,22 @@
 
 {event name='beforeHeader'}
 
+{if $event->getController()->showEventNodesPosition('right')}
+    {hascontent}
+        {capture append='sidebarRight'}
+            <section class="box" data-static-box-identifier="info.daries.rp.notes">
+                <h2 class="boxTitle">{lang}rp.event.notes{/lang}</h2>
+
+                <div class="boxContent htmlContent">
+                    {content}
+                        {@$event->getSimplifiedFormattedNotes()}
+                    {/content}
+                </div>
+            </section>
+        {/capture}
+    {/hascontent}
+{/if}
+
 {capture assign='contentHeader'}
     <header class="contentHeader messageGroupContentHeader rpEventHeader{if $event->isDeleted} messageDeleted{/if}{if $event->isDisabled} messageDisabled{/if}" 
             data-object-id="{@$event->eventID}"
@@ -83,19 +99,23 @@
 
 {event name='afterHeader'}
 
-{if !$event->notes|empty}
-    <section class="section">
-        <h2 class="sectionTitle">{lang}rp.event.notes{/lang}</h2>
+{if $event->getController()->showEventNodesPosition('center')}
+    {hascontent}
+        <section class="section">
+            <h2 class="sectionTitle">{lang}rp.event.notes{/lang}</h2>
 
-        <dl>
-            <dt></dt>
-            <dd>
-                <div class="htmlContent">
-                    {@$event->getFormattedNotes()}
-                </div>
-            </dd>
-        </dl>
-    </section>
+            <dl>
+                <dt></dt>
+                <dd>
+                    <div class="htmlContent">
+                        {content}
+                            {@$event->getFormattedNotes()}
+                        {/content}
+                    </div>
+                </dd>
+            </dl>
+        </section>
+    {/hascontent}
 {/if}
 
 {event name='afterHeader'}

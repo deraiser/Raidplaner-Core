@@ -9,19 +9,19 @@
         </a>
 
         <div class="characterInformation">
-            {include file='characterInformation' application='rp'}
+            {include file='characterInformation' application='rp' disableCharacterInformationButtons='true'}
+            
+            <dl class="plain inlineDataList characterFields">
+                <dt>{lang}rp.event.raid.attendee.registration{/lang}</dt>
+                <dd>{$attendee->created|plainTime}</dd>
+
+                {if !$character->isPrimary}
+                    <dt>{lang}rp.character.primary{/lang}</dt>
+                    <dd>{$character->getPrimaryCharacter()->getTitle()}</dd>
+                {/if}
+
+                {event name='characterFields'}
+            </dl>
         </div>
-
-        <dl class="plain inlineDataList characterFields">
-            <dt>{lang}rp.event.raid.attendee.registration{/lang}</dt>
-            <dd>{$attendee->created|plainTime}</dd>
-
-            {if !$character->isPrimary}
-                <dt>{lang}rp.character.primary{/lang}</dt>
-                <dd>{$character->getPrimaryCharacter()->getTitle()}</dd>
-            {/if}
-
-            {event name='characterFields'}
-        </dl>
     </div>
 {/if}

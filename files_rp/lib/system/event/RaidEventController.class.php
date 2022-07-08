@@ -2,6 +2,7 @@
 
 namespace rp\system\event;
 
+use rp\data\character\Character;
 use rp\data\character\CharacterList;
 use rp\data\classification\Classification;
 use rp\data\classification\ClassificationCache;
@@ -11,6 +12,7 @@ use rp\data\point\account\PointAccountCache;
 use rp\data\raid\event\RaidEventCache;
 use rp\data\role\Role;
 use rp\data\role\RoleCache;
+use rp\system\cache\runtime\CharacterProfileRuntimeCache;
 use rp\system\character\CharacterHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\event\EventHandler;
@@ -58,6 +60,11 @@ class RaidEventController extends AbstractEventController
      * content datas
      */
     protected static ?array $contentData = null;
+
+    /**
+     * @inheritDoc
+     */
+    protected string $eventNodesPosition = 'right';
 
     /**
      * @inheritDoc
@@ -349,8 +356,8 @@ class RaidEventController extends AbstractEventController
         }
 
         if (\is_null($key)) return self::$contentData;
-        return self::$contentData[$key] ?? null;        
-        }
+        return self::$contentData[$key] ?? null;
+    }
 
     /**
      * @inheritDoc
@@ -360,6 +367,15 @@ class RaidEventController extends AbstractEventController
         $raidEvent = RaidEventCache::getInstance()->getRaidEventByID($this->getEvent()->raidEventID);
         if ($raidEvent === null) return parent::getIcon($size);
         return $raidEvent->getIcon($size);
+    }
+
+    /**
+     * Returns all character profiles from the raid leader of the current raid event.
+     * @return  Character[]
+     */
+    public function getLeaders(): array
+    {
+        return CharacterProfileRuntimeCache::getInstance()->getObjects($this->getEvent()->leaders);
     }
 
     /**

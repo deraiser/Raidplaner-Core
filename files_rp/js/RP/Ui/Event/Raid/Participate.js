@@ -20,7 +20,7 @@
 define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Form/Builder/Dialog", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, Core, DomChangeListener, DomUtil, Dialog_1, Language, UiConfirmation, UiNotification) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.toogleButton = exports.setup = void 0;
+    exports.toogleButton = exports.showButton = exports.setup = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
@@ -98,6 +98,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         `;
             return button;
         }
+        showButton(show) {
+            if (show)
+                DomUtil.show(this._buttonContainer);
+            else
+                DomUtil.hide(this._buttonContainer);
+        }
         toogleButton(hasAttendee) {
             if (hasAttendee) {
                 this._buttonContainer.replaceChildren(this._removeButton);
@@ -132,6 +138,10 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         _participate = new EventRaidParticipate(eventId, options);
     }
     exports.setup = setup;
+    function showButton(show) {
+        _participate === null || _participate === void 0 ? void 0 : _participate.showButton(show);
+    }
+    exports.showButton = showButton;
     function toogleButton(hasAttendee) {
         _participate === null || _participate === void 0 ? void 0 : _participate.toogleButton(hasAttendee);
     }

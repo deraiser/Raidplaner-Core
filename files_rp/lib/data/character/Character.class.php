@@ -69,6 +69,11 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
     protected static $databaseTableName = 'member';
 
     /**
+     * other characters of the current character
+     */
+    protected ?array $otherCharacters = null;
+
+    /**
      * user profile object
      */
     protected ?UserProfile $user = null;
@@ -203,6 +208,22 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
                 'forceFrontend' => true,
                 'object' => $this
         ]);
+    }
+
+    /**
+     * Returns other characters of the current character owner.
+     */
+    public function getOtherCharacters(): array
+    {
+        if ($this->otherCharacters === null) {
+            $list = new CharacterProfileList();
+            $list->getConditionBuilder()->add('userID = ?', [$this->userID]);
+            $list->getConditionBuilder()->add('characterID != ?', [$this->characterID]);
+            $list->readObjects();
+            $this->otherCharacters = $list->getObjects();
+        }
+
+        return $this->otherCharacters;
     }
 
     /**

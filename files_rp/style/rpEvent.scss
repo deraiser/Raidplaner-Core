@@ -189,6 +189,21 @@
     }
 }
 
+.eventRaidAttendeePreview {
+    .characterFields {
+        margin-top: 15px;
+    }
+}
+
+.eventRaidContainer {
+    .contentItemMultiColumn {
+        /* The `flex` shorthand fails in IE11 if `calc()` is used. */
+        flex-grow: 0;
+        flex-shrink: 0;
+        flex-basis: calc(33% - 20px);
+    }
+}
+
 /* fix icons in rtl design */
 html[dir="rtl"] {
     .eventNavigation {
