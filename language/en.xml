@@ -150,6 +150,7 @@
             <item name="rp.event.raid.attendee.guest.button"><![CDATA[Apply as a guest attendee]]></item>
             <item name="rp.event.raid.attendee.notes"><![CDATA[Notes]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Delete attendance]]></item>
+            <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[Do you really want to cancel the attendance?]]></item>
             <item name="rp.event.raid.closed"><![CDATA[The raid was cancelled by a raid leader.]]></item>
             <item name="rp.event.raid.condition"><![CDATA[Condition]]></item>
             <item name="rp.event.raid.condition.description"><![CDATA[Here you can specify which are the minimum conditions for this event.]]></item>

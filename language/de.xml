@@ -150,6 +150,7 @@
             <item name="rp.event.raid.attendee.guest.button"><![CDATA[Als Gastteilnehmer bewerben]]></item>
             <item name="rp.event.raid.attendee.notes"><![CDATA[Notiz]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Teilnahme löschen]]></item>
+            <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich die Teilnahme absagen?]]></item>
             <item name="rp.event.raid.closed"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
             <item name="rp.event.raid.condition"><![CDATA[Voraussetzung]]></item>
             <item name="rp.event.raid.condition.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst Du{else}können Sie{/if} angeben, welche Voraussetzungen für dieses Event mindestens besteht.]]></item>
