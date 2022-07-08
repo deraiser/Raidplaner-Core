@@ -253,7 +253,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         }
 
         return [
-            'template' => WCF::getTPL()->fetch('raidAttendeePreview', 'rp'),
+            'template' => WCF::getTPL()->fetch('eventRaidAttendeePreview', 'rp'),
         ];
     }
 

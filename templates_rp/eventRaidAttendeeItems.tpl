@@ -16,7 +16,7 @@
                 {@$attendee->getCharacter()->getAvatar()->getImageTag(24)}
                 <span>
                     <a href="{$attendee->getLink()}" 
-                       class="rpRaidAttendeeLink" 
+                       class="rpEventRaidAttendeeLink" 
                        data-object-id="{@$attendee->attendeeID}">{$attendee->getCharacter()->characterName}
                     </a>
                 </span>

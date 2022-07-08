@@ -26,6 +26,7 @@
         require(['Language', 'Daries/RP/Ui/Event/Raid/Participate'], function(Language, EventRaidParticipate) {
             Language.addObject({
                 'rp.event.raid.attendee.add': '{jslang}rp.event.raid.attendee.add{/jslang}',
+                'rp.event.raid.attendee.remove.confirmMessage': '{jslang}rp.event.raid.attendee.remove.confirmMessage{/jslang}',
                 'rp.event.raid.participate': '{jslang}rp.event.raid.participate{/jslang}',
                 'rp.event.raid.participate.remove': '{jslang}rp.event.raid.participate.remove{/jslang}',
             });

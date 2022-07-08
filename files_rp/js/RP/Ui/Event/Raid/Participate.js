@@ -76,9 +76,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
                                 objectIDs: [attendee.dataset.objectId],
                             },
                             success: () => {
-                                var _a;
                                 this.toogleButton(false);
-                                (_a = document.querySelector(".section > .warning")) === null || _a === void 0 ? void 0 : _a.remove();
                                 attendee.remove();
                                 DomChangeListener.trigger();
                                 UiNotification.show();

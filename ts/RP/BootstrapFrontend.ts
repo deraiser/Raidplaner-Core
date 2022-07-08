@@ -50,11 +50,23 @@ function _initEventPopover(): void {
 }
 
 /**
+ * Initializes event raid attendee popover.
+ */
+function _initEventRaidAttendeePopover(): void {
+    ControllerPopover.init({
+        className: "rpEventRaidAttendeeLink",
+        dboAction: "rp\\data\\event\\raid\\attendee\\EventRaidAttendeeAction",
+        identifier: "info.daries.rp.event.raid.attendee",
+    });
+}
+
+/**
  * Bootstraps general modules and frontend exclusive ones.
  */
 export function setup(options: BootstrapOptions): void {
     if (options.enableCharacterPopover) {
         _initCharacterPopover();
+        _initEventRaidAttendeePopover();
     }
     if (options.enableEventPopover) {
         _initEventPopover();
@@ -64,4 +76,5 @@ export function setup(options: BootstrapOptions): void {
 interface BootstrapOptions {
     enableCharacterPopover: boolean;
     enableEventPopover: boolean;
+    enableEventRaidAttendeePopover: boolean;
 }

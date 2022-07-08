@@ -43,11 +43,22 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Controller/Popover"], 
         });
     }
     /**
+     * Initializes event raid attendee popover.
+     */
+    function _initEventRaidAttendeePopover() {
+        ControllerPopover.init({
+            className: "rpEventRaidAttendeeLink",
+            dboAction: "rp\\data\\event\\raid\\attendee\\EventRaidAttendeeAction",
+            identifier: "info.daries.rp.event.raid.attendee",
+        });
+    }
+    /**
      * Bootstraps general modules and frontend exclusive ones.
      */
     function setup(options) {
         if (options.enableCharacterPopover) {
             _initCharacterPopover();
+            _initEventRaidAttendeePopover();
         }
         if (options.enableEventPopover) {
             _initEventPopover();

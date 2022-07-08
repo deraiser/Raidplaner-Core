@@ -26,7 +26,7 @@
  */
 
 import * as Ajax from "WoltLabSuite/Core/Ajax";
-import { AjaxCallbackSetup, DatabaseObjectActionResponse } from "WoltLabSuite/Core/Ajax/Data";
+import { AjaxCallbackSetup } from "WoltLabSuite/Core/Ajax/Data";
 import * as ControllerClipboard from "WoltLabSuite/Core/Controller/Clipboard";
 import * as Core from "WoltLabSuite/Core/Core";
 import DragAndDropItem from "./DragAndDrop/Item";
@@ -42,7 +42,6 @@ import {
     AttendeeData, 
     AttendeeObjectActionResponse, 
     ClipboardActionData, 
-    ClipboardResponseData, 
     InlineEditorPermissions 
 } from "./InlineEditor/Data";
 
