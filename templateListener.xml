@@ -10,12 +10,6 @@
         </templatelistener>
         
          <!-- user -->
-        <templatelistener name="characterInformationHeadline">
-            <environment>user</environment>
-            <templatename>characterInformationHeadline</templatename>
-            <eventname>afterHeadline</eventname>
-            <templatecode><![CDATA[{include file='__swtorCharacterInformationHeadline' application='rp'}]]></templatecode>
-        </templatelistener>
         <templatelistener name="copyright">
             <environment>user</environment>
             <templatename>pageFooterCopyright</templatename>
