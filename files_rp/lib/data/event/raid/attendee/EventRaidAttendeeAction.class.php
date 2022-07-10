@@ -421,6 +421,10 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         if ($this->event === null) {
             throw new UserInputException('eventID');
         }
+
+        if ($this->event->getController()->isExpired()) {
+            throw new PermissionDeniedException();
+        }
     }
 
     /**
@@ -498,6 +502,10 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         $this->event = EventRuntimeCache::getInstance()->getObject(($this->parameters['eventID']));
         if ($this->event === null) {
             throw new UserInputException('eventID');
+        }
+
+        if ($this->event->getController()->isExpired()) {
+            throw new PermissionDeniedException();
         }
 
         $dialog = $this->getAddDialog();

@@ -4,6 +4,9 @@ namespace rp\data\event;
 
 use rp\system\calendar\Day;
 use rp\system\calendar\Month;
+use rp\system\event\discussion\CommentEventDiscussionProvider;
+use rp\system\event\discussion\IEventDiscussionProvider;
+use rp\system\event\discussion\VoidEventDiscussionProvider;
 use rp\system\event\IEventController;
 use rp\util\RPUtil;
 use wcf\data\DatabaseObject;
@@ -12,6 +15,7 @@ use wcf\data\language\Language;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\TUserContent;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
@@ -58,10 +62,11 @@ use wcf\util\StringUtil;
  * @property-read   int         $views                  number of times the event has been viewed
  * @property-read   int         $enableComments         is `1` if comments are enabled for the event, otherwise `0`
  * @property-read   int         $comments               number of comments on the event
+ * @property-read   int         $cumulativeLikes        cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the event
  * @property-read   int         $hasEmbeddedObjects     is `1` if there are embedded objects in the event, otherwise `0`
  * @property-read	int         $deleteTime             timestamp at which the event has been deleted
  * @property-read	int         $isDeleted              is `1` if the event is in trash bin, otherwise `0`
- * @property-read   int         $isClosed               is `1` if the even is closed, otherwise `0`
+ * @property-read   int         $isCanceled             is `1` if the even is canceled, otherwise `0`
  * @property-read   int         $isDisabled             is `1` if the even is disabled, otherwise `0`
  * @property-read   array       $additionalData         array with additional data of the event
  */
@@ -80,6 +85,11 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
     protected ?IEventController $controller = null;
 
     /**
+     * discussion provider
+     */
+    protected ?IEventDiscussionProvider $discussionProvider = null;
+
+    /**
      * event days
      */
     protected ?array $eventDays = null;
@@ -90,22 +100,19 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
     protected ?\DateTimeZone $timezoneObj = null;
 
     /**
-     * Returns true if the current user can edit these event.
+     * Returns true if the current user can cancel this event.
      */
-    public function canEdit(): bool
+    public function canCancel(): bool
     {
-        // check mod permissions
-        if (WCF::getSession()->getPermission('mod.rp.canEditEvent')) {
+        if (!$this->getController()->getObjectTypeName() == 'info.daries.rp.event.raid') {
+            return false;
+        }
+
+        if ($this->canEdit()) {
             return true;
         }
-        
-        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
-            if ($this->getController()->isLeader()) {
-                return true;
-            }
-        } 
-        
-        if ($this->userID && $this->userID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.rp.canEditEvent')) {
+
+        if ($this->getController()->isLeader()) {
             return true;
         }
 
@@ -121,7 +128,7 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         if (WCF::getSession()->getPermission('mod.rp.canDeleteEventCompletely')) {
             return true;
         }
-        
+
         if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
             if ($this->getController()->isLeader()) {
                 return true;
@@ -132,23 +139,51 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
     }
 
     /**
-     * Returns true if the active user has the permission to read this event.
+     * Returns true if the current user can edit these event.
      */
-    public function canRead(): bool
+    public function canEdit(): bool
     {
+        // check mod permissions
+        if (WCF::getSession()->getPermission('mod.rp.canEditEvent')) {
+            return true;
+        }
+
+        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+            if ($this->getController()->isLeader()) {
+                return true;
+            }
+        }
+
+        if ($this->userID && $this->userID == WCF::getUser()->userID && WCF::getSession()->getPermission('user.rp.canEditEvent')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Returns true if the given user has access to this event. If the given $user is null,
+     * the function uses the current user.
+     */
+    public function canRead(?UserProfile $user = null): bool
+    {
+        if ($user === null) {
+            $user = new UserProfile(WCF::getUser());
+        }
+
         if ($this->isDeleted) {
-            if (!WCF::getSession()->getPermission('mod.rp.canViewDeletedEvent')) {
+            if (!$user->getPermission('mod.rp.canViewDeletedEvent')) {
                 return false;
             }
         }
 
         if ($this->isDisabled) {
-            if (!WCF::getSession()->getPermission('mod.rp.canModerateEvent')) {
+            if (!$user->getPermission('mod.rp.canModerateEvent')) {
                 return false;
             }
         }
 
-        if (!WCF::getSession()->getPermission('user.rp.canReadEvent')) {
+        if (!$user->getPermission('user.rp.canReadEvent')) {
             return false;
         }
 
@@ -185,6 +220,38 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
     }
 
     /**
+     * Returns the list of the available discussion providers.
+     *
+     * @return      string[]
+     */
+    public static function getAllDiscussionProviders(): array
+    {
+        /** @var string[] $discussionProviders */
+        static $discussionProviders;
+
+        if ($discussionProviders === null) {
+            $discussionProviders = [];
+
+            $objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('info.daries.rp.event.discussionProvider');
+            $commentProvider = '';
+            foreach ($objectTypes as $objectType) {
+                // the comment and the "void" provider should always be the last in the list
+                if ($objectType->className === CommentEventDiscussionProvider::class) {
+                    $commentProvider = $objectType->className;
+                    continue;
+                }
+
+                $discussionProviders[] = $objectType->className;
+            }
+
+            $discussionProviders[] = $commentProvider;
+            $discussionProviders[] = VoidEventDiscussionProvider::class;
+        }
+
+        return $discussionProviders;
+    }
+
+    /**
      * Returns the event controller.
      */
     public function getController(): IEventController
@@ -197,6 +264,27 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         }
 
         return $this->controller;
+    }
+
+    /**
+     * Returns the responsible discussion provider for this event.
+     */
+    public function getDiscussionProvider(): IEventDiscussionProvider
+    {
+        if ($this->discussionProvider === null) {
+            foreach (self::getAllDiscussionProviders() as $discussionProvider) {
+                if (\call_user_func([$discussionProvider, 'isResponsible'], $this)) {
+                    $this->setDiscussionProvider(new $discussionProvider($this));
+                    break;
+                }
+            }
+
+            if ($this->discussionProvider === null) {
+                throw new \RuntimeException('No discussion provider has claimed to be responsible for the event #' . $this->eventID);
+            }
+        }
+
+        return $this->discussionProvider;
     }
 
     /**
@@ -423,6 +511,14 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
                 );
             }
         }
+    }
+
+    /**
+     * Sets the discussion provider for this event.
+     */
+    public function setDiscussionProvider(IEventDiscussionProvider $discussionProvider): void
+    {
+        $this->discussionProvider = $discussionProvider;
     }
 
     /**

@@ -29,6 +29,22 @@
         </type>
         <!-- /clipboard items -->
         
+        <!-- comments -->
+		<type>
+			<name>info.daries.rp.eventComment</name>
+			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
+			<classname>rp\system\comment\manager\EventCommentManager</classname>
+		</type>
+        <!-- /comments -->
+        
+        <!-- discussion providers -->
+		<type>
+			<name>info.daries.rp.event.comment</name>
+			<definitionname>info.daries.rp.event.discussionProvider</definitionname>
+			<classname>rp\system\event\discussion\CommentEventDiscussionProvider</classname>
+		</type>
+        <!-- /discussion providers -->
+        
         <!-- event controllers -->
         <type>
             <name>info.daries.rp.event.appointment</name>
@@ -46,6 +62,14 @@
             <classname>rp\system\event\RaidEventController</classname>
         </type>
         <!-- /event controllers -->
+        
+        <!-- likes -->
+		<type>
+			<name>info.daries.rp.likeableEvent</name>
+			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
+			<classname>rp\data\event\LikeableEventProvider</classname>
+		</type>
+        <!-- /likes -->
         
         <!-- message -->
         <type>
@@ -90,6 +114,38 @@
 		<!-- /Modification Log -->
         
         <!-- notification -->
+		<type>
+			<name>info.daries.rp.eventComment.like.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
+			<category>info.daries.rp.event</category>
+			<supportsReactions>1</supportsReactions>
+		</type>
+		<type>
+			<name>info.daries.rp.eventComment.response.like.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
+			<category>info.daries.rp.event</category>
+			<supportsReactions>1</supportsReactions>
+		</type>
+		<type>
+			<name>info.daries.rp.eventComment.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>rp\system\user\notification\object\type\EventCommentUserNotificationObjectType</classname>
+			<category>info.daries.rp.event</category>
+		</type>
+		<type>
+			<name>info.daries.rp.eventComment.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>rp\system\user\notification\object\type\EventCommentResponseUserNotificationObjectType</classname>
+			<category>info.daries.rp.event</category>
+		</type>
+		<type>
+			<name>info.daries.rp.likeableEvent.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
+			<category>info.daries.rp.event</category>
+		</type>
         <type>
             <name>info.daries.rp.raid.event.notification</name>
             <definitionname>com.woltlab.wcf.notification.objectType</definitionname>

@@ -9,5 +9,9 @@
             <name>info.daries.rp.eventController</name>
             <interfacename>rp\system\event\IEventController</interfacename>
         </definition>
+		<definition>
+			<name>info.daries.rp.event.discussionProvider</name>
+			<interfacename>rp\system\event\discussion\IEventDiscussionProvider</interfacename>
+		</definition>
     </import>
 </data>

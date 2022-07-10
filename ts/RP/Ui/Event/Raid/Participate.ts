@@ -51,6 +51,7 @@ class EventRaidParticipate {
                 attendeeId: 0,
                 canParticipate: false,
                 hasAttendee: false,
+                isExpired: false,
             }, 
             options,
         ) as ButtonOptions;
@@ -122,19 +123,18 @@ class EventRaidParticipate {
         return button;
     }
     
-    public showButton(show: boolean): void {
-        if (show) DomUtil.show(this._buttonContainer);
-        else DomUtil.hide(this._buttonContainer);
-    }
-    
     public toogleButton(hasAttendee: boolean): void {
         if (hasAttendee) {
             this._buttonContainer.replaceChildren(this._removeButton);
             this._options.hasAttendee = true;
         } else {
-            this._buttonContainer.replaceChildren(this._addButton);
-            this._options.hasAttendee = false;
-            this._options.attendeeId = 0;
+            if (!this._options.isExpired) {
+                this._buttonContainer.replaceChildren(this._addButton);
+                this._options.hasAttendee = false;
+                this._options.attendeeId = 0;
+            } else {
+                this._buttonContainer.remove();
+            }
         }
     }
     
@@ -163,9 +163,6 @@ export function setup(eventId: number, options: ButtonOptions): void {
         
     _participate = new EventRaidParticipate(eventId, options);
 }
-export function showButton(show: boolean): void {
-    _participate?.showButton(show);
-}
 
 export function toogleButton(hasAttendee: boolean): void {
     _participate?.toogleButton(hasAttendee);
@@ -182,4 +179,5 @@ interface ButtonOptions {
     attendeeId: number;
     canParticipate: boolean;
     hasAttendee: boolean;
+    isExpired: boolean;
 }

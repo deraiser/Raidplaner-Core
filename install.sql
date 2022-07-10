@@ -46,10 +46,11 @@ CREATE TABLE rp1_event (
     views MEDIUMINT(7) NOT NULL DEFAULT 0,
     enableComments TINYINT(1) NOT NULL DEFAULT 0,
     comments SMALLINT(5) NOT NULL DEFAULT 0,
+	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
     hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	deleteTime INT(10) NOT NULL DEFAULT 0,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
-    isClosed TINYINT(1) NOT NULL DEFAULT 0,
+    isCanceled TINYINT(1) NOT NULL DEFAULT 0,
     isDisabled TINYINT(1) NOT NULL DEFAULT 0,
     additionalData TEXT
 );

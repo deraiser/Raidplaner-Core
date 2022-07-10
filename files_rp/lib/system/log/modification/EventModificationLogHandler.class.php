@@ -50,6 +50,14 @@ class EventModificationLogHandler extends AbstractExtendedModificationLogHandler
     }
 
     /**
+     * Adds a log entry for raid event cancel.
+     */
+    public function cancel(Event $event): void
+    {
+        $this->fireNotification($event, $this->add($event, 'cancel'));
+    }
+
+    /**
      * Adds a log entry for event delete.
      */
     public function delete(Event $event): void
@@ -98,6 +106,7 @@ class EventModificationLogHandler extends AbstractExtendedModificationLogHandler
     public function getAvailableActions(): array
     {
         return [
+            'cancel',
             'delete',
             'disable',
             'edit',

@@ -8,6 +8,7 @@ use rp\data\classification\Classification;
 use rp\data\classification\ClassificationCache;
 use rp\data\event\raid\attendee\EventRaidAttendee;
 use rp\data\event\raid\attendee\EventRaidAttendeeList;
+use rp\data\game\GameCache;
 use rp\data\point\account\PointAccountCache;
 use rp\data\raid\event\RaidEventCache;
 use rp\data\role\Role;
@@ -75,6 +76,7 @@ class RaidEventController extends AbstractEventController
      * @inheritDoc
      */
     protected array $savedFields = [
+        'enableComments',
         'endTime',
         'notes',
         'startTime',
@@ -200,6 +202,8 @@ class RaidEventController extends AbstractEventController
                 ->label('rp.event.notes')
                 ->objectType('info.daries.rp.event.notes'),
         ]);
+        
+        $this->formComment($dataContainer);
 
         // condition tab
         $conditionTab = TabFormContainer::create('conditionTab');
@@ -213,7 +217,7 @@ class RaidEventController extends AbstractEventController
 
         // participant tab
         $participantTab = TabFormContainer::create('participantTab');
-        $participantTab->label('rp.event.raid.participant');
+        $participantTab->label('rp.event.raid.participants');
         $tabMenu->appendChild($participantTab);
 
         $distributionMode = SingleSelectionFormField::create('distributionMode')
@@ -231,7 +235,7 @@ class RaidEventController extends AbstractEventController
             ->appendChildren([
             $distributionMode,
             IntegerFormField::create('participants')
-            ->label('rp.event.raid.participant')
+            ->label('rp.event.raid.participants')
             ->minimum(0)
             ->maximum(99)
             ->value(0)
@@ -387,6 +391,44 @@ class RaidEventController extends AbstractEventController
     }
 
     /**
+     * Returns an array of the required values.
+     * 
+     * Key is the language variable and value as integer.
+     */
+    public function getRequireds(): array
+    {
+        $requireds = [];
+        $game = GameCache::getInstance()->getCurrentGame();
+        switch ($this->getEvent()->distributionMode) {
+            case 'class':
+                foreach (ClassificationCache::getInstance()->getClassifications() as $classification) {
+                    if (!$this->getEvent()->{$classification->identifier}) continue;
+
+                    $key = 'rp.classification.' . $game->identifier . '.' . $classification->identifier;
+                    $value = $this->getEvent()->{$classification->identifier};
+                    $requireds[$key] = $value;
+                }
+                break;
+            case 'none':
+                if (!$this->getEvent()->participants) continue;
+                $requireds['rp.event.raid.participants'] = $this->getEvent()->participants;
+                break;
+            case 'role':
+                foreach (RoleCache::getInstance()->getRoles() as $role) {
+                    if (!$this->getEvent()->{$role->identifier}) continue;
+
+                    $key = 'rp.role.' . $game->identifier . '.' . $role->identifier;
+                    $value = $this->getEvent()->{$role->identifier};
+                    $requireds[$key] = $value;
+                }
+                break;
+        }
+
+
+        return $requireds;
+    }
+
+    /**
      * @inheritDoc
      */
     public function getTitle(): string
@@ -401,8 +443,8 @@ class RaidEventController extends AbstractEventController
      */
     public function isExpired(): bool
     {
-        $expired = TIME_NOW - ((int) $this->getEvent()->deadline * 3600);
-        if ($this->getEvent()->startTime < $expired) return true;
+        $expired = $this->getEvent()->startTime - ((int) $this->getEvent()->deadline * 3600);
+        if ($expired < TIME_NOW) return true;
         return false;
     }
 
@@ -451,6 +493,8 @@ class RaidEventController extends AbstractEventController
 
         /** @var Classification $classification */
         foreach (ClassificationCache::getInstance()->getClassifications() as $classification) {
+            if (!$this->getEvent()->{$classification->identifier}) continue;
+
             /** @var IntegerFormField $classificationFormField */
             $classificationFormField = $form->getNodeById($classification->identifier);
             if ($classificationFormField !== null) {
@@ -460,6 +504,8 @@ class RaidEventController extends AbstractEventController
 
         /** @var Role $role */
         foreach (RoleCache::getInstance()->getRoles() as $role) {
+            if (!$this->getEvent()->{$role->identifier}) continue;
+
             /** @var IntegerFormField $roleFormField */
             $roleFormField = $form->getNodeById($role->identifier);
             if ($roleFormField !== null) {

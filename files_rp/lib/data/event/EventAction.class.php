@@ -9,10 +9,12 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IPopoverAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\visitTracker\VisitTracker;
@@ -95,6 +97,29 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
     }
 
     /**
+     * cancel raid events.
+     */
+    public function cancel(): void
+    {
+        foreach ($this->getObjects() as $event) {
+            if ($event->isCanceled) {
+                continue;
+            }
+
+            $event->update([
+                'isCanceled' => 1,
+            ]);
+
+            EventModificationLogHandler::getInstance()->cancel(
+                $event->getDecoratedObject()
+            );
+        }
+
+        // reset storage
+        UserStorageHandler::getInstance()->resetAll('rpUnreadEvents');
+    }
+
+    /**
      * @inheritDoc
      */
     public function create(): Event
@@ -168,14 +193,20 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
         parent::delete();
 
         if (!empty($eventIDs)) {
+            // delete like data
+            ReactionHandler::getInstance()->removeReactions('info.daries.rp.likeableEvent', $eventIDs);
+
+            // delete comments
+            CommentHandler::getInstance()->deleteObjects('info.daries.rp.eventComment', $eventIDs);
+
             // delete embedded object references
             MessageEmbeddedObjectManager::getInstance()->removeObjects('info.daries.rp.event.notes', $eventIDs);
 
             // delete event from search index
             SearchIndexManager::getInstance()->delete('info.daries.rp.event', $eventIDs);
-            
-			// delete modification log entries except for deleting the events
-			EventModificationLogHandler::getInstance()->deleteLogs($eventIDs, ['delete']);
+
+            // delete modification log entries except for deleting the events
+            EventModificationLogHandler::getInstance()->deleteLogs($eventIDs, ['delete']);
         }
 
         // reset storage
@@ -412,6 +443,27 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
 
         if (!$this->event->canRead()) {
             throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Validates parameters to cancel events.
+     */
+    public function validateCancel(): void
+    {
+        // read objects
+        if (empty($this->objects)) {
+            $this->readObjects();
+
+            if (empty($this->objects)) {
+                throw new UserInputException('objectIDs');
+            }
+        }
+
+        foreach ($this->getObjects() as $event) {
+            if (!$event->canCancel()) {
+                throw new PermissionDeniedException();
+            }
         }
     }
 

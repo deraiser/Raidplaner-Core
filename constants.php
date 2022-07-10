@@ -38,6 +38,7 @@ define('RELATIVE_RP_DIR', '');
 \define('RP_DEFAULT_GAME_ID', 0);
 \define('RP_DEFAULT_EVENT_TYPE_SELECTED', '');
 \define('RP_ENABLE_RANK', 1);
+\define('RP_EVENT_ENABLE_LIKE', 1);
 \define('RP_POINTS_ENABLED', 1);
 \define('RP_POINTS_NAME', 'DKP');
 \define('RP_ROUND_POINTS', 1);

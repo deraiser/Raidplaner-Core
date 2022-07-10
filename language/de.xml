@@ -32,16 +32,16 @@
         </category>
         
         <category name="rp.acp.raid">
-            <item name="rp.acp.raid.event.add"><![CDATA[Raid Event hinzufügen]]></item>
+            <item name="rp.acp.raid.event.add"><![CDATA[Raid Termin hinzufügen]]></item>
             <item name="rp.acp.raid.event.defaultPoints"><![CDATA[Wert]]></item>
-            <item name="rp.acp.raid.event.defaultPoints.description"><![CDATA[Standard-Wert des Events. Dient als Hilfe und ist nicht bindend.]]></item>
+            <item name="rp.acp.raid.event.defaultPoints.description"><![CDATA[Standard-Wert des Termine. Dient als Hilfe und ist nicht bindend.]]></item>
             <item name="rp.acp.raid.event.point.account"><![CDATA[Punktekonto]]></item>
-            <item name="rp.acp.raid.event.edit"><![CDATA[Raid Event bearbeiten]]></item>
+            <item name="rp.acp.raid.event.edit"><![CDATA[Raid Termin bearbeiten]]></item>
             <item name="rp.acp.raid.event.image"><![CDATA[Icon]]></item>
             <item name="rp.acp.raid.event.image.mode"><![CDATA[Auswahl]]></item>
             <item name="rp.acp.raid.event.image.mode.select"><![CDATA[Icon auswählen]]></item>
             <item name="rp.acp.raid.event.image.mode.upload"><![CDATA[Icon hochladen]]></item>
-            <item name="rp.acp.raid.event.list"><![CDATA[Raid Events]]></item>
+            <item name="rp.acp.raid.event.list"><![CDATA[Raid Termine]]></item>
             <item name="rp.acp.raid.event.showProfile"><![CDATA[Im Charakter-Profil anzeigen]]></item>
         </category>
         
@@ -68,6 +68,7 @@
             <item name="rp.character.created"><![CDATA[Erstellt]]></item>
             <item name="rp.character.edit"><![CDATA[Charakter bearbeiten]]></item>
             <item name="rp.character.guildName"><![CDATA[Gilde]]></item>
+            <item name="rp.character.level"><![CDATA[Stufe]]></item>
             <item name="rp.character.list"><![CDATA[Charaktere]]></item>
             <item name="rp.character.notes"><![CDATA[Notizen]]></item>
             <item name="rp.character.notes.description"><![CDATA[Beliebige Notizen zu diesem Charakter.]]></item>
@@ -92,22 +93,30 @@
         <category name="rp.event">
             <item name="rp.event.accepted"><![CDATA[Zugesagt]]></item>
             <item name="rp.event.add"><![CDATA[Termin hinzufügen]]></item>
-            <item name="rp.event.backEvent"><![CDATA[Zurück zum Event]]></item>
+            <item name="rp.event.backEvent"><![CDATA[Zurück zum Termin]]></item>
             <item name="rp.event.canceled"><![CDATA[Abgesagt]]></item>
+            <item name="rp.event.comment"><![CDATA[Termin-Kommentar]]></item>
+            <item name="rp.event.commentResponse"><![CDATA[Antwort auf Termin-Kommentar]]></item>
             <item name="rp.event.dateFormat"><![CDATA[l, j. F Y]]></item>
             <item name="rp.event.delete"><![CDATA[Endgültig löschen]]></item>
             <item name="rp.event.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Termin wirklich endgültig löschen?]]></item>
             <item name="rp.event.deleted"><![CDATA[Dieser Termin wurde {if $event->userID == $event->getLogEntry()->userID}vom Benutzer{else}von {if $event->getLogEntry()->userID}<a href="{link controller='User' id=$event->getLogEntry()->userID title=$event->getLogEntry()->username}{/link}" class="userLink" data-object-id="{@$event->getLogEntry()->userID}">{$event->getLogEntry()->username}</a>{else}{$event->getLogEntry()->username}{/if}{/if} {if $event->getLogEntry()->reason}aus folgendem Grund gelöscht: {$event->getLogEntry()->reason}{else}gelöscht{/if} ({@$event->getLogEntry()->time|time}).]]></item>
             <item name="rp.event.disable"><![CDATA[Deaktivieren]]></item>
-            <item name="rp.event.edit"><![CDATA[Event bearbeiten]]></item>
+            <item name="rp.event.edit"><![CDATA[Termin bearbeiten]]></item>
             <item name="rp.event.enable"><![CDATA[Freischalten]]></item>
+            <item name="rp.event.enableComments"><![CDATA[Kommentare aktivieren]]></item>
             <item name="rp.event.endTime"><![CDATA[Endzeit]]></item>
-            <item name="rp.event.endTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum für das Ende des Events angegeben. Das Ende des Events darf nicht vor dem Start liegen.]]></item>
-            <item name="rp.event.endTime.error.tooLong"><![CDATA[Die Dauer des Events ist zu groß. Die maximal zulässige Dauer beträgt {#RP_CALENDAR_MAX_EVENT_LENGTH} Tage.]]></item>
+            <item name="rp.event.endTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum für das Ende des Termins angegeben. Das Ende des Termins darf nicht vor dem Start liegen.]]></item>
+            <item name="rp.event.endTime.error.tooLong"><![CDATA[Die Dauer des Termins ist zu groß. Die maximal zulässige Dauer beträgt {#RP_CALENDAR_MAX_EVENT_LENGTH} Tage.]]></item>
+            <item name="rp.event.eventComments"><![CDATA[{plural value=$event->comments one='# Kommentar' other='# Kommentare'}]]></item>
             <item name="rp.event.events"><![CDATA[Termine]]></item>
             <item name="rp.event.eventViews"><![CDATA[{#$event->views}x angeschaut]]></item>
-            <item name="rp.event.expired"><![CDATA[Die Anmeldefrist für dieses Event ist bereits überschritten.]]></item>
+            <item name="rp.event.expired"><![CDATA[Die Anmeldefrist für diesen Termin ist bereits überschritten.]]></item>
             <item name="rp.event.isFullDay"><![CDATA[Ganztägiges Ereignis]]></item>
+            <item name="rp.event.like.notification.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.event.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.event.like.notification.title"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin]]></item>
+            <item name="rp.event.like.notification.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin reagiert]]></item>
             <item name="rp.event.maybe"><![CDATA[Vielleicht]]></item>
             <item name="rp.event.moderation.info"><![CDATA[Von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} erstellte Termine unterliegen der Moderation. D.h. {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Termin wird nach dem Absenden zunächst durch einen Moderator geprüft und danach, sofern keine Beanstandung vorliegt, freigeschaltet.]]></item>
             <item name="rp.event.moderation.redirect"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Termin wurde gespeichert. Er wird zunächst von einem Moderator geprüft und danach, sofern keine Beanstandung vorliegt, freigeschaltet.]]></item>
@@ -119,12 +128,13 @@
             <item name="rp.event.restore"><![CDATA[Wiederherstellen]]></item>
             <item name="rp.event.settings"><![CDATA[Einstellungen]]></item>
             <item name="rp.event.startTime"><![CDATA[Startzeit]]></item>
-            <item name="rp.event.startTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum für den Start des Events angegeben.]]></item>
-            <item name="rp.event.startTime.error.tooLong"><![CDATA[Die Dauer des Events ist zu groß. Die maximal zulässige Dauer beträgt {#RP_CALENDAR_MAX_EVENT_LENGTH} Tage.]]></item>
+            <item name="rp.event.startTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum für den Start des Termins angegeben.]]></item>
+            <item name="rp.event.startTime.error.tooLong"><![CDATA[Die Dauer des Termins ist zu groß. Die maximal zulässige Dauer beträgt {#RP_CALENDAR_MAX_EVENT_LENGTH} Tage.]]></item>
+            <item name="rp.event.title"><![CDATA[Löschen]]></item>
             <item name="rp.event.trash"><![CDATA[Löschen]]></item>
             <item name="rp.event.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Termin wirklich löschen?]]></item>
             <item name="rp.event.trash.reason"><![CDATA[Grund (optional)]]></item>
-            <item name="rp.event.type"><![CDATA[Event Type]]></item>
+            <item name="rp.event.type"><![CDATA[Termin Type]]></item>
             <item name="rp.event.useAsPreset"><![CDATA[Als Vorlage verwenden]]></item>
         </category>
 
@@ -149,13 +159,16 @@
             <item name="rp.event.raid.attendee.email"><![CDATA[E-Mail-Addresse]]></item>
             <item name="rp.event.raid.attendee.guest"><![CDATA[Gast]]></item>
             <item name="rp.event.raid.attendee.guest.button"><![CDATA[Als Gastteilnehmer bewerben]]></item>
+            <item name="rp.event.raid.attendee.noCharacters"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} bisher keine Charaktere erstellt oder keiner der Charaktere besitzt die benötigten Voraussetzung(en) für dieses Termin.]]></item>
             <item name="rp.event.raid.attendee.notes"><![CDATA[Notiz]]></item>
             <item name="rp.event.raid.attendee.registration"><![CDATA[Raid Anmeldung]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Teilnahme löschen]]></item>
             <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich die Teilnahme absagen?]]></item>
-            <item name="rp.event.raid.closed"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
+            <item name="rp.event.raid.cancel"><![CDATA[Raid absagen]]></item>
+            <item name="rp.event.raid.cancel.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Raid wirklich absagen?]]></item>
+            <item name="rp.event.raid.canceled"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
             <item name="rp.event.raid.condition"><![CDATA[Voraussetzung]]></item>
-            <item name="rp.event.raid.condition.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst Du{else}können Sie{/if} angeben, welche Voraussetzungen für dieses Event mindestens besteht.]]></item>
+            <item name="rp.event.raid.condition.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst Du{else}können Sie{/if} angeben, welche Voraussetzungen für dieses Termin mindestens besteht.]]></item>
             <item name="rp.event.raid.container.confirmed"><![CDATA[Bestätigt]]></item>
             <item name="rp.event.raid.container.login"><![CDATA[Angemeldet]]></item>
             <item name="rp.event.raid.container.logout"><![CDATA[Abgemeldet]]></item>
@@ -168,12 +181,16 @@
             <item name="rp.event.raid.distribution.role"><![CDATA[Rollenverteilung]]></item>
             <item name="rp.event.raid.leader"><![CDATA[Raidleiter]]></item>
             <item name="rp.event.raid.leaders"><![CDATA[Raidleiters]]></item>
-            <item name="rp.event.raid.noRaidEvents"><![CDATA[Für das Spiel „{$game->getTitle()}“ sind keine Raid Events vorhanden.]]></item>
+            <item name="rp.event.raid.message.status.canceled"><![CDATA[Abgesagt]]></item>
+            <item name="rp.event.raid.noRaidEvents"><![CDATA[Für das Spiel „{$game->getTitle()}“ sind keine Raid Termine vorhanden.]]></item>
+            <item name="rp.event.raid.open"><![CDATA[Raid öffnen]]></item>
+            <item name="rp.event.raid.open.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Raid wirklich öffnen?]]></item>
             <item name="rp.event.raid.participate"><![CDATA[Teilnehmen]]></item>
             <item name="rp.event.raid.participate.remove"><![CDATA[Nicht mehr Teilnehmen]]></item>
             <item name="rp.event.raid.participants"><![CDATA[Teilnehmer]]></item>
             <item name="rp.event.raid.points"><![CDATA[Punkte]]></item>
-            <item name="rp.event.raid.points.description"><![CDATA[Punkte für diesen Event]]></item>
+            <item name="rp.event.raid.points.description"><![CDATA[Punkte für diesen Termin]]></item>
+            <item name="rp.event.raid.required"><![CDATA[Benötigt]]></item>
             <item name="rp.event.raid.status"><![CDATA[Status]]></item>
             <item name="rp.event.raid.updateStatus"><![CDATA[Status aktualisieren]]></item>
         </category>
@@ -198,7 +215,7 @@
         <category name="rp.raid.event">
             <item name="rp.raid.event.pointAccount"><![CDATA[Punktekonto]]></item>
             <item name="rp.raid.event.points"><![CDATA[Punkte]]></item>
-            <item name="rp.raid.event.title"><![CDATA[Raid Event]]></item>
+            <item name="rp.raid.event.title"><![CDATA[Raid Termin]]></item>
         </category>
     
         <category name="rp.role">
@@ -210,6 +227,32 @@
         </category>
     
         <category name="rp.user.notification">
+            <item name="rp.user.notification.eventComment.like.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar zum Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.user.notification.eventComment.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar zum Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.user.notification.eventComment.like.title"><![CDATA[Reaktion auf einen Kommentar (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.like.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu dem Termin <a href="{$eventObj->getLink()}#comment{@$commentID}">{$eventObj->getTitle()}</a> verfasst:</p>]]></item>
+            <item name="rp.user.notification.eventComment.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat einen Kommentar{else}haben Kommentare{/if} zu dem Termin „{@$eventObj->getTitle()}“ [URL:{@$eventObj->getLink()}#comment{@$commentID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+            <item name="rp.user.notification.eventComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat einen Kommentar zu dem Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Kommentare zu dem Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.response.like.message"><![CDATA[<strong>{$author}</strong> hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar zum Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.user.notification.eventComment.response.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar zum Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+            <item name="rp.user.notification.eventComment.response.like.title"><![CDATA[Reaktion auf eine Antwort eines Kommentars (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.response.like.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.response.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zu einem Kommentar in dem Termin <a href="{$eventObj->getLink()}#comments/comment{@$commentID}/response{@$responseID}">{$eventObj->getTitle()}</a> verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}</p>]]></item>
+            <item name="rp.user.notification.eventComment.response.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zu einem Kommentar in dem Termin „{@$eventObj->getTitle()}“ [URL:{@$eventObj->getLink()}#comments/comment{@$commentID}/response{@$responseID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+            <item name="rp.user.notification.eventComment.response.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zu einem Kommentar in dem Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.response.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zu einem Kommentar in dem Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.response.title"><![CDATA[Neue Antwort (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.response.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von <strong>{@$commentAuthor}</strong> zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin <a href="{$eventObj->getLink()}#comments/comment{@$commentID}/response{@$responseID}">{$eventObj->getTitle()}</a> verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}</p>]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1 && $guestTimesTriggered < 2 && (!$event->getAuthor()->userID || $guestTimesTriggered == 0)}hat eine Antwort{else}haben Antworten{/if} zum Kommentar von {@$commentAuthor} zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin „{@$eventObj->getTitle()}“ [URL:{@$eventObj->getLink()}#comments/comment{@$commentID}/response{@$responseID}] verfasst{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} hat eine Antwort zum Kommentar von <strong>{$commentAuthor}</strong> zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben Antworten zum Kommentar von <strong>{$commentAuthor}</strong> zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin <strong>{$event->getTitle()}</strong> verfasst.]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.title"><![CDATA[Neue Antwort (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} neue Antworten (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.title"><![CDATA[Neuer Kommentar (Termin)]]></item>
+            <item name="rp.user.notification.eventComment.title.stacked"><![CDATA[{#$timesTriggered} neue Kommentare (Termin)]]></item>
             <item name="rp.user.notification.raid.event.status.message"><![CDATA[Dein Status im Raid <a href="{$event->getLink()}">{$event->getTitle()}</a> wurde geändert.]]></item>
             <item name="rp.user.notification.raid.event.status.title"><![CDATA[Statusänderung]]></item>
         </category>
@@ -261,6 +304,7 @@
         </category>
         
         <category name="wcf.acp.modificationLog">
+            <item name="wcf.acp.modificationLog.info.daries.rp.event.close"><![CDATA[Termin (Raid) geschlossen]]></item>
             <item name="wcf.acp.modificationLog.info.daries.rp.event.delete"><![CDATA[Termin gelöscht]]></item>
             <item name="wcf.acp.modificationLog.info.daries.rp.event.disable"><![CDATA[Termin deaktiviert]]></item>
             <item name="wcf.acp.modificationLog.info.daries.rp.event.edit"><![CDATA[Termin bearbeitet]]></item>
@@ -272,13 +316,13 @@
         <category name="wcf.acp.option">
             <item name="wcf.acp.option.category.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.option.category.rp.calendar"><![CDATA[Kalender]]></item>
-            <item name="wcf.acp.option.category.rp.calendar.event"><![CDATA[Events]]></item>
+            <item name="wcf.acp.option.category.rp.calendar.event"><![CDATA[Termine]]></item>
             <item name="wcf.acp.option.category.rp.character"><![CDATA[Charakter]]></item>
             <item name="wcf.acp.option.category.rp.character.list"><![CDATA[Charakterliste]]></item>
             <item name="wcf.acp.option.category.rp.points"><![CDATA[Punkte]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Einstellungen]]></item>
             <item name="wcf.acp.option.rp_calendar_max_event_length"><![CDATA[Maximale Termin-Dauer]]></item>
-            <item name="wcf.acp.option.rp_calendar_max_event_length.description"><![CDATA[Maximaler Zeitraum zwischen Start und Ende eines Events.]]></item>
+            <item name="wcf.acp.option.rp_calendar_max_event_length.description"><![CDATA[Maximaler Zeitraum zwischen Start und Ende eines Termins.]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_field"><![CDATA[Standard-Sortierung]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_field.description"><![CDATA[]]></item>
             <item name="wcf.acp.option.rp_characters_list_default_sort_order"><![CDATA[Standard-Reihenfolge]]></item>
@@ -287,6 +331,9 @@
             <item name="wcf.acp.option.rp_default_event_type_selected"><![CDATA[Termin Type [Standard]]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Spiel [Standard]]]></item>
             <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Ranks aktivieren]]></item>
+            <item name="wcf.acp.option.rp_event_enable_like"><![CDATA[Reaktionen aktivieren]]></item>
+            <item name="wcf.acp.option.rp_item_account_easymode_disabled"><![CDATA[Einfacher Modus für Punktekonten deaktivieren]]></item>
+            <item name="wcf.acp.option.rp_item_account_easymode_disabled.description"><![CDATA[Im einfachen Modus können keine Itemkonten angelegt werden, und Termine immer nur einem Punktekonto zugeordnet sein.]]></item>
             <item name="wcf.acp.option.rp_points_enabled"><![CDATA[Punkte aktivieren]]></item>
             <item name="wcf.acp.option.rp_points_enabled.desciption"><![CDATA[Raids könnten Punkte vergeben werden.]]></item>
             <item name="wcf.acp.option.rp_points_name"><![CDATA[Punktename]]></item>
@@ -306,6 +353,12 @@
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.updateStatus"><![CDATA[Status ändern ({#$count})]]></item>
         </category>
         
+        <category name="wcf.like">
+            <item name="wcf.like.title.info.daries.rp.eventComment"><![CDATA[Hat mit {@$reaction->render()} auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Termin <a href="{$comment->getLink()}">{$event->getTitle()}</a> reagiert.]]></item>
+            <item name="wcf.like.title.info.daries.rp.eventComment.response"><![CDATA[Hat mit {@$reaction->render()} auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Termin <a href="{$response->getLink()}">{$event->getTitle()}</a> reagiert.]]></item>
+            <item name="wcf.like.title.info.daries.rp.likeableEvent"><![CDATA[Hat mit {@$reaction->render()} auf den Termin <a href="{$event->getLink()}">{$event->getTitle()}</a> reagiert.]]></item>
+        </category>
+        
         <category name="wcf.moderation">
             <item name="wcf.moderation.type.info.daries.rp.event"><![CDATA[Termin]]></item>
             <item name="wcf.moderation.deletedContent.info.daries.rp.event"><![CDATA[Gelöschte Termine]]></item>
@@ -319,7 +372,14 @@
     
         <category name="wcf.user.notification">
             <item name="wcf.user.notification.info.daries.rp.event"><![CDATA[Termine (Raidplaner)]]></item>
-            <item name="wcf.user.notification.info.daries.rp.raid.event.notification.status"><![CDATA[Statusänderung]]></item>
+            <item name="wcf.user.notification.info.daries.rp.event.raid"><![CDATA[Raids (Raidplaner)]]></item>
+            <item name="wcf.user.notification.info.daries.rp.eventComment.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin-Kommentar]]></item>
+            <item name="wcf.user.notification.info.daries.rp.eventComment.notification.comment"><![CDATA[Neuer Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin]]></item>
+            <item name="wcf.user.notification.info.daries.rp.eventComment.response.like.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Termin-Kommentar]]></item>
+            <item name="wcf.user.notification.info.daries.rp.eventComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
+            <item name="wcf.user.notification.info.daries.rp.eventComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Termin]]></item>
+            <item name="wcf.user.notification.info.daries.rp.likeableEvent.notification.like"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin]]></item>
+            <item name="wcf.user.notification.info.daries.rp.raid.event.notification.status"><![CDATA[Ihr Status hat sich geändert]]></item>
         </category>
     </import>
 </language>

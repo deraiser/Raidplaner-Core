@@ -49,6 +49,7 @@ class DefaultEventController extends AbstractEventController
      * @inheritDoc
      */
     protected array $savedFields = [
+        'enableComments',
         'endTime',
         'isFullDay',
         'notes',
@@ -79,6 +80,8 @@ class DefaultEventController extends AbstractEventController
                 ->label('rp.event.notes')
                 ->objectType('info.daries.rp.event.notes')
         );
+        
+        $this->formComment($dataContainer);
 
         parent::createForm($form);
     }

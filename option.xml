@@ -51,6 +51,11 @@
                 <maxvalue>999</maxvalue>
                 <suffix>days</suffix>
             </option>
+			<option name="rp_event_enable_like">
+				<categoryname>rp.calendar.event</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
             <!-- /rp.calendar.event -->
             <!-- /rp.calendar -->
             

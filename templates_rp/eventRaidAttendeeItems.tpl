@@ -6,7 +6,7 @@
     {if $event->canEdit()}draggable="true"{/if}
     data-droppable-to="{implode from=$attendee->possibleDistribution() item=distributionID}distribution{@$distributionID}{/implode}">
     <div class="box24">
-        {if $event->canEdit()}
+        {if !$event->isCanceled && $event->canEdit()}
             <div class="columnMark">
                 <input type="checkbox" class="jsClipboardItem" data-object-id="{@$attendee->attendeeID}">
             </div>
@@ -24,11 +24,13 @@
                 <span>{$attendee->characterName}<span>
             {/if}
         </div>
-        <span class="statusDisplay">
-            {if $attendee->getCharacter() && 
-                $attendee->getCharacter()->userID == $__wcf->user->userID && 
-                !$event->isClosed && 
-                !$event->getController()->isExpired()}
+        
+        {if !$event->isCanceled && 
+            !$event->isClosed && 
+            !$event->getController()->isExpired() &&
+            $attendee->getCharacter() && 
+            $attendee->getCharacter()->userID == $__wcf->user->userID}
+            <span class="statusDisplay">
                 <div id="attendreeDropdown{@$attendee->attendeeID}" class="dropdown">
                     <a class="dropdownToggle"><span class="icon icon16 fa-cog"></span></a>
                     <ul class="dropdownMenu">
@@ -36,7 +38,7 @@
                         <li><a class="jsAttendeeRemove" data-confirm-message-html="{lang __encode=true}rp.event.raid.attendee.remove.confirmMessage{/lang}">{lang}rp.event.raid.attendee.remove{/lang}</a></li>
                     </ul>
                 </div>
-            {/if}
-        </span>
+            </span>
+        {/if}
     </div>
 </li>

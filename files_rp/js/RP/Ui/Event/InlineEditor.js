@@ -56,6 +56,15 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 case "restore":
                     this._eventManager.update(this._eventId.toString(), optionName);
                     break;
+                case "cancel":
+                    UiConfirmation.show({
+                        confirm: () => {
+                            this._eventManager.update(this._eventId.toString(), optionName);
+                        },
+                        message: Language.get("rp.event.raid.cancel.confirmMessage"),
+                        messageIsHtml: true,
+                    });
+                    break;
                 case "delete":
                     UiConfirmation.show({
                         confirm: () => {
@@ -103,16 +112,31 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     if (!this._elements.get(optionName)) {
                         element.addEventListener("click", (ev) => this._click(element, ev));
                         this._elements.set(optionName, element);
+                        if (optionName === "editLink") {
+                            const toggleButton = document.querySelector(".jsEventDropdown > .dropdownToggle");
+                            toggleButton.addEventListener("dblclick", (event) => {
+                                event.preventDefault();
+                                if (!this._validate("editLink"))
+                                    return;
+                                element.click();
+                            });
+                        }
                     }
                 }
             });
+            const eventDropdown = document.querySelector(".jsEventDropdown");
             if (!hasShowElements) {
-                const eventDropdown = document.querySelector(".jsEventDropdown");
                 eventDropdown.remove();
+            }
+            else {
+                DomUtil.show(eventDropdown);
             }
         }
         _ajaxSuccess(data) {
             switch (data.actionName) {
+                case "cancel":
+                    window.location.reload();
+                    break;
                 case "disable":
                 case "enable":
                     this._eventManager.updateItems([this._eventId.toString()], {
@@ -132,6 +156,14 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         _validate(optionName) {
             const eventId = this._eventId.toString();
             switch (optionName) {
+                case "cancel":
+                    if (!this._eventManager.getPermission(eventId, "cancelEvent")) {
+                        return false;
+                    }
+                    if (!this._eventManager.getPropertyValue(eventId, "isCanceled", true)) {
+                        return true;
+                    }
+                    break;
                 case "delete":
                     if (!this._eventManager.getPermission(eventId, "deleteEvent")) {
                         return false;
@@ -159,6 +191,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 case "enable":
                 case "disable":
                     if (!this._eventManager.getPermission(eventId, "moderateEvent")) {
+                        return false;
+                    }
+                    if (this._eventManager.getPropertyValue(eventId, "isCanceled", true)) {
                         return false;
                     }
                     if (this._eventManager.getPropertyValue(eventId, "isDeleted", true)) {

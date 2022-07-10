@@ -204,6 +204,45 @@
     }
 }
 
+.rpEventHeader {
+    &.messageCanceled {
+        > .contentHeaderIcon {
+            &::before {
+                display: block;
+                font-family: FontAwesome;
+                font-size: 56px;
+                position: absolute;
+
+                color: rgb(180, 0, 0);
+                content: $fa-var-ban;
+                left: 8px;
+                top: -9px;
+            }
+
+            > img,
+            > .icon:first-child {
+                visibility: hidden;
+            }
+        }
+    }
+}
+
+.eventLikeContent {
+    margin-top: 20px;
+    
+    .eventLikeSection {
+		align-items: center;
+	}
+
+    .eventLikeButtons {
+		justify-content: flex-end;
+
+		.invisible {
+			display: inline;
+		}
+	}
+}
+
 /* fix icons in rtl design */
 html[dir="rtl"] {
     .eventNavigation {

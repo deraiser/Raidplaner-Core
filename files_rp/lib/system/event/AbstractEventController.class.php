@@ -78,6 +78,18 @@ abstract class AbstractEventController implements IEventController
     }
 
     /**
+     * Adds a Boolean form field for enabling comments.
+     */
+    protected function formComment(IFormContainer $container): void
+    {
+        $container->appendChild(
+            BooleanFormField::create('enableComments')
+                ->label('rp.event.enableComments')
+                ->value(1)
+        );
+    }
+
+    /**
      * Adds an event date to the container.
      */
     protected function formEventDate(IFormContainer $container, bool $supportFullDay = false): void

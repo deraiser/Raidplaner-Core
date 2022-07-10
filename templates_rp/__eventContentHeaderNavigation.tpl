@@ -19,7 +19,7 @@
     {/if}
 {/if}
 
-{if $event->getController()->getObjectTypeName() == 'info.daries.rp.event.raid'}
+{if $event->getController()->getObjectTypeName() == 'info.daries.rp.event.raid' && !$event->isCanceled}
     <li class="jsButtonAttendee" style="display: none;"></li>
     
     <script data-relocate="true">
@@ -35,6 +35,7 @@
                 attendeeId: {@$event->getController()->getContentData('hasAttendee')},
                 canParticipate:  {if $__wcf->session->getPermission('user.rp.canParticipate') && $event->getController()->getContentData('characters')|count}true{else}false{/if},
                 hasAttendee: {if $event->getController()->getContentData('hasAttendee')}true{else}false{/if},
+                isExpired: {if $event->getController()->isExpired()}true{else}false{/if},
             });
         });
     </script>

@@ -75,6 +75,16 @@ class UiEventInlineEditor {
                 this._eventManager.update(this._eventId.toString(), optionName);
                 break;
                 
+            case "cancel":
+                UiConfirmation.show({
+                    confirm: () => {
+                        this._eventManager.update(this._eventId.toString(), optionName);
+                    },
+                    message: Language.get("rp.event.raid.cancel.confirmMessage"),
+                    messageIsHtml: true,
+                });
+                break;
+                
             case "delete":
                 UiConfirmation.show({
                     confirm: () => {
@@ -134,18 +144,34 @@ class UiEventInlineEditor {
                         optionName,
                         element
                     );
+                    
+                    if (optionName === "editLink") {
+                        const toggleButton = document.querySelector(".jsEventDropdown > .dropdownToggle") as HTMLAnchorElement;
+                        toggleButton.addEventListener("dblclick", (event) => {
+                            event.preventDefault();
+
+                            if (!this._validate("editLink")) return;
+                            element.click();
+                        });
+                    }
                 }
             }
         });
         
+        const eventDropdown = document.querySelector(".jsEventDropdown") as HTMLElement;
         if (!hasShowElements) {
-            const eventDropdown = document.querySelector(".jsEventDropdown") as HTMLElement;
             eventDropdown.remove();
+        } else {
+            DomUtil.show(eventDropdown);
         }
     }
     
     protected _ajaxSuccess(data: DatabaseObjectActionResponse): void {
         switch(data.actionName) {
+            case "cancel":
+                window.location.reload();
+                break;
+                
             case "disable":
             case "enable":
                 this._eventManager.updateItems(
@@ -175,6 +201,16 @@ class UiEventInlineEditor {
         const eventId = this._eventId.toString();
         
         switch(optionName) {
+            case "cancel":
+                if (!this._eventManager.getPermission(eventId, "cancelEvent")) {
+                    return false;
+                }
+                
+                if (!this._eventManager.getPropertyValue(eventId, "isCanceled", true)) {
+                    return true;
+                }
+                break;
+                
             case "delete":
                 if (!this._eventManager.getPermission(eventId, "deleteEvent")) {
                     return false;
@@ -208,6 +244,10 @@ class UiEventInlineEditor {
             case "enable":
             case "disable":
                 if (!this._eventManager.getPermission(eventId, "moderateEvent")) {
+                    return false;
+                }
+                
+                if (this._eventManager.getPropertyValue(eventId, "isCanceled", true)) {
                     return false;
                 }
                 

@@ -7,5 +7,44 @@
             <classname>rp\system\user\notification\event\EventRaidStatusUserNotificationEvent</classname>
             <preset>1</preset>
         </event>
+        <event>
+            <name>comment</name>
+            <objecttype>info.daries.rp.eventComment.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventCommentUserNotificationEvent</classname>
+            <preset>1</preset>
+        </event>
+        <event>
+            <name>commentResponse</name>
+            <objecttype>info.daries.rp.eventComment.response.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventCommentResponseUserNotificationEvent</classname>
+            <preset>1</preset>
+        </event>
+        <event>
+            <name>commentResponseOwner</name>
+            <objecttype>info.daries.rp.eventComment.response.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventCommentResponseOwnerUserNotificationEvent</classname>
+            <preset>1</preset>
+        </event>
+        <event>
+            <name>like</name>
+            <objecttype>info.daries.rp.likeableEvent.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventLikeUserNotificationEvent</classname>
+            <preset>1</preset>
+            <options>module_like</options>
+        </event>
+        <event>
+            <name>like</name>
+            <objecttype>info.daries.rp.eventComment.like.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventCommentLikeUserNotificationEvent</classname>
+            <preset>1</preset>
+            <options>module_like</options>
+        </event>
+        <event>
+            <name>like</name>
+            <objecttype>info.daries.rp.eventComment.response.like.notification</objecttype>
+            <classname>rp\system\user\notification\event\EventCommentResponseLikeUserNotificationEvent</classname>
+            <preset>1</preset>
+            <options>module_like</options>
+        </event>
     </import>
 </data>
