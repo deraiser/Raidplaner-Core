@@ -22,7 +22,7 @@
                 &:hover {
                     border: 1px solid $wcfContentBorder !important;
                     background-color: $wcfTabularBoxBackgroundActive;
-                    cursor: pointer;
+                    cursor: move;
                 }
             }
 
@@ -51,6 +51,9 @@
 
         .statusDisplay {
             flex: 0 auto;
+            
+            display: flex;
+            align-items: center;
         }
     }
 
@@ -186,12 +189,6 @@
         @include screen-md-up {
             margin-left: 0;
         }
-    }
-}
-
-.eventRaidAttendeePreview {
-    .characterFields {
-        margin-top: 15px;
     }
 }
 

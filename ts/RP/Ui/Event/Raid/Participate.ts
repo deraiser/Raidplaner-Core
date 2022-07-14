@@ -31,21 +31,23 @@ import * as DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import * as DomUtil from "WoltLabSuite/Core/Dom/Util";
 import FormBuilderDialog from "WoltLabSuite/Core/Form/Builder/Dialog";
 import * as Language from "WoltLabSuite/Core/Language";
+import { ParticipateAjaxResponse, ParticipateButtonOptions } from "./Participate/Data"
 import * as UiConfirmation from "WoltLabSuite/Core/Ui/Confirmation";
 import * as UiNotification from "WoltLabSuite/Core/Ui/Notification";
+import User from "WoltLabSuite/Core/User";
 
 class EventRaidParticipate {
     protected readonly _addButton: HTMLElement;
     protected readonly _buttonContainer: HTMLElement;
     protected _dialog: FormBuilderDialog;
     protected readonly _eventId: number;
-    protected readonly _options: ButtonOptions;
+    protected readonly _options: ParticipateButtonOptions;
     protected readonly _removeButton: HTMLElement;
 
     /**
      * Initializes the event raid inline editor for attendees.
      */
-    constructor(eventId: number, options: ButtonOptions) {
+    constructor(eventId: number, options: ParticipateButtonOptions) {
         this._options = Core.extend(
             {
                 attendeeId: 0,
@@ -54,7 +56,7 @@ class EventRaidParticipate {
                 isExpired: false,
             }, 
             options,
-        ) as ButtonOptions;
+        ) as ParticipateButtonOptions;
         
         if (!this._options.canParticipate) return;
         
@@ -66,12 +68,12 @@ class EventRaidParticipate {
         this._addButton = this._createButton(Language.get("rp.event.raid.participate"), "fa-plus");
         this._removeButton = this._createButton(Language.get("rp.event.raid.participate.remove"), "fa-trash");
         
-        this.toogleButton(this._options.hasAttendee);
-        
+        DomChangeListener.add("Daries/RP/Ui/Event/Raid/Participate", () => this.toogleButton());
+                
         DomUtil.show(this._buttonContainer);
     }
     
-    private _click(): void {
+    protected _click(): void {
         if (!this._options.hasAttendee) {
             if (this._dialog === undefined) {
                 this._dialog = new FormBuilderDialog("addAttendeeDialog", "rp\\data\\event\\raid\\attendee\\EventRaidAttendeeAction", "createAddDialog", {
@@ -82,7 +84,7 @@ class EventRaidParticipate {
                         eventID: this._eventId,
                     },
                     submitActionName: "submitAddDialog",
-                    successCallback:(data: AjaxResponse) => this._ajaxSuccess(data),
+                    successCallback:(data: ParticipateAjaxResponse) => this._ajaxSuccess(data),
                 });
             }
             
@@ -98,7 +100,6 @@ class EventRaidParticipate {
                             objectIDs: [ attendee.dataset.objectId! ],
                         },
                         success: () => {
-                            this.toogleButton(false);
                             attendee.remove();
                             DomChangeListener.trigger();
                             UiNotification.show();
@@ -111,7 +112,7 @@ class EventRaidParticipate {
         }
     }
     
-    private _createButton(title: string, icon: string): HTMLElement {
+    protected _createButton(title: string, icon: string): HTMLElement {
         const button = document.createElement("a");
         button.className = "button buttonPrimary";
         button.addEventListener("click", () => this._click());
@@ -123,10 +124,20 @@ class EventRaidParticipate {
         return button;
     }
     
-    public toogleButton(hasAttendee: boolean): void {
+    protected toogleButton(): void {
+        let hasAttendee = false;
+        let attendeeId = 0;
+        document.querySelectorAll(".attendee").forEach((attendee: HTMLElement) => {
+            if (~~attendee.dataset.userId! === User.userId) {
+                hasAttendee = true;
+                attendeeId = ~~attendee.dataset.objectId!;
+            }
+        });
+        
         if (hasAttendee) {
             this._buttonContainer.replaceChildren(this._removeButton);
             this._options.hasAttendee = true;
+            this._options.attendeeId = attendeeId;
         } else {
             if (!this._options.isExpired) {
                 this._buttonContainer.replaceChildren(this._addButton);
@@ -138,7 +149,7 @@ class EventRaidParticipate {
         }
     }
     
-    private _ajaxSuccess(data: AjaxResponse): void {
+    protected _ajaxSuccess(data: ParticipateAjaxResponse): void {
         document.querySelectorAll(".attendeeBox").forEach((attendeeBox: HTMLElement) => {
             if (data.distributionId === ~~attendeeBox.dataset.objectId! &&
                 data.status === ~~attendeeBox.dataset.status!) {
@@ -147,7 +158,6 @@ class EventRaidParticipate {
                 const attendeeList = attendeeBox.querySelector(".attendeeList") as HTMLElement;
                 DomUtil.insertHtml(data.template, attendeeList, "append");
 
-                this.toogleButton(true);
                 DomChangeListener.trigger();
                 UiNotification.show();
             }
@@ -157,27 +167,9 @@ class EventRaidParticipate {
 
 let _didInit = false;
 let _participate: EventRaidParticipate | undefined = undefined;
-export function setup(eventId: number, options: ButtonOptions): void {
+export function setup(eventId: number, options: ParticipateButtonOptions): void {
     if (_didInit) return;
         _didInit = true;
         
     _participate = new EventRaidParticipate(eventId, options);
-}
-
-export function toogleButton(hasAttendee: boolean): void {
-    _participate?.toogleButton(hasAttendee);
-}
-
-interface AjaxResponse {
-    attendeeId: number;
-    distributionId: number;
-    status: number;
-    template: string;
-}
-
-interface ButtonOptions {
-    attendeeId: number;
-    canParticipate: boolean;
-    hasAttendee: boolean;
-    isExpired: boolean;
 }

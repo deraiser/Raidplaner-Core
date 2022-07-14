@@ -155,6 +155,7 @@
         
         <category name="rp.event.raid">
             <item name="rp.event.raid.attendee.add"><![CDATA[Anmeldung]]></item>
+            <item name="rp.event.raid.attendee.addByLeader"><![CDATA[Angemeldet von einem Raidleiter]]></item>
             <item name="rp.event.raid.attendee.character"><![CDATA[Charakter]]></item>
             <item name="rp.event.raid.attendee.email"><![CDATA[E-Mail-Addresse]]></item>
             <item name="rp.event.raid.attendee.guest"><![CDATA[Gast]]></item>
@@ -164,6 +165,7 @@
             <item name="rp.event.raid.attendee.registration"><![CDATA[Raid Anmeldung]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Teilnahme löschen]]></item>
             <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich die Teilnahme absagen?]]></item>
+            <item name="rp.event.raid.attendee.select"><![CDATA[Auswahl]]></item>
             <item name="rp.event.raid.cancel"><![CDATA[Raid absagen]]></item>
             <item name="rp.event.raid.cancel.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Raid wirklich absagen?]]></item>
             <item name="rp.event.raid.canceled"><![CDATA[Der Raid wurde von einem Raidleiter abgesagt.]]></item>
@@ -186,6 +188,7 @@
             <item name="rp.event.raid.open"><![CDATA[Raid öffnen]]></item>
             <item name="rp.event.raid.open.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Raid wirklich öffnen?]]></item>
             <item name="rp.event.raid.participate"><![CDATA[Teilnehmen]]></item>
+            <item name="rp.event.raid.participate.add"><![CDATA[Teilnehmer hinzufügen]]></item>
             <item name="rp.event.raid.participate.remove"><![CDATA[Nicht mehr Teilnehmen]]></item>
             <item name="rp.event.raid.participants"><![CDATA[Teilnehmer]]></item>
             <item name="rp.event.raid.points"><![CDATA[Punkte]]></item>
@@ -269,6 +272,7 @@
             <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Charakter]]></item>
             <item name="wcf.acp.group.option.category.mod.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.mod.rp.calendar"><![CDATA[Kalender]]></item>
+            <item name="wcf.acp.group.option.category.mod.rp.raid"><![CDATA[Raids]]></item>
             <item name="wcf.acp.group.option.category.user.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.user.rp.calendar"><![CDATA[Kalender]]></item>
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Charakter]]></item>

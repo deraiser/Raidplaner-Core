@@ -1,7 +1,8 @@
 <li id="attendee{@$attendee->attendeeID}"
     class="attendee jsClipboardObject{if $event->canEdit()} draggable{/if}" 
     data-object-id="{@$attendee->attendeeID}"  
-    data-user-id="{@$attendee->userID}" 
+    data-character-id="{@$attendee->characterID}" 
+    data-user-id="{if $attendee->getCharacter()}{@$attendee->getCharacter()->userID}{else}0{/if}" 
     data-distribution-id="{$__availableDistributionID}"
     {if $event->canEdit()}draggable="true"{/if}
     data-droppable-to="{implode from=$attendee->possibleDistribution() item=distributionID}distribution{@$distributionID}{/implode}">
@@ -25,12 +26,15 @@
             {/if}
         </div>
         
-        {if !$event->isCanceled && 
-            !$event->isClosed && 
-            !$event->getController()->isExpired() &&
-            $attendee->getCharacter() && 
-            $attendee->getCharacter()->userID == $__wcf->user->userID}
-            <span class="statusDisplay">
+        <span class="statusDisplay">
+            {if !$attendee->notes|empty}<span class="icon icon16 fa-comment tooltip" title="{$attendee->notes}"></span>{/if}
+            {if !$attendee->characterID}<span class="icon icon16 fa-user tooltip" title="{lang}rp.event.raid.attendee.guest{/lang}"></span>{/if}
+            {if $attendee->addByLeader}<span class="icon icon16 fa-plus-circle tooltip" title="{lang}rp.event.raid.attendee.addByLeader{/lang}"></span>{/if}
+            {if !$event->isCanceled && 
+                !$event->isClosed && 
+                !$event->getController()->isExpired() &&
+                $attendee->getCharacter() && 
+                $attendee->getCharacter()->userID == $__wcf->user->userID}
                 <div id="attendreeDropdown{@$attendee->attendeeID}" class="dropdown">
                     <a class="dropdownToggle"><span class="icon icon16 fa-cog"></span></a>
                     <ul class="dropdownMenu">
@@ -38,7 +42,7 @@
                         <li><a class="jsAttendeeRemove" data-confirm-message-html="{lang __encode=true}rp.event.raid.attendee.remove.confirmMessage{/lang}">{lang}rp.event.raid.attendee.remove{/lang}</a></li>
                     </ul>
                 </div>
-            </span>
-        {/if}
+            {/if}
+        </span>
     </div>
 </li>

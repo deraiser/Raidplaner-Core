@@ -154,6 +154,7 @@
         
         <category name="rp.event.raid">
             <item name="rp.event.raid.attendee.add"><![CDATA[Registration]]></item>
+            <item name="rp.event.raid.attendee.addByLeader"><![CDATA[Registered by a raid leader]]></item>
             <item name="rp.event.raid.attendee.character"><![CDATA[Character]]></item>
             <item name="rp.event.raid.attendee.email"><![CDATA[E-mail address]]></item>
             <item name="rp.event.raid.attendee.guest"><![CDATA[Guest]]></item>
@@ -163,6 +164,7 @@
             <item name="rp.event.raid.attendee.registration"><![CDATA[Raid registration]]></item>
             <item name="rp.event.raid.attendee.remove"><![CDATA[Delete attendance]]></item>
             <item name="rp.event.raid.attendee.remove.confirmMessage"><![CDATA[Do you really want to cancel the attendance?]]></item>
+            <item name="rp.event.raid.attendee.select"><![CDATA[Selection]]></item>
             <item name="rp.event.raid.cancel"><![CDATA[Cancel Raid]]></item>
             <item name="rp.event.raid.cancel.confirmMessage"><![CDATA[Do you really want to cancel the raid?]]></item>
             <item name="rp.event.raid.canceled"><![CDATA[The raid was cancelled by a raid leader.]]></item>
@@ -185,6 +187,7 @@
             <item name="rp.event.raid.open"><![CDATA[Open Raid]]></item>
             <item name="rp.event.raid.open.confirmMessage"><![CDATA[Do you really want to open the <span class="confirmationObject">{$event->getTitle()}</span> raid?]]></item>
             <item name="rp.event.raid.participate"><![CDATA[Participate]]></item>
+            <item name="rp.event.raid.participate.add"><![CDATA[Add participants]]></item>
             <item name="rp.event.raid.participate.remove"><![CDATA[No longer participate]]></item>
             <item name="rp.event.raid.participants"><![CDATA[Participant]]></item>
             <item name="rp.event.raid.points"><![CDATA[Points]]></item>
@@ -268,6 +271,7 @@
             <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Character]]></item>
             <item name="wcf.acp.group.option.category.mod.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.mod.rp.calendar"><![CDATA[Calendar]]></item>
+            <item name="wcf.acp.group.option.category.mod.rp.raid"><![CDATA[Raids]]></item>
             <item name="wcf.acp.group.option.category.user.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.user.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Character]]></item>

@@ -202,7 +202,7 @@ class RaidEventController extends AbstractEventController
                 ->label('rp.event.notes')
                 ->objectType('info.daries.rp.event.notes'),
         ]);
-        
+
         $this->formComment($dataContainer);
 
         // condition tab
@@ -342,8 +342,13 @@ class RaidEventController extends AbstractEventController
             EventHandler::getInstance()->fireAction($this, 'availableCharacters', $parameters);
             $characters = $parameters['availableCharacters'] ?? $parameters['characters'];
 
-            $raidStatus = [
-                EventRaidAttendee::STATUS_CONFIRMED => WCF::getLanguage()->get('rp.event.raid.container.confirmed'),
+            $raidStatus = [];
+
+            if ($this->isLeader()) {
+                $raidStatus[EventRaidAttendee::STATUS_CONFIRMED] = WCF::getLanguage()->get('rp.event.raid.container.confirmed');
+            }
+
+            $raidStatus = $raidStatus + [
                 EventRaidAttendee::STATUS_LOGIN => WCF::getLanguage()->get('rp.event.raid.container.login'),
                 EventRaidAttendee::STATUS_RESERVE => WCF::getLanguage()->get('rp.event.raid.container.reserve'),
                 EventRaidAttendee::STATUS_LOGOUT => WCF::getLanguage()->get('rp.event.raid.container.logout'),
@@ -352,6 +357,12 @@ class RaidEventController extends AbstractEventController
             self::$contentData = [
                 'attendees' => $attendees,
                 'availableDistributions' => $distributions,
+                'availableRaidStatus' => [
+                    EventRaidAttendee::STATUS_CONFIRMED => WCF::getLanguage()->get('rp.event.raid.container.confirmed'),
+                    EventRaidAttendee::STATUS_LOGIN => WCF::getLanguage()->get('rp.event.raid.container.login'),
+                    EventRaidAttendee::STATUS_RESERVE => WCF::getLanguage()->get('rp.event.raid.container.reserve'),
+                    EventRaidAttendee::STATUS_LOGOUT => WCF::getLanguage()->get('rp.event.raid.container.logout'),
+                ],
                 'characters' => $characters,
                 'hasAttendee' => $hasAttendee,
                 'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('info.daries.rp.raid.attendee')),

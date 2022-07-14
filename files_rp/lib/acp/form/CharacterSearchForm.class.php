@@ -8,7 +8,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\search\SearchEditor;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\condition\ICondition;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
@@ -19,6 +18,7 @@ use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use const TIME_NOW;
+use rp\system\condition\ICondition;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp

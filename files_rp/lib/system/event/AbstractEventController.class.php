@@ -401,7 +401,7 @@ abstract class AbstractEventController implements IEventController
     /**
      * @inheritDoc
      */
-    public function showEventNodesPosition(string $position): bool
+    public function showEventNodes(string $position): bool
     {
         return ($this->eventNodesPosition === $position);
     }

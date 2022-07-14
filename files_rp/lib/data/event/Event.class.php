@@ -104,7 +104,7 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
      */
     public function canCancel(): bool
     {
-        if (!$this->getController()->getObjectTypeName() == 'info.daries.rp.event.raid') {
+        if (!$this->isRaidEvent()) {
             return false;
         }
 
@@ -129,7 +129,7 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
             return true;
         }
 
-        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+        if ($this->isRaidEvent()) {
             if ($this->getController()->isLeader()) {
                 return true;
             }
@@ -148,7 +148,7 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
             return true;
         }
 
-        if ($this->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+        if ($this->isRaidEvent()) {
             if ($this->getController()->isLeader()) {
                 return true;
             }
@@ -511,6 +511,15 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
                 );
             }
         }
+    }
+
+    /**
+     * Returns `true` if this event is a raid event, otherwise `false`.
+     */
+    public function isRaidEvent(): bool
+    {
+        if ($this->getController()->getObjectTypeName() === 'info.daries.rp.event.raid') return true;
+        return false;
     }
 
     /**

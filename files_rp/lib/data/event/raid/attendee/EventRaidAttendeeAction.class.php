@@ -2,12 +2,14 @@
 
 namespace rp\data\event\raid\attendee;
 
+use rp\data\character\CharacterList;
 use rp\data\classification\ClassificationCache;
 use rp\data\event\Event;
 use rp\data\role\RoleCache;
 use rp\system\cache\runtime\CharacterRuntimeCache;
 use rp\system\cache\runtime\EventRaidAttendeeRuntimeCache;
 use rp\system\cache\runtime\EventRuntimeCache;
+use rp\system\form\builder\field\character\CharacterMultipleSelectionFormField;
 use rp\system\user\notification\object\EventRaidUserNotificationObject;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IPopoverAction;
@@ -17,7 +19,10 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\DialogFormDocument;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\EmailFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -83,6 +88,11 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
     protected ?Event $event = null;
 
     /**
+     * leader add dialog form document
+     */
+    protected ?DialogFormDocument $leaderAddDialog = null;
+
+    /**
      * @inheritDoc
      */
     public function create(): EventRaidAttendee
@@ -97,6 +107,14 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         return [
             'dialog' => $this->getAddDialog()->getHtml(),
             'formId' => 'addDialog'
+        ];
+    }
+
+    public function createLeaderAddDialog(): array
+    {
+        return [
+            'dialog' => $this->getLeaderAddDialog()->getHtml(),
+            'formId' => 'leaderAddDialog'
         ];
     }
 
@@ -150,7 +168,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
                             foreach ($characters as $id => $character) {
                                 $options[] = [
                                     'depth' => 0,
-                                    'label' => $character['characterLabel'],
+                                    'label' => $character->characterName,
                                     'value' => $id,
                                 ];
                             }
@@ -228,6 +246,144 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         }
 
         return $this->addDialog;
+    }
+
+    /**
+     * Creates a leader dialog and is returned.
+     */
+    protected function getLeaderAddDialog(): DialogFormDocument
+    {
+        if ($this->leaderAddDialog === null) {
+            $this->leaderAddDialog = DialogFormDocument::create('leaderAddDialog');
+            $this->leaderAddDialog->cancelable(false);
+
+            $dataContainer = FormContainer::create('leaderAddDialogData');
+            $this->leaderAddDialog->appendChild($dataContainer);
+
+            $select = RadioButtonFormField::create('select')
+                ->label('rp.event.raid.attendee.select')
+                ->options([
+                    'character' => 'rp.event.raid.attendee.character',
+                    'guest' => 'rp.event.raid.attendee.guest'
+                ])
+                ->value('character')
+                ->addClass('floated');
+
+            $charactersFormField = CharacterMultipleSelectionFormField::create('characters')
+                ->label('rp.event.raid.attendee.character')
+                ->filterable()
+                ->required()
+                ->addDependency(
+                    ValueFormFieldDependency::create('select')
+                    ->field($select)
+                    ->values(['character'])
+                )
+                ->addValidator(new FormFieldValidator('empty', static function (MultipleSelectionFormField $formField) {
+                        if (empty($formField->getSaveValue())) {
+                            $formField->addValidationError(new FormFieldValidationError('empty'));
+                        }
+                    }));
+
+            $parameters = [
+                'charactersFormField' => $charactersFormField,
+                'parameters' => $this->parameters,
+            ];
+            EventHandler::getInstance()->fireAction($this, 'getLeaderAddDialogCharacters', $parameters);
+
+            if (!isset($parameters['fieldChanged'])) {
+                $charactersFormField->options(function () {
+                    $characterList = new CharacterList();
+                    $characterList->getConditionBuilder()->add('member.gameID = ?', [RP_DEFAULT_GAME_ID]);
+                    $characterList->getConditionBuilder()->add('member.isDisabled = ?', [0]);
+                    if (!empty($this->parameters['characterIDs'])) {
+                        $characterList->getConditionBuilder()->add('member.characterID NOT IN (?)', [$this->parameters['characterIDs']]);
+                    }
+                    $characterList->readObjects();
+
+                    $options = [];
+                    foreach ($characterList->getObjects() as $character) {
+                        $options[] = [
+                            'depth' => 0,
+                            'label' => $character->getTitle(),
+                            'userID' => $character->userID,
+                            'value' => $character->charcterID,
+                        ];
+                    }
+                    return $options;
+                }, false, false);
+            }
+
+            $dataContainer->appendChildren([
+                $select,
+                    SingleSelectionFormField::create('status')
+                    ->label('rp.event.raid.status')
+                    ->options($this->event->getController()->getContentData('raidStatus'))
+                    ->value(EventRaidAttendee::STATUS_LOGIN),
+                $charactersFormField,
+                    TextFormField::create('characterName')
+                    ->label('rp.event.raid.attendee.character')
+                    ->required()
+                    ->autoFocus()
+                    ->maximumLength(100)
+                    ->addDependency(
+                        ValueFormFieldDependency::create('select')
+                        ->field($select)
+                        ->values(['guest'])
+                    ),
+                    SingleSelectionFormField::create('roleID')
+                    ->label('rp.role.title')
+                    ->required()
+                    ->options(['' => 'wcf.global.noSelection'] + RoleCache::getInstance()->getRoles())
+                    ->addValidator(new FormFieldValidator('uniqueness', function (SingleSelectionFormField $formField) {
+                                $value = $formField->getSaveValue();
+
+                                if (empty($value)) {
+                                    $formField->addValidationError(new FormFieldValidationError('empty'));
+                                } else {
+                                    $role = RoleCache::getInstance()->getRoleByID($value);
+                                    if ($role === null) {
+                                        $formField->addValidationError(new FormFieldValidationError(
+                                                'invalid',
+                                                'rp.role.error.invalid'
+                                        ));
+                                    }
+                                }
+                            }))
+                    ->addDependency(
+                        ValueFormFieldDependency::create('select')
+                        ->field($select)
+                        ->values(['guest'])
+                    ),
+                    SingleSelectionFormField::create('classificationID')
+                    ->label('rp.classification.title')
+                    ->required()
+                    ->options(['' => 'wcf.global.noSelection'] + ClassificationCache::getInstance()->getClassifications())
+                    ->addValidator(new FormFieldValidator('uniqueness', function (SingleSelectionFormField $formField) {
+                                $value = $formField->getSaveValue();
+
+                                if (empty($value)) {
+                                    $formField->addValidationError(new FormFieldValidationError('empty'));
+                                } else {
+                                    $role = ClassificationCache::getInstance()->getClassificationByID($value);
+                                    if ($role === null) {
+                                        $formField->addValidationError(new FormFieldValidationError(
+                                                'invalid',
+                                                'rp.classification.error.invalid'
+                                        ));
+                                    }
+                                }
+                            }))
+                    ->addDependency(
+                        ValueFormFieldDependency::create('select')
+                        ->field($select)
+                        ->values(['guest'])
+                    ),
+            ]);
+
+            $this->leaderAddDialog->build();
+        }
+
+        return $this->leaderAddDialog;
     }
 
     /**
@@ -356,6 +512,94 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
     }
 
     /**
+     * Saves the leader attendees add dialog.
+     */
+    public function submitLeaderAddDialog(): ?array
+    {
+        if ($this->getLeaderAddDialog()->hasValidationErrors()) {
+            return [
+                'dialog' => $this->getLeaderAddDialog()->getHtml(),
+                'formId' => 'leaderAddDialog'
+            ];
+        }
+
+        $formData = $this->getLeaderAddDialog()->getData();
+
+        $saveDatas = [];
+        switch ($formData['data']['select']) {
+            case 'character':
+                foreach ($formData['characters'] as $characterID) {
+                    $newData = [];
+
+                    $parameters = [
+                        'characterID' => $characterID
+                    ];
+                    EventHandler::getInstance()->fireAction($this, 'submitLeaderAddDialogCharacter', $parameters);
+
+                    if ($parameters['characterID'] === null) {
+                        $newData = $parameters['saveData'];
+                    } else {
+                        $character = CharacterRuntimeCache::getInstance()->getObject($characterID);
+                        $newData = [
+                            'characterID' => $character->characterID,
+                            'characterName' => $character->characterName,
+                            'classificationID' => $character->classificationID,
+                            'roleID' => $character->roleID,
+                        ];
+                    }
+
+                    $saveDatas[] = $newData + [
+                        'addByLeader' => 1,
+                        'eventID' => $this->event->eventID,
+                        'status' => $formData['data']['status'],
+                    ];
+                }
+                break;
+
+            case 'guest':
+                $saveDatas[] = [
+                    'addByLeader' => 1,
+                    'characterName' => $formData['data']['characterName'],
+                    'classificationID' => $formData['data']['classificationID'],
+                    'eventID' => $this->event->eventID,
+                    'roleID' => $formData['data']['roleID'],
+                    'status' => $formData['data']['status'],
+                ];
+                break;
+        }
+
+        $returnDatas = [];
+        foreach ($saveDatas as $data) {
+            $action = new EventRaidAttendeeAction([], 'create', ['data' => $data]);
+            /** @var EventRaidAttendee $attendee */
+            $attendee = $action->executeAction()['returnValues'];
+
+            $distributionID = 0;
+            switch ($this->event->distributionMode) {
+                case 'class':
+                    $distributionID = $attendee->classificationID;
+                    break;
+                case 'role':
+                    $distributionID = $attendee->roleID;
+                    break;
+            }
+
+            $returnDatas[] = [
+                'attendeeId' => $attendee->attendeeID,
+                'distributionId' => $distributionID,
+                'status' => $attendee->status,
+                'template' => WCF::getTPL()->fetch('eventRaidAttendeeItems', 'rp', [
+                    'attendee' => $attendee,
+                    'event' => $this->event,
+                    '__availableDistributionID' => $distributionID,
+                ])
+            ];
+        }
+        
+        return $returnDatas;
+    }
+
+    /**
      * Unmarks attendees.
      */
     protected function unmarkItems(array $attendeeIDs = [])
@@ -423,6 +667,24 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         }
 
         if ($this->event->getController()->isExpired()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Validates the 'createLeaderAddDialog' action.
+     */
+    public function validateCreateLeaderAddDialog(): void
+    {
+        $this->readBoolean('eventID');
+        $this->readIntegerArray('characterIDs', true);
+
+        $this->event = EventRuntimeCache::getInstance()->getObject($this->parameters['eventID']);
+        if ($this->event === null) {
+            throw new UserInputException('eventID');
+        }
+
+        if (!$this->event->getController()->isLeader()) {
             throw new PermissionDeniedException();
         }
     }
@@ -509,6 +771,27 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         }
 
         $dialog = $this->getAddDialog();
+        $dialog->requestData($this->parameters['data']);
+        $dialog->readValues();
+        $dialog->validate();
+    }
+
+    /**
+     * Validates the 'submitLeaderAddDialong' action.
+     */
+    public function validateSubmitLeaderAddDialog(): void
+    {
+        $this->readInteger('eventID');
+        $this->event = EventRuntimeCache::getInstance()->getObject(($this->parameters['eventID']));
+        if ($this->event === null) {
+            throw new UserInputException('eventID');
+        }
+
+        if (!$this->event->getController()->isLeader()) {
+            throw new PermissionDeniedException();
+        }
+
+        $dialog = $this->getLeaderAddDialog();
         $dialog->requestData($this->parameters['data']);
         $dialog->readValues();
         $dialog->validate();

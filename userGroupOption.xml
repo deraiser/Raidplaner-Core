@@ -18,6 +18,9 @@
             <category name="mod.rp.calendar">
                 <parent>mod.rp</parent>
             </category>
+            <category name="mod.rp.raid">
+                <parent>mod.rp</parent>
+            </category>
             
             <category name="user.rp">
                 <parent>user</parent>
@@ -157,6 +160,9 @@
 				<usersonly>1</usersonly>
 			</option>
             <!-- /mod.rp.calendar -->
+            
+            <!-- mod.rp.raid -->
+            <!-- /mod.rp.raid -->
             <!-- /mod.rp -->
             
             <!-- user.rp -->

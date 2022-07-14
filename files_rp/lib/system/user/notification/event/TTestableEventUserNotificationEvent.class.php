@@ -46,12 +46,14 @@ trait TTestableEventUserNotificationEvent
         /** @var Event $event */
         return (new EventAction([], 'create', [
                 'data' => [
+                    'additionalData' => \serialize([
+                        'timezone' => WCF::getUser()->getTimeZone()->getName(),
+                    ]),
                     'enableComments' => 1,
                     'endTime' => TIME_NOW + (60 * 60 * 2),
                     'notes' => 'Test Notes',
                     'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.default'),
                     'startTime' => TIME_NOW,
-                    'timezone' => WCF::getUser()->getTimeZone()->getName(),
                     'title' => 'Test Event',
                     'userID' => $author->userID,
                     'username' => $author->username,

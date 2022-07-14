@@ -17,10 +17,10 @@
  *  You should have received a copy of the GNU Affero General Public License
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Form/Builder/Dialog", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Notification"], function (require, exports, tslib_1, Ajax, Core, DomChangeListener, DomUtil, Dialog_1, Language, UiConfirmation, UiNotification) {
+define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/Core/Core", "WoltLabSuite/Core/Dom/Change/Listener", "WoltLabSuite/Core/Dom/Util", "WoltLabSuite/Core/Form/Builder/Dialog", "WoltLabSuite/Core/Language", "WoltLabSuite/Core/Ui/Confirmation", "WoltLabSuite/Core/Ui/Notification", "WoltLabSuite/Core/User"], function (require, exports, tslib_1, Ajax, Core, DomChangeListener, DomUtil, Dialog_1, Language, UiConfirmation, UiNotification, User_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    exports.toogleButton = exports.setup = void 0;
+    exports.setup = void 0;
     Ajax = tslib_1.__importStar(Ajax);
     Core = tslib_1.__importStar(Core);
     DomChangeListener = tslib_1.__importStar(DomChangeListener);
@@ -29,6 +29,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
     Language = tslib_1.__importStar(Language);
     UiConfirmation = tslib_1.__importStar(UiConfirmation);
     UiNotification = tslib_1.__importStar(UiNotification);
+    User_1 = tslib_1.__importDefault(User_1);
     class EventRaidParticipate {
         /**
          * Initializes the event raid inline editor for attendees.
@@ -47,7 +48,8 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             // create participate buttons
             this._addButton = this._createButton(Language.get("rp.event.raid.participate"), "fa-plus");
             this._removeButton = this._createButton(Language.get("rp.event.raid.participate.remove"), "fa-trash");
-            this.toogleButton(this._options.hasAttendee);
+            DomChangeListener.add("Daries/RP/Ui/Event/Raid/Participate", () => this.toogleButton());
+            this.toogleButton();
             DomUtil.show(this._buttonContainer);
         }
         _click() {
@@ -77,7 +79,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
                                 objectIDs: [attendee.dataset.objectId],
                             },
                             success: () => {
-                                this.toogleButton(false);
                                 attendee.remove();
                                 DomChangeListener.trigger();
                                 UiNotification.show();
@@ -99,10 +100,19 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         `;
             return button;
         }
-        toogleButton(hasAttendee) {
+        toogleButton() {
+            let hasAttendee = false;
+            let attendeeId = 0;
+            document.querySelectorAll(".attendee").forEach((attendee) => {
+                if (~~attendee.dataset.userId === User_1.default.userId) {
+                    hasAttendee = true;
+                    attendeeId = ~~attendee.dataset.objectId;
+                }
+            });
             if (hasAttendee) {
                 this._buttonContainer.replaceChildren(this._removeButton);
                 this._options.hasAttendee = true;
+                this._options.attendeeId = attendeeId;
             }
             else {
                 if (!this._options.isExpired) {
@@ -122,7 +132,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
                     this._options.attendeeId = data.attendeeId;
                     const attendeeList = attendeeBox.querySelector(".attendeeList");
                     DomUtil.insertHtml(data.template, attendeeList, "append");
-                    this.toogleButton(true);
                     DomChangeListener.trigger();
                     UiNotification.show();
                 }
@@ -138,8 +147,4 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         _participate = new EventRaidParticipate(eventId, options);
     }
     exports.setup = setup;
-    function toogleButton(hasAttendee) {
-        _participate === null || _participate === void 0 ? void 0 : _participate.toogleButton(hasAttendee);
-    }
-    exports.toogleButton = toogleButton;
 });

@@ -114,7 +114,7 @@ class EventCommentManager extends AbstractCommentManager implements IViewableLik
     {
         $event = ViewableEventRuntimeCache::getInstance()->getObject($this->getObjectID($commentOrResponse));
 
-        if ($event->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+        if ($event->isRaidEvent()) {
             if ($event->leaders) {
                 if (\in_array($commentOrResponse->userID, $event->leaders)) {
                     return true;

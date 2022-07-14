@@ -32,7 +32,6 @@ import * as Core from "WoltLabSuite/Core/Core";
 import DragAndDropItem from "./DragAndDrop/Item";
 import * as DomChangeListener from "WoltLabSuite/Core/Dom/Change/Listener";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
-import * as EventRaidParticipate from "./Participate";
 import * as Language from "WoltLabSuite/Core/Language";
 import * as UiConfirmation from "WoltLabSuite/Core/Ui/Confirmation";
 import * as UiDialog from "WoltLabSuite/Core/Ui/Dialog";
@@ -60,7 +59,6 @@ class EventRaidInlineEditor {
             }, 
             permissions,
         ) as InlineEditorPermissions;
-        
         
         EventHandler.add("com.woltlab.wcf.clipboard", "info.daries.rp.raid.attendee", (data) => this.clipboardAction(data));
         
@@ -205,7 +203,7 @@ class EventRaidInlineEditor {
         attendee.element!.remove();
         attendees.delete(attendeeId);
         
-        EventRaidParticipate.toogleButton(false);
+        DomChangeListener.trigger();
     }
     
     /**

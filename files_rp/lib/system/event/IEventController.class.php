@@ -101,5 +101,5 @@ interface IEventController
      * Returns `true` if the position matches the event nodes position present in 
      * the controller, otherwise `false`.
      */
-    public function showEventNodesPosition(string $position): bool;
+    public function showEventNodes(string $position): bool;
 }

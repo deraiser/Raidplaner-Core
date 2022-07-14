@@ -4,7 +4,7 @@ namespace rp\acp\form;
 
 use rp\data\character\Character;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\form\builder\IFormNode;
+use wcf\system\form\builder\field\IFormField;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -73,10 +73,10 @@ class CharacterEditForm extends CharacterAddForm
 
         if (empty($_POST)) {
             foreach ($this->formObject->additionalData as $key => $value) {
-                /** @var IFormNode $node */
-                $node = $this->form->getNodeById($key);
-                if ($node !== null) {
-                    $node->value($value);
+                /** @var IFormField $field */
+                $field = $this->form->getNodeById($key);
+                if ($field !== null) {
+                    $field->value($value);
                 }
             }
         }

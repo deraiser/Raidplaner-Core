@@ -82,7 +82,7 @@ ICommentUserNotificationObjectType, IMultiRecipientCommentUserNotificationObject
         \assert($event->eventID !== 0);
 
         $leaders = [];
-        if ($event->objectTypeID === ObjectTypeCache::getInstance()->getObjectTypeIDByName('info.daries.rp.eventController', 'info.daries.rp.event.raid')) {
+        if ($event->isRaidEvent()) {
             $leaders = $event->leaders;
         }
         $users = UserProfileRuntimeCache::getInstance()->getObjects($leaders);
