@@ -166,10 +166,9 @@ class EventRaidParticipate {
 }
 
 let _didInit = false;
-let _participate: EventRaidParticipate | undefined = undefined;
 export function setup(eventId: number, options: ParticipateButtonOptions): void {
     if (_didInit) return;
         _didInit = true;
         
-    _participate = new EventRaidParticipate(eventId, options);
+    new EventRaidParticipate(eventId, options);
 }

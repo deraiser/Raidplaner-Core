@@ -49,7 +49,6 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             this._addButton = this._createButton(Language.get("rp.event.raid.participate"), "fa-plus");
             this._removeButton = this._createButton(Language.get("rp.event.raid.participate.remove"), "fa-trash");
             DomChangeListener.add("Daries/RP/Ui/Event/Raid/Participate", () => this.toogleButton());
-            this.toogleButton();
             DomUtil.show(this._buttonContainer);
         }
         _click() {
@@ -139,12 +138,11 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
         }
     }
     let _didInit = false;
-    let _participate = undefined;
     function setup(eventId, options) {
         if (_didInit)
             return;
         _didInit = true;
-        _participate = new EventRaidParticipate(eventId, options);
+        new EventRaidParticipate(eventId, options);
     }
     exports.setup = setup;
 });
