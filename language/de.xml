@@ -73,9 +73,16 @@
             <item name="rp.character.notes"><![CDATA[Notizen]]></item>
             <item name="rp.character.notes.description"><![CDATA[Beliebige Notizen zu diesem Charakter.]]></item>
             <item name="rp.character.otherCharacters"><![CDATA[Andere Charaktere]]></item>
+            <item name="rp.character.point.account.adjustments"><![CDATA[Anpassungen]]></item>
+            <item name="rp.character.point.account.current"><![CDATA[Aktuell]]></item>
+            <item name="rp.character.point.account.issued"><![CDATA[Ausgegeben]]></item>
+            <item name="rp.character.point.account.raid30"><![CDATA[Raids (30 Tage)]]></item>
+            <item name="rp.character.point.account.raid60"><![CDATA[Raids (60 Tage)]]></item>
+            <item name="rp.character.point.account.raid90"><![CDATA[Raids (90 Tage)]]></item>
+            <item name="rp.character.point.account.raidAll"><![CDATA[Raids (Lebenszeit)]]></item>
+            <item name="rp.character.point.account.received"><![CDATA[Erhalten]]></item>
+            <item name="rp.character.point.account.title"><![CDATA[Kontoname]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
-            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine Informationen hinterlegt.{else}Der Charakter hat noch keine Informationen hinterlegt.{/if}]]></item>
-            <item name="rp.character.profile.menu.about"><![CDATA[Über Charakter]]></item>
             <item name="rp.character.profileHits"><![CDATA[Aufrufe]]></item>
             <item name="rp.character.rank"><![CDATA[Rang]]></item>
             <item name="rp.character.search"><![CDATA[Charaktersuche]]></item>
@@ -84,6 +91,12 @@
             <item name="rp.character.sortField.created"><![CDATA[Erstellt]]></item>
             <item name="rp.character.title"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Charaktere]]></item>
             <item name="rp.character.unknownCharacter"><![CDATA[Dieser Charakter existiert nicht oder wurde gelöscht.]]></item>
+        </category>
+        
+        <category name="rp.character.profile">
+            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine Informationen hinterlegt.{else}Der Charakter hat noch keine Informationen hinterlegt.{/if}]]></item>
+            <item name="rp.character.profile.menu.about"><![CDATA[Über Charakter]]></item>
+            <item name="rp.character.profile.menu.stats"><![CDATA[Statistiken]]></item>
         </category>
         
         <category name="rp.classification">
@@ -205,6 +218,10 @@
         <category name="rp.game">
             <item name="rp.game.default"><![CDATA[Standard]]></item>
             <item name="rp.game.title"><![CDATA[Spiel]]></item>
+        </category>
+    
+        <category name="rp.point.account">
+            <item name="rp.point.account.noDatas"><![CDATA[Es wurden keine Punktestände gefunden. <a href="{link controller='PointList' application='rp'}{/link}">Den aktiven Filter zurücksetzen.</a>]]></item>
         </category>
     
         <category name="rp.race">

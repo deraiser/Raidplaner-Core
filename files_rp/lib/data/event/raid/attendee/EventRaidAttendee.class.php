@@ -2,9 +2,9 @@
 
 namespace rp\data\event\raid\attendee;
 
+use rp\data\character\Character;
 use rp\data\character\CharacterProfile;
 use rp\data\event\Event;
-use rp\data\role\Role;
 use rp\system\cache\runtime\CharacterProfileRuntimeCache;
 use rp\system\cache\runtime\EventRuntimeCache;
 use wcf\data\DatabaseObject;
@@ -86,8 +86,21 @@ class EventRaidAttendee extends DatabaseObject implements ITitledLinkObject
      */
     public function getCharacter(): ?CharacterProfile
     {
-        if ($this->character === null && $this->characterID) {
+        if ($this->character === null) {
             $this->character = CharacterProfileRuntimeCache::getInstance()->getObject($this->characterID);
+        }
+
+        if ($this->character === null) {
+            $this->character = new CharacterProfile(
+                new Character(
+                    null,
+                    [
+                    'characterName' => $this->characterName,
+                    'created' => $this->created,
+                    'isPrimary' => 1,
+                    ]
+                )
+            );
         }
 
         return $this->character;

@@ -139,10 +139,6 @@ class CharactersListPage extends SortablePage
         }
 
         $this->objectList->getConditionBuilder()->add('gameID = ?', [RP_DEFAULT_GAME_ID]);
-
-        if (!RP_SHOW_TWINKS) {
-            $this->objectList->getConditionBuilder()->add('isPrimary', [1]);
-        }
     }
 
     /**

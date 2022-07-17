@@ -73,9 +73,16 @@
             <item name="rp.character.notes"><![CDATA[Notes]]></item>
             <item name="rp.character.notes.description"><![CDATA[Any notes on this character.]]></item>
             <item name="rp.character.otherCharacters"><![CDATA[Other Characters]]></item>
+            <item name="rp.character.point.account.adjustments"><![CDATA[Adjustments]]></item>
+            <item name="rp.character.point.account.current"><![CDATA[Current]]></item>
+            <item name="rp.character.point.account.issued"><![CDATA[Issued]]></item>
+            <item name="rp.character.point.account.raid30"><![CDATA[Raids (30 Days)]]></item>
+            <item name="rp.character.point.account.raid60"><![CDATA[Raids (60 Days)]]></item>
+            <item name="rp.character.point.account.raid90"><![CDATA[Raids (90 Days)]]></item>
+            <item name="rp.character.point.account.raidAll"><![CDATA[Raids (Lifetime)]]></item>
+            <item name="rp.character.point.account.received"><![CDATA[Received]]></item>
+            <item name="rp.character.point.account.title"><![CDATA[Account name]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
-            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
-            <item name="rp.character.profile.menu.about"><![CDATA[About Character]]></item>
             <item name="rp.character.profileHits"><![CDATA[Hits]]></item>
             <item name="rp.character.rank"><![CDATA[Rank]]></item>
             <item name="rp.character.search"><![CDATA[Search Characters]]></item>
@@ -84,6 +91,12 @@
             <item name="rp.character.sortField.created"><![CDATA[Created]]></item>
             <item name="rp.character.title"><![CDATA[Your Characters]]></item>
             <item name="rp.character.unknownCharacter"><![CDATA[This character does not exist or has been deleted.]]></item>
+        </category>
+        
+        <category name="rp.character.profile">
+            <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
+            <item name="rp.character.profile.menu.about"><![CDATA[About Character]]></item>
+            <item name="rp.character.profile.menu.stats"><![CDATA[Statistics]]></item>
         </category>
         
         <category name="rp.classification">
@@ -204,6 +217,10 @@
         <category name="rp.game">
             <item name="rp.game.default"><![CDATA[Default]]></item>
             <item name="rp.game.title"><![CDATA[Game]]></item>
+        </category>
+    
+        <category name="rp.point.account">
+            <item name="rp.point.account.noDatas"><![CDATA[No points matched your criteria. <a href="{link controller='PointList' application='rp'}{/link}">Reset the applied filters.</a>]]></item>
         </category>
     
         <category name="rp.race">

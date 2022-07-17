@@ -2,7 +2,7 @@
     class="attendee jsClipboardObject{if $event->canEdit()} draggable{/if}" 
     data-object-id="{@$attendee->attendeeID}"  
     data-character-id="{@$attendee->characterID}" 
-    data-user-id="{if $attendee->getCharacter()}{@$attendee->getCharacter()->userID}{else}0{/if}" 
+    data-user-id="{@$attendee->getCharacter()->userID}" 
     data-distribution-id="{$__availableDistributionID}"
     {if $event->canEdit()}draggable="true"{/if}
     data-droppable-to="{implode from=$attendee->possibleDistribution() item=distributionID}distribution{@$distributionID}{/implode}">
@@ -13,17 +13,13 @@
             </div>
         {/if}
         <div class="attendeeName">
-            {if $attendee->getCharacter()}
-                {@$attendee->getCharacter()->getAvatar()->getImageTag(24)}
-                <span>
-                    <a href="{$attendee->getLink()}" 
-                       class="rpEventRaidAttendeeLink" 
-                       data-object-id="{@$attendee->attendeeID}">{$attendee->getCharacter()->characterName}
-                    </a>
-                </span>
-            {else}
-                <span>{$attendee->characterName}<span>
-            {/if}
+            {@$attendee->getCharacter()->getAvatar()->getImageTag(24)}
+            <span>
+                <a href="{$attendee->getLink()}" 
+                   class="rpEventRaidAttendeeLink" 
+                   data-object-id="{@$attendee->attendeeID}">{$attendee->getCharacter()->characterName}
+                </a>
+            </span>
         </div>
         
         <span class="statusDisplay">
@@ -33,7 +29,6 @@
             {if !$event->isCanceled && 
                 !$event->isClosed && 
                 !$event->getController()->isExpired() &&
-                $attendee->getCharacter() && 
                 $attendee->getCharacter()->userID == $__wcf->user->userID}
                 <div id="attendreeDropdown{@$attendee->attendeeID}" class="dropdown">
                     <a class="dropdownToggle"><span class="icon icon16 fa-cog"></span></a>

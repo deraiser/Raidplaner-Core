@@ -55,6 +55,23 @@
 				<title>Termin bearbeiten</title>
 			</content>
 		</page>
+		<page identifier="info.daries.rp.UnreadEventList">
+			<pageType>system</pageType>
+			<parent>info.daries.rp.Calendar</parent>
+			<controller>rp\page\UnreadEventListPage</controller>
+			<handler>rp\system\page\handler\UnreadEventListPageHandler</handler>
+			<name language="de">Ungelesene Termine</name>
+			<name language="en">Unread Events</name>
+			<permissions>user.rp.canReadEvent</permissions>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<content language="en">
+				<title>Unread Events</title>
+			</content>
+			<content language="de">
+				<title>Ungelesene Termine</title>
+			</content>
+		</page>
+        
         <page identifier="info.daries.rp.CharactersList">
             <pageType>system</pageType>
             <controller>rp\page\CharactersListPage</controller>
@@ -118,6 +135,72 @@
             <handler>rp\system\page\handler\CharacterPageHandler</handler>
             <parent>info.daries.rp.CharactersList</parent>
             <requireObjectID>1</requireObjectID>
+        </page>
+        
+        <page identifier="info.daries.rp.Roster">
+            <pageType>system</pageType>
+            <controller>rp\page\RosterPage</controller>
+            <name language="de">Roster</name>
+            <name language="en">Roster</name>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+            <content language="en">
+                <title>Roster</title>
+            </content>
+            <content language="de">
+                <title>Roster</title>
+            </content>
+        </page>
+                
+        <page identifier="info.daries.rp.PointList">
+            <pageType>system</pageType>
+            <controller>rp\page\PointListPage</controller>
+            <name language="de">Punktestand</name>
+            <name language="en">Points</name>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+            <content language="en">
+                <title>Points</title>
+            </content>
+            <content language="de">
+                <title>Punktestand</title>
+            </content>
+        </page>
+        
+        <page identifier="info.daries.rp.RaidList">
+            <pageType>system</pageType>
+            <controller>rp\page\RaidListPage</controller>
+            <name language="de">Raid-Liste</name>
+            <name language="en">Raid List</name>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+            <content language="en">
+                <title>Raids</title>
+            </content>
+            <content language="de">
+                <title>Raids</title>
+            </content>
+        </page>
+        <page identifier="info.daries.rp.Raid">
+            <pageType>system</pageType>
+            <controller>rp\page\RaidPage</controller>
+            <name language="de">Raid</name>
+            <name language="en">Raid</name>
+            <parent>info.daries.rp.RaidList</parent>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+			<hasFixedParent>1</hasFixedParent>
+            <requireObjectID>1</requireObjectID>
+        </page>
+        
+        <page identifier="info.daries.rp.RaidEventList">
+            <pageType>system</pageType>
+            <controller>rp\page\RaidEventListPage</controller>
+            <name language="de">Raid Event-Liste</name>
+            <name language="en">Raid Event List</name>
+            <allowSpidersToIndex>1</allowSpidersToIndex>
+            <content language="en">
+                <title>Raid Events</title>
+            </content>
+            <content language="de">
+                <title>Raid Events</title>
+            </content>
         </page>
     </import>
 </data>

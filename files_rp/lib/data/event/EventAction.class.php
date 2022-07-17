@@ -293,6 +293,19 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
     }
 
     /**
+     * Marks all articles as read.
+     */
+    public function markAllAsRead(): void
+    {
+        VisitTracker::getInstance()->trackTypeVisit('info.daries.rp.event');
+
+        // reset storage
+        if (WCF::getUser()->userID) {
+            UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'rpUnreadEvents');
+        }
+    }
+
+    /**
      * Marks events as read.
      */
     public function markAsRead(): void
@@ -529,6 +542,14 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
         if (\count($this->objectIDs) != 1) {
             throw new UserInputException('objectIDs');
         }
+    }
+
+    /**
+     * Validates the mark all as read action.
+     */
+    public function validateMarkAllAsRead(): void
+    {
+        // does nothing
     }
 
     /**

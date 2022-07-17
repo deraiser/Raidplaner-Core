@@ -1,10 +1,9 @@
 <?php
 
-namespace rp\system\page\handler;
+namespace wcf\system\template\plugin;
 
-use rp\data\event\ViewableEvent;
-use wcf\system\page\handler\AbstractMenuPageHandler;
-use wcf\system\WCF;
+use rp\util\RPUtil;
+use wcf\system\template\TemplateEngine;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -27,27 +26,23 @@ use wcf\system\WCF;
  */
 
 /**
- * Page handler implementation for the calendar.
+ * Template modifier plugin which formats a character point.
  *
+ * Usage:
+ *  {$intOrFloat|characterPoint}
+ *  {123456789|characterPoint}
+ * 
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     WoltLabSuite\Core\System\Template\Plugin
  */
-class CalendarPageHandler extends AbstractMenuPageHandler
+class CharacterPointModifierTemplatePlugin implements IModifierTemplatePlugin
 {
 
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function execute($tagArgs, TemplateEngine $tplObj)
     {
-        return ViewableEvent::getUnreadEvents();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function isVisible($objectID = null)
-    {
-        return WCF::getSession()->getPermission('user.rp.canReadEvent');
+        return RPUtil::formatPoints($tagArgs[0]);
     }
 }

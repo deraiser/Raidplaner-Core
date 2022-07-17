@@ -6,6 +6,7 @@ use rp\data\event\Event;
 use wcf\data\language\Language;
 use wcf\data\user\User;
 use wcf\util\DateUtil;
+use wcf\util\StringUtil;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -46,6 +47,17 @@ final class RPUtil
     public static function formatEventFullDay(\DateTime $time, ?Language $language = null): string
     {
         return DateUtil::format($time, Event::DATE_FORMAT, $language, self::getUTCUser());
+    }
+
+    /**
+     * Formats the points
+     */
+    public static function formatPoints(float|int $points = 0): string
+    {
+        return StringUtil::formatDouble(
+                $points,
+                RP_ROUND_POINTS ? RP_ROUND_POINTS_PRECISION : 2
+        );
     }
 
     /**

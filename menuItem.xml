@@ -7,6 +7,13 @@
             <title language="en">Calendar</title>
             <page>info.daries.rp.Calendar</page>
         </item>
+		<item identifier="info.daries.rp.UnreadEventList">
+			<parent>info.daries.rp.Calendar</parent>
+			<title language="de">Ungelesene Termine</title>
+			<title language="en">Unread Events</title>
+			<page>info.daries.rp.UnreadEventList</page>
+		</item>
+        
         <item identifier="info.daries.rp.CharactersList">
             <menu>com.woltlab.wcf.MainMenu</menu>
             <title language="de">Charaktere</title>
@@ -19,5 +26,31 @@
 			<title language="en">Search Characters</title>
 			<page>info.daries.rp.CharacterSearch</page>
 		</item>
+        
+        <item identifier="info.daries.rp.Roster">
+            <menu>com.woltlab.wcf.MainMenu</menu>
+            <title language="de">Roster</title>
+            <title language="en">Roster</title>
+            <page>info.daries.rp.Roster</page>
+        </item>
+        
+        <item identifier="info.daries.rp.PointList">
+            <menu>com.woltlab.wcf.MainMenu</menu>
+            <title language="de">Punktestand</title>
+            <title language="en">Points</title>
+            <page>info.daries.rp.PointList</page>
+        </item>
+        <item identifier="info.daries.rp.RaidList">
+            <parent>info.daries.rp.PointList</parent>
+            <title language="de">Raids</title>
+            <title language="en">Raids</title>
+            <page>info.daries.rp.RaidList</page>
+        </item>
+        <item identifier="info.daries.rp.RaidEventList">
+            <parent>info.daries.rp.PointList</parent>
+            <title language="de">Raid Events</title>
+            <title language="en">Raid Events</title>
+            <page>info.daries.rp.RaidEventList</page>
+        </item>
     </import>
 </data>

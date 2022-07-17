@@ -4,7 +4,6 @@ namespace rp\system\page\handler;
 
 use rp\data\event\ViewableEvent;
 use wcf\system\page\handler\AbstractMenuPageHandler;
-use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -27,18 +26,18 @@ use wcf\system\WCF;
  */
 
 /**
- * Page handler implementation for the calendar.
- *
+ * Page menu handler for the page listing all unread events.
+ * 
  * @author      Marco Daries
  * @package     Daries\RP\Core\System\Page\Handler
  */
-class CalendarPageHandler extends AbstractMenuPageHandler
+class UnreadEventListPageHandler extends AbstractMenuPageHandler
 {
 
     /**
      * @inheritDoc
      */
-    public function getOutstandingItemCount($objectID = null)
+    public function getOutstandingItemCount($objectID = null): int
     {
         return ViewableEvent::getUnreadEvents();
     }
@@ -46,8 +45,8 @@ class CalendarPageHandler extends AbstractMenuPageHandler
     /**
      * @inheritDoc
      */
-    public function isVisible($objectID = null)
+    public function isVisible($objectID = null): bool
     {
-        return WCF::getSession()->getPermission('user.rp.canReadEvent');
+        return ViewableEvent::getUnreadEvents() > 0;
     }
 }

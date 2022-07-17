@@ -239,7 +239,7 @@ class Character extends DatabaseObject implements IPopoverObject, IRouteControll
      */
     public function getPrimaryCharacter(): ?CharacterProfile
     {
-        if ($this->isPrimary) {
+        if ($this->isPrimary || !$this->userID) {
             return new CharacterProfile($this);
         } else {
             $characterPrimaryIDs = UserStorageHandler::getInstance()->getField('characterPrimaryIDs', $this->userID);

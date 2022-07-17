@@ -19,6 +19,10 @@
 	{/if}
 {/capture}
 
+{capture assign='contentInteractionButtons'}
+    <a href="#" class="markAllAsReadButton contentInteractionButton button small jsOnly"><span class="icon icon16 fa-check"></span> <span>{lang}wcf.global.button.markAllAsRead{/lang}</span></a>
+{/capture}
+
 {include file='header'}
 
 <div class="section">
@@ -41,7 +45,7 @@
                             {if $event == ':empty'}
                                 <div class="rpEvent rpEmptyEvent"></div>
                             {else}
-                                <div class="rpEvent {$event->cssMultipleEvent}{if $event->isDisabled} rpEventDisabled{/if}{if $event->isClosed} rpEventClosed{/if}{if $event->isDeleted} rpEventDeleted{/if}">
+                                <div class="rpEvent{if $event->isNew()} isNew{/if}{if $event->cssMultipleEvent} {$event->cssMultipleEvent}{/if}{if $event->isDisabled} rpEventDisabled{/if}{if $event->isClosed} rpEventClosed{/if}{if $event->isDeleted} rpEventDeleted{/if}">
                                     {if !$event->cssMultipleEvent || ($event->cssMultipleEvent != 'rpEventStart' && $day->isFirstDayOfWeek()) || $event->cssMultipleEvent == 'rpEventStart'}
                                         {if $event->getController()->isExpired()}
                                             <span class="icon icon16 fa-lock rpEventExpired jsTooltip" title="{lang}rp.event.expired{/lang}"></span>
@@ -100,6 +104,12 @@
 		
 		{event name='javascriptInit'}
 	});
+</script>
+
+<script data-relocate="true">
+    require(['Daries/RP/Ui/Event/MarkAllAsRead'], function(UiEventMarkAllAsRead) {
+        UiEventMarkAllAsRead.init();
+    });
 </script>
 
 {if $__wcf->getSession()->getPermission('user.rp.canCreateEvent')}

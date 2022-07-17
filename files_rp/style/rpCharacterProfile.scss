@@ -4,7 +4,7 @@
     .characterInformation {
         margin-bottom: 20px;
     }
-    
+
     .characterContentInformation {
         margin-top: 15px;
     }
@@ -42,12 +42,12 @@
                 margin-right: 4px;
             }
         }
-        
+
         .characterName {
             @include wcfFontDefault;
         }
     }
-    
+
     .tabMenu {
         margin-bottom: 5px;
 
@@ -58,5 +58,19 @@
                 }
             }
         }
+    }
+}
+
+.characterPointAccountList {
+    .green {
+        color: rgba(0, 153, 0, 1);
+    }
+    
+    .red {
+        color: rgba(204, 0, 0, 1);
+    }
+
+    .yellow {
+        color: #ff0;
     }
 }

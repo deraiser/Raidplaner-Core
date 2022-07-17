@@ -55,7 +55,7 @@ class ViewableEvent extends DatabaseObjectDecorator
     /**
      * number of unseen events
      */
-    protected static ?int $unseenEvents = null;
+    protected static ?int $unreadEvents = null;
 
     /**
      * user profile object
@@ -97,16 +97,16 @@ class ViewableEvent extends DatabaseObjectDecorator
     /**
      * Returns the number of unseen events.
      */
-    public static function getUnseenEvents(): int
+    public static function getUnreadEvents(): int
     {
-        if (self::$unseenEvents === null) {
-            self::$unseenEvents = 0;
+        if (self::$unreadEvents === null) {
+            self::$unreadEvents = 0;
 
             if (WCF::getUser()->userID) {
-                $unseenEvents = UserStorageHandler::getInstance()->getField('rpUnreadEvents');
+                $unreadEvents = UserStorageHandler::getInstance()->getField('rpUnreadEvents');
 
                 // cache does not exist or is outdated
-                if ($unseenEvents === null) {
+                if ($unreadEvents === null) {
                     $conditionBuilder = new PreparedStatementConditionBuilder();
                     $conditionBuilder->add(
                         'event.created > ?',
@@ -123,21 +123,21 @@ class ViewableEvent extends DatabaseObjectDecorator
                             " . $conditionBuilder;
                     $statement = WCF::getDB()->prepareStatement($sql);
                     $statement->execute($conditionBuilder->getParameters());
-                    self::$unseenEvents = $statement->fetchSingleColumn();
+                    self::$unreadEvents = $statement->fetchSingleColumn();
 
-                    // update storage unseenEvents
+                    // update storage unread events
                     UserStorageHandler::getInstance()->update(
                         WCF::getUser()->userID,
                         'rpUnreadEvents',
-                        self::$unseenEvents
+                        self::$unreadEvents
                     );
                 } else {
-                    self::$unseenEvents = $unseenEvents;
+                    self::$unreadEvents = $unreadEvents;
                 }
             }
         }
 
-        return self::$unseenEvents;
+        return self::$unreadEvents;
     }
 
     /**

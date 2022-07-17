@@ -127,7 +127,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         parent::delete();
 
         foreach ($this->objects as $attendee) {
-            if ($attendee->getCharacter()?->userID) {
+            if ($attendee->getCharacter()->userID) {
                 UserNotificationHandler::getInstance()->markAsConfirmed(
                     'status',
                     'info.daries.rp.raid.event.notification',
@@ -632,7 +632,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
 
             $editor->update($update);
 
-            if ($editor->getCharacter()?->userID) {
+            if ($editor->getCharacter()->userID) {
                 UserNotificationHandler::getInstance()->fireEvent(
                     'status',
                     'info.daries.rp.raid.event.notification',

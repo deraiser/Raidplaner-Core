@@ -37,7 +37,7 @@ class CharacterProfileMenuCacheBuilder extends AbstractCacheBuilder
     /**
      * @inheritDoc
      */
-    protected function rebuild(array $parameters)
+    protected function rebuild(array $parameters): array
     {
         $itemList = new CharacterProfileMenuItemList();
         $itemList->sqlOrderBy = "member_profile_menu_item.showOrder ASC";

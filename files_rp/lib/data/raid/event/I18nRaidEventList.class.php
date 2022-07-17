@@ -48,4 +48,9 @@ class I18nRaidEventList extends I18nDatabaseObjectList
      */
     public $className = RaidEvent::class;
 
+    /**
+     * @inheritDoc
+     */
+    public $sqlOrderBy = 'eventNameI18n';
+
 }

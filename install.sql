@@ -89,6 +89,34 @@ CREATE TABLE rp1_game (
     UNIQUE KEY identifier (identifier)
 );
 
+DROP TABLE IF EXISTS rp1_item;
+CREATE TABLE rp1_item (
+    itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    itemName VARCHAR(191) NOT NULL DEFAULT '',
+    searchItemID VARCHAR(255) NOT NULL DEFAULT '',
+    date INT(10) NOT NULL DEFAULT 0,
+    additionalData TEXT,
+    UNIQUE KEY itemName (itemName)
+);
+
+DROP TABLE IF EXISTS rp1_item_database;
+CREATE TABLE rp1_item_database (
+    databaseName VARCHAR(191) NOT NULL,
+    packageID INT(10),
+    className VARCHAR(255) NOT NULL,
+    UNIQUE KEY databaseName (databaseName)
+);
+
+DROP TABLE IF EXISTS rp1_item_to_raid;
+CREATE TABLE rp1_item_to_raid (
+    itemID INT(10) NOT NULL,
+    characterID INT(10) NOT NULL,
+    raidID INT(10) NOT NULL,
+    pointAccountID INT(10),
+    points FLOAT(11,2) NOT NULL DEFAULT 0,
+    UNIQUE KEY itemID (itemID, characterID, raidID)
+);
+
 DROP TABLE IF EXISTS rp1_member;
 -- Alternative for character
 CREATE TABLE rp1_member (
@@ -161,6 +189,27 @@ CREATE TABLE rp1_race_to_faction (
     UNIQUE KEY(raceID, factionID)
 );
 
+DROP TABLE IF EXISTS rp1_raid;
+CREATE TABLE rp1_raid (
+    raidID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    raidEventID INT(10) NOT NULL,
+    date INT(10) NOT NULL DEFAULT 0,
+    addedBy VARCHAR(255) NOT NULL DEFAULT '',
+    updatedBy VARCHAR(255) NOT NULL DEFAULT '',
+    points FLOAT(11,2) NOT NULL DEFAULT 0,
+    notes MEDIUMTEXT
+);
+
+DROP TABLE IF EXISTS rp1_raid_attendee;
+CREATE TABLE rp1_raid_attendee (
+    raidID INT(10) NOT NULL,
+    characterID INT(10),
+    characterName VARCHAR(255) NOT NULL DEFAULT '',
+    classificationID INT(10),
+    roleID INT(10),
+    UNIQUE KEY(raidID, characterID)
+);
+
 DROP TABLE IF EXISTS rp1_raid_event;
 CREATE TABLE rp1_raid_event (
     eventID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -229,6 +278,12 @@ ALTER TABLE rp1_faction ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE rp1_game ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE rp1_item_database ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE rp1_item_to_raid ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
+ALTER TABLE rp1_item_to_raid ADD FOREIGN KEY (itemID) REFERENCES rp1_item (itemID) ON DELETE CASCADE;
+ALTER TABLE rp1_item_to_raid ADD FOREIGN KEY (pointAccountID) REFERENCES rp1_point_account (pointAccountID) ON DELETE SET NULL;
+ALTER TABLE rp1_item_to_raid ADD FOREIGN KEY (raidID) REFERENCES rp1_raid (raidID) ON DELETE CASCADE;
+
 ALTER TABLE rp1_member ADD FOREIGN KEY (avatarID) REFERENCES rp1_member_avatar (avatarID) ON DELETE SET NULL;
 ALTER TABLE rp1_member ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_member ADD FOREIGN KEY (rankID) REFERENCES rp1_rank (rankID) ON DELETE SET NULL;
@@ -243,6 +298,11 @@ ALTER TABLE rp1_race ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packag
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (raceID) REFERENCES rp1_race (raceID) ON DELETE CASCADE;
 ALTER TABLE rp1_race_to_faction ADD FOREIGN KEY (factionID) REFERENCES rp1_faction (factionID) ON DELETE CASCADE;
 
+ALTER TABLE rp1_raid ADD FOREIGN KEY (raidEventID) REFERENCES rp1_raid_event (eventID) ON DELETE CASCADE;
+ALTER TABLE rp1_raid_attendee ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE SET NULL;
+ALTER TABLE rp1_raid_attendee ADD FOREIGN KEY (classificationID) REFERENCES rp1_classification (classificationID) ON DELETE SET NULL;
+ALTER TABLE rp1_raid_attendee ADD FOREIGN KEY (raidID) REFERENCES rp1_raid (raidID) ON DELETE CASCADE;
+ALTER TABLE rp1_raid_attendee ADD FOREIGN KEY (roleID) REFERENCES rp1_role (roleID) ON DELETE SET NULL;
 ALTER TABLE rp1_raid_event ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 ALTER TABLE rp1_raid_event ADD FOREIGN KEY (pointAccountID) REFERENCES rp1_point_account (pointAccountID) ON DELETE SET NULL;
 

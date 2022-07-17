@@ -4,6 +4,7 @@ namespace rp\system;
 
 use rp\page\CalendarPage;
 use rp\system\character\CharacterHandler;
+use rp\system\character\point\CharacterPointHandler;
 use rp\system\menu\character\profile\CharacterProfileMenu;
 use wcf\system\application\AbstractApplication;
 use wcf\system\request\route\StaticRequestRoute;
@@ -62,6 +63,14 @@ class RPCore extends AbstractApplication
     public function getCharacter(): CharacterHandler
     {
         return CharacterHandler::getInstance();
+    }
+
+    /**
+     * Returns the character point handler
+     */
+    public function getCharacterPointHandler(): CharacterPointHandler
+    {
+        return CharacterPointHandler::getInstance();
     }
 
     /**
