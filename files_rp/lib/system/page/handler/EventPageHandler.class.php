@@ -34,7 +34,7 @@ use wcf\system\WCF;
 
 /**
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     Daries\RP\System\Page\Handler
  */
 class EventPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler
 {

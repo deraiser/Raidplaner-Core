@@ -28,7 +28,7 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of event raid attendees.
  * 
  * @author      Marco Daries
- * @package     Daries\RPData\Event\Raid\Attendee
+ * @package     Daries\RP\Data\Event\Raid\Attendee
  *
  * @method      EventRaidAttendee           current()
  * @method      EventRaidAttendee[]         getObjects()

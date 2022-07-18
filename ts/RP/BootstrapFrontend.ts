@@ -61,6 +61,17 @@ function _initEventRaidAttendeePopover(): void {
 }
 
 /**
+ * Initializes item popover.
+ */
+function _initItemPopover(): void {
+    ControllerPopover.init({
+        className: "rpItemLink",
+        dboAction: "rp\\data\\item\\ItemAction",
+        identifier: "info.daries.rp.item",
+    });
+}
+
+/**
  * Bootstraps general modules and frontend exclusive ones.
  */
 export function setup(options: BootstrapOptions): void {
@@ -71,10 +82,14 @@ export function setup(options: BootstrapOptions): void {
     if (options.enableEventPopover) {
         _initEventPopover();
     }
+    if (options.enableItemPopover) {
+        _initItemPopover();
+    }
 }
 
 interface BootstrapOptions {
     enableCharacterPopover: boolean;
     enableEventPopover: boolean;
     enableEventRaidAttendeePopover: boolean;
+    enableItemPopover: boolean;
 }

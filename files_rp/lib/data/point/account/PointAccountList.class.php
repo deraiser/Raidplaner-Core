@@ -28,7 +28,7 @@ use wcf\data\DatabaseObjectList;
  * Represents a list of point accounts.
  * 
  * @author      Marco Daries
- * @package     Daries\RPData\Point\Account
+ * @package     Daries\RP\Data\Point\Account
  *
  * @method      PointAccount        current()
  * @method      PointAccount[]      getObjects()

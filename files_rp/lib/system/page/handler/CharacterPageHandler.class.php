@@ -30,7 +30,7 @@ use wcf\system\page\handler\IOnlineLocationPageHandler;
  * Menu page handler for the character profile page.
  *
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     Daries\RP\System\Page\Handler
  */
 class CharacterPageHandler extends AbstractLookupPageHandler implements IOnlineLocationPageHandler
 {

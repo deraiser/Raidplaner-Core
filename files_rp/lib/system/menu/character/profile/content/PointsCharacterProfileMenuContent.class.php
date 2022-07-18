@@ -32,12 +32,12 @@ use wcf\system\WCF;
  */
 
 /**
- * Handles character profile statistic content.
+ * Handles character profile points content.
  *
  * @author      Marco Daries
  * @package     Daries\RP\System\Menu\Character\Profile\Content
  */
-class StatsCharacterProfileMenuContent extends SingletonFactory implements ICharacterProfileMenuContent
+class PointsCharacterProfileMenuContent extends SingletonFactory implements ICharacterProfileMenuContent
 {
 
     /**
@@ -121,7 +121,7 @@ class StatsCharacterProfileMenuContent extends SingletonFactory implements IChar
             'pointAccounts' => $pointAccounts,
         ]);
 
-        return WCF::getTPL()->fetch('characterProfileStats', 'rp');
+        return WCF::getTPL()->fetch('characterProfilePoints', 'rp');
     }
 
     public function isVisible(int $characterID): bool

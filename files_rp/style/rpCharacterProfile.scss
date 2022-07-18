@@ -65,12 +65,20 @@
     .green {
         color: rgba(0, 153, 0, 1);
     }
-    
+
     .red {
         color: rgba(204, 0, 0, 1);
     }
 
     .yellow {
         color: #ff0;
+    }
+}
+
+.raidList {
+    > li {
+        &.showMore {
+            flex-basis: 100%;
+        }
     }
 }

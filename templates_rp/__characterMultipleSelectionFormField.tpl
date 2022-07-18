@@ -1,5 +1,5 @@
 <script data-relocate="true">
-    require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter', 'Daries/RP/Form/Field/Character/MultipleSelection'], (Language, UiItemListFilter, CharacterMultipleSelection) => {
+    require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter', 'Daries/RP/Form/Builder/Field/Character/MultipleSelection'], (Language, UiItemListFilter, CharacterMultipleSelection) => {
         Language.addObject({
             'wcf.global.filter.button.visibility': '{jslang}wcf.global.filter.button.visibility{/jslang}',
             'wcf.global.filter.button.clear': '{jslang}wcf.global.filter.button.clear{/jslang}',

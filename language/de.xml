@@ -12,6 +12,13 @@
             <item name="rp.acp.character.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Charakter gefunden.]]></item>
             <item name="rp.acp.character.user"><![CDATA[Benutzername]]></item>
         </category>
+
+        <category name="rp.acp.item">
+            <item name="rp.acp.item.databaseName"><![CDATA[Name der Datenbank]]></item>
+            <item name="rp.acp.item.databaseName.description"><![CDATA[Der Name darf nur Buchstaben enthalten und muss mit einem Kleinbuchstaben beginnen.]]></item>
+            <item name="rp.acp.item.databaseName.error.format"><![CDATA[Der angegebene Name ist ungültig.]]></item>
+            <item name="rp.acp.item.databaseName.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einem anderen Paketinstallationsplugin verwendet.]]></item>
+        </category>
         
         <category name="rp.acp.menu">
             <item name="rp.acp.menu.link.character"><![CDATA[Charakter]]></item>
@@ -96,7 +103,10 @@
         <category name="rp.character.profile">
             <item name="rp.character.profile.content.about.noData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine Informationen hinterlegt.{else}Der Charakter hat noch keine Informationen hinterlegt.{/if}]]></item>
             <item name="rp.character.profile.menu.about"><![CDATA[Über Charakter]]></item>
-            <item name="rp.character.profile.menu.stats"><![CDATA[Statistiken]]></item>
+            <item name="rp.character.profile.menu.item"><![CDATA[Gegenstände]]></item>
+            <item name="rp.character.profile.menu.points"><![CDATA[Punkte]]></item>
+            <item name="rp.character.profile.menu.raid"><![CDATA[Raids]]></item>
+            <item name="rp.character.profile.menu.raid.attendance"><![CDATA[Raidteilnahme]]></item>
         </category>
         
         <category name="rp.classification">
@@ -110,6 +120,7 @@
             <item name="rp.event.canceled"><![CDATA[Abgesagt]]></item>
             <item name="rp.event.comment"><![CDATA[Termin-Kommentar]]></item>
             <item name="rp.event.commentResponse"><![CDATA[Antwort auf Termin-Kommentar]]></item>
+            <item name="rp.event.date"><![CDATA[Zeitpunkt]]></item>
             <item name="rp.event.dateFormat"><![CDATA[l, j. F Y]]></item>
             <item name="rp.event.delete"><![CDATA[Endgültig löschen]]></item>
             <item name="rp.event.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Termin wirklich endgültig löschen?]]></item>
@@ -138,6 +149,7 @@
             <item name="rp.event.participation"><![CDATA[Teilnahme]]></item>
             <item name="rp.event.preset"><![CDATA[Der Termin <a href="{link controller='Event' application='rp' object=$presetEvent}{/link}">{$presetEvent->getTitle()}</a> wird als Vorlage verwendet, die unten stehenden Felder wurden bereits vorausgefüllt.]]></item>
             <item name="rp.event.previousEvent"><![CDATA[Vorheriger Termin]]></item>
+            <item name="rp.event.raidLink"><![CDATA[Zum Raid]]></item>
             <item name="rp.event.restore"><![CDATA[Wiederherstellen]]></item>
             <item name="rp.event.settings"><![CDATA[Einstellungen]]></item>
             <item name="rp.event.startTime"><![CDATA[Startzeit]]></item>
@@ -208,6 +220,8 @@
             <item name="rp.event.raid.points.description"><![CDATA[Punkte für diesen Termin]]></item>
             <item name="rp.event.raid.required"><![CDATA[Benötigt]]></item>
             <item name="rp.event.raid.status"><![CDATA[Status]]></item>
+            <item name="rp.event.raid.title"><![CDATA[Raid]]></item>
+            <item name="rp.event.raid.transform"><![CDATA[Raid abschließen]]></item>
             <item name="rp.event.raid.updateStatus"><![CDATA[Status aktualisieren]]></item>
         </category>
     
@@ -227,15 +241,40 @@
         <category name="rp.race">
             <item name="rp.race.title"><![CDATA[Rasse]]></item>
         </category>
-    
-        <category name="rp.rank">
-            <item name="rp.rank.title"><![CDATA[Rang]]></item>
+        
+        <category name="rp.raid">
+            <item name="rp.raid.items"><![CDATA[Gegenstände]]></item>
+            <item name="rp.raid.items.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Gegenstand wirklich löschen?]]></item>
         </category>
 
         <category name="rp.raid.event">
             <item name="rp.raid.event.pointAccount"><![CDATA[Punktekonto]]></item>
             <item name="rp.raid.event.points"><![CDATA[Punkte]]></item>
-            <item name="rp.raid.event.title"><![CDATA[Raid Termin]]></item>
+            <item name="rp.raid.event.title"><![CDATA[Ereignis]]></item>
+        </category>
+    
+        <category name="rp.raid.item">
+            <item name="rp.raid.item.buyer"><![CDATA[Käufer]]></item>
+            <item name="rp.raid.item.character"><![CDATA[Charakter]]></item>
+            <item name="rp.raid.item.form.field"><![CDATA[
+<dl class="plain inlineDataList" style="display: inline;">
+    <dt>Item</dt>
+    <dd style="font-weight: 600;">{$itemName}</dd>
+    <dt>Charakter</dt>
+    <dd style="font-weight: 600;">{$characterName}</dd>
+    <dt>Punktekonto</dt>
+    <dd style="font-weight: 600;">{$pointAccountName}</dd>
+    <dt>Punkte</dt>
+    <dd style="font-weight: 600;">{$points}</dd>
+</dl>]]></item>
+            <item name="rp.raid.item.itemName"><![CDATA[Item Name]]></item>
+            <item name="rp.raid.item.pointAccount"><![CDATA[Punktekonto]]></item>
+            <item name="rp.raid.item.points"><![CDATA[Punkte]]></item>
+            <item name="rp.raid.item.points.error.forma"><![CDATA[Die angegebene Punkte sind ungültig.]]></item>
+        </category>
+    
+        <category name="rp.rank">
+            <item name="rp.rank.title"><![CDATA[Rang]]></item>
         </category>
     
         <category name="rp.role">
@@ -340,6 +379,7 @@
             <item name="wcf.acp.option.category.rp.calendar.event"><![CDATA[Termine]]></item>
             <item name="wcf.acp.option.category.rp.character"><![CDATA[Charakter]]></item>
             <item name="wcf.acp.option.category.rp.character.list"><![CDATA[Charakterliste]]></item>
+            <item name="wcf.acp.option.category.rp.item"><![CDATA[ItemTooltip]]></item>
             <item name="wcf.acp.option.category.rp.points"><![CDATA[Punkte]]></item>
             <item name="wcf.acp.option.category.rp.settings"><![CDATA[Einstellungen]]></item>
             <item name="wcf.acp.option.rp_calendar_max_event_length"><![CDATA[Maximale Termin-Dauer]]></item>
@@ -351,10 +391,12 @@
             <item name="wcf.acp.option.rp_characters_list_per_page"><![CDATA[Charaktere pro Seite]]></item>
             <item name="wcf.acp.option.rp_default_event_type_selected"><![CDATA[Termin Type [Standard]]]></item>
             <item name="wcf.acp.option.rp_default_game_id"><![CDATA[Spiel [Standard]]]></item>
+            <item name="wcf.acp.option.rp_enable_item"><![CDATA[Item aktivieren]]></item>
             <item name="wcf.acp.option.rp_enable_rank"><![CDATA[Ranks aktivieren]]></item>
             <item name="wcf.acp.option.rp_event_enable_like"><![CDATA[Reaktionen aktivieren]]></item>
             <item name="wcf.acp.option.rp_item_account_easymode_disabled"><![CDATA[Einfacher Modus für Punktekonten deaktivieren]]></item>
             <item name="wcf.acp.option.rp_item_account_easymode_disabled.description"><![CDATA[Im einfachen Modus können keine Itemkonten angelegt werden, und Termine immer nur einem Punktekonto zugeordnet sein.]]></item>
+            <item name="wcf.acp.option.rp_item_databases"><![CDATA[Item Datenbanken]]></item>
             <item name="wcf.acp.option.rp_points_enabled"><![CDATA[Punkte aktivieren]]></item>
             <item name="wcf.acp.option.rp_points_enabled.desciption"><![CDATA[Raids könnten Punkte vergeben werden.]]></item>
             <item name="wcf.acp.option.rp_points_name"><![CDATA[Punktename]]></item>

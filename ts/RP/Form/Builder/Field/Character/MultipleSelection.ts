@@ -22,7 +22,7 @@
  * Handle other characters these Users by selection.
  *
  * @author      Marco Daries
- * @module      Daries/RP/Form/Field/Character/MultipleSelection
+ * @module      Daries/RP/Form/Builder/Field/Character/MultipleSelection
  */
 
 import * as Core from "WoltLabSuite/Core/Core";

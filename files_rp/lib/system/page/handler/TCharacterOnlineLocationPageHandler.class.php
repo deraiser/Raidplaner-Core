@@ -33,7 +33,7 @@ use wcf\system\WCF;
  * Implementation of the `IOnlineLocationPageHandler` interface for character-bound pages.
  *
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     Daries\RP\System\Page\Handler
  */
 trait TCharacterOnlineLocationPageHandler
 {

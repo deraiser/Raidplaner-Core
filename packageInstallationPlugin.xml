@@ -5,6 +5,7 @@
         <pip name="rpClassification">wcf\system\package\plugin\RPClassificationPackageInstallationPlugin</pip>
         <pip name="rpFaction">wcf\system\package\plugin\RPFactionPackageInstallationPlugin</pip>
         <pip name="rpGame">wcf\system\package\plugin\RPGamePackageInstallationPlugin</pip>
+        <pip name="rpItemDatabase">wcf\system\package\plugin\RPItemDatabasePackageInstallationPlugin</pip>
         <pip name="rpRace">wcf\system\package\plugin\RPRacePackageInstallationPlugin</pip>
         <pip name="rpRole">wcf\system\package\plugin\RPRolePackageInstallationPlugin</pip>
         <pip name="rpServer">wcf\system\package\plugin\RPServerPackageInstallationPlugin</pip>

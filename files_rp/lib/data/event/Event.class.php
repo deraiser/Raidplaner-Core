@@ -65,6 +65,7 @@ use wcf\util\StringUtil;
  * @property-read   int         $cumulativeLikes        cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the event
  * @property-read   int         $hasEmbeddedObjects     is `1` if there are embedded objects in the event, otherwise `0`
  * @property-read	int         $deleteTime             timestamp at which the event has been deleted
+ * @property-read	int|null    $raidID                 raid id after a raid event has been converted to a raid or `null` if not converted to a raid
  * @property-read	int         $isDeleted              is `1` if the event is in trash bin, otherwise `0`
  * @property-read   int         $isCanceled             is `1` if the even is canceled, otherwise `0`
  * @property-read   int         $isDisabled             is `1` if the even is disabled, otherwise `0`
@@ -339,6 +340,19 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         $processor->process($this->notes, 'info.daries.rp.event.notes', $this->eventID, false);
 
         return $processor->getHtml();
+    }
+
+    /**
+     * Returns the event's formatted plain notes.
+     */
+    public function getFormattedPlainNotes(): string
+    {
+        $processor = new HtmlOutputProcessor();
+        $processor->setOutputType('text/plain');
+        $processor->enableUgc = false;
+        $processor->process($this->notes, 'info.daries.rp.event.notes', $this->eventID, false);
+
+        return StringUtil::encodeHTML(StringUtil::truncate($processor->getHtml(), 255));
     }
 
     /**

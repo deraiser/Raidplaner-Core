@@ -30,7 +30,7 @@ use wcf\system\WCF;
  * Page handler implementation for the calendar.
  *
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     Daries\RP\System\Page\Handler
  */
 class CalendarPageHandler extends AbstractMenuPageHandler
 {

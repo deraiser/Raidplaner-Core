@@ -5,9 +5,21 @@
             <classname>rp\system\menu\character\profile\content\AboutCharacterProfileMenuContent</classname>
             <showorder>1</showorder>
         </characterprofilemenuitem>
-        <characterprofilemenuitem name="stats">
-            <classname>rp\system\menu\character\profile\content\StatsCharacterProfileMenuContent</classname>
+        <characterprofilemenuitem name="points">
+            <classname>rp\system\menu\character\profile\content\PointsCharacterProfileMenuContent</classname>
             <showorder>2</showorder>
+        </characterprofilemenuitem>
+        <characterprofilemenuitem name="item">
+            <classname>rp\system\menu\character\profile\content\ItemCharacterProfileMenuContent</classname>
+            <showorder>3</showorder>
+        </characterprofilemenuitem>
+        <characterprofilemenuitem name="raid">
+            <classname>rp\system\menu\character\profile\content\RaidCharacterProfileMenuContent</classname>
+            <showorder>4</showorder>
+        </characterprofilemenuitem>
+        <characterprofilemenuitem name="raid.attendance">
+            <classname>rp\system\menu\character\profile\content\RaidAttendanceCharacterProfileMenuContent</classname>
+            <showorder>5</showorder>
         </characterprofilemenuitem>
     </import>
 </data>

@@ -178,6 +178,21 @@
                 <title>Raids</title>
             </content>
         </page>
+        <page identifier="info.daries.rp.RaidAdd">
+            <pageType>system</pageType>
+            <controller>rp\form\RaidAddForm</controller>
+            <name language="de">Raid hinzufügen</name>
+            <name language="en">Add Raid</name>
+            <parent>info.daries.rp.RaidList</parent>
+            <hasFixedParent>1</hasFixedParent>
+            <allowSpidersToIndex>0</allowSpidersToIndex>
+            <content language="en">
+                <title>Add Raid</title>
+            </content>
+            <content language="de">
+                <title>Raid hinzufügen</title>
+            </content>
+        </page>
         <page identifier="info.daries.rp.Raid">
             <pageType>system</pageType>
             <controller>rp\page\RaidPage</controller>

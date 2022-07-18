@@ -71,8 +71,7 @@
             data-can-moderate-event="{if $__wcf->getSession()->getPermission('mod.rp.canModerateEvent')}true{else}false{/if}"
             {if $event->isRaidEvent()}
                 data-can-cancel-event="{if $event->canEdit() || $event->getController()->isLeader()}true{else}false{/if}"
-            {else}
-                data-can-cancel-event="false"
+                data-can-transform="{if !$event->raidID && $event->getController()->isLeader()}true{else}false{/if}"
             {/if}
             >
         <div class="contentHeaderIcon">
@@ -110,6 +109,13 @@
                     <span class="icon icon16 fa-eye"></span>
                     {lang}rp.event.eventViews{/lang}
                 </li>
+                
+                {if $event->isRaidEvent() && $event->raidID}
+                    <li>
+                        <span class="icon icon16 fa-exchange"></span>
+                        <a href="{link controller='Raid' application='rp' id=$event->raidID}{/link}">{lang}rp.event.raidLink{/lang}</a>
+                    </li>
+                {/if}
                 
                 {if $event->isNew()}
                     <li><span class="badge label green newMessageBadge">{lang}wcf.message.new{/lang}</span></li>
@@ -157,7 +163,7 @@
                         {/if}
 
                         {if $event->isRaidEvent()}
-                            {if !$event->isCanceled}
+                            {if !$event->isCanceled && !$event->getController()->isExpired()}
                                 <li class="jsButtonAttendee" style="display: none;"></li>
                                 <script data-relocate="true">
                                     require(['Language', 'Daries/RP/Ui/Event/Raid/Participate'], function(Language, EventRaidParticipate) {
@@ -210,6 +216,9 @@
             <li data-option-name="disable"><span>{lang}rp.event.disable{/lang}</span></li>
             {if $event->isRaidEvent()}
                 <li data-option-name="cancel"><span>{lang}rp.event.raid.cancel{/lang}</span></li>
+                {if !$event->raidID && $event->getController()->isLeader()}
+                    <li data-option-name="transform" data-link="{link controller='RaidAdd' application='rp'}eventID={@$event->eventID}{/link}"><span>{lang}rp.event.raid.transform{/lang}</span></li>
+                {/if}
             {/if}
             <li class="dropdownDivider" />
             <li data-option-name="editLink" data-link="{link controller='EventEdit' application='rp' id=$event->eventID}{/link}"><span>{lang}rp.event.edit{/lang}</span></li>

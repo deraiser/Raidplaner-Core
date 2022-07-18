@@ -49,6 +49,7 @@ CREATE TABLE rp1_event (
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
     hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	deleteTime INT(10) NOT NULL DEFAULT 0,
+    raidID INT(10) NULL,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
     isCanceled TINYINT(1) NOT NULL DEFAULT 0,
     isDisabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -62,6 +63,7 @@ CREATE TABLE rp1_event_raid_attendee (
     characterID INT(10),
     characterName VARCHAR(255) NOT NULL DEFAULT '',
     email VARCHAR(191) NOT NULL DEFAULT '',
+    internID CHAR(10) NOT NULL DEFAULT '',
     classificationID INT(10),
     roleID INT(10),
     notes VARCHAR(255) NOT NULL DEFAULT '',
@@ -268,6 +270,7 @@ ALTER TABLE rp1_classification_to_role ADD FOREIGN KEY (roleID) REFERENCES rp1_r
 
 ALTER TABLE rp1_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE rp1_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE rp1_event ADD FOREIGN KEY (raidID) REFERENCES rp1_raid (raidID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (classificationID) REFERENCES rp1_classification (classificationID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (eventID) REFERENCES rp1_event (eventID) ON DELETE CASCADE;

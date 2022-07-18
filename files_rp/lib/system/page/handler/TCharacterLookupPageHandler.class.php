@@ -30,7 +30,7 @@ use wcf\system\page\handler\ILookupPageHandler;
  * Provides the `isValid` and `lookup` methods for looking up characters.
  *
  * @author      Marco Daries
- * @package     Daries\RP\Core\System\Page\Handler
+ * @package     Daries\RP\System\Page\Handler
  */
 trait TCharacterLookupPageHandler
 {

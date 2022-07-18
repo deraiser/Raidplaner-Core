@@ -28,7 +28,7 @@
             {if $attendee->addByLeader}<span class="icon icon16 fa-plus-circle tooltip" title="{lang}rp.event.raid.attendee.addByLeader{/lang}"></span>{/if}
             {if !$event->isCanceled && 
                 !$event->isClosed && 
-                !$event->getController()->isExpired() &&
+                $event->startTime >= TIME_NOW &&
                 $attendee->getCharacter()->userID == $__wcf->user->userID}
                 <div id="attendreeDropdown{@$attendee->attendeeID}" class="dropdown">
                     <a class="dropdownToggle"><span class="icon icon16 fa-cog"></span></a>

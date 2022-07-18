@@ -41,7 +41,8 @@ use wcf\system\WCF;
  * @property-read   int     $eventID                id of the event
  * @property-read   int     $characterID            id of the character
  * @property-read   int     $characterName          character name
- * @property-read   string  $email                  email address of the participant for a guest registration.
+ * @property-read   string  $email                  email address of the participant for a guest registration
+ * @property-read   string  $internID               Special id for the character of the attendee
  * @property-read   int     $classificationID       id of the classification
  * @property-read   int     $roleID                 id of the role
  * @property-read   string  $notes                  notes of the attendee

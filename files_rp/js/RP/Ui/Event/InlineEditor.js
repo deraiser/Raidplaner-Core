@@ -39,7 +39,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 event.preventDefault();
             }
             const optionName = element.dataset.optionName;
-            if (optionName === "editLink") {
+            if (optionName === "editLink" || optionName === 'transform') {
                 window.location.href = element.dataset.link;
             }
             else {
@@ -208,6 +208,12 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                     break;
                 case "editLink":
                     if (!this._eventManager.getPermission(eventId, "editEvent")) {
+                        return false;
+                    }
+                    return true;
+                    break;
+                case "transform":
+                    if (!this._eventManager.getPermission(eventId, "transform")) {
                         return false;
                     }
                     return true;

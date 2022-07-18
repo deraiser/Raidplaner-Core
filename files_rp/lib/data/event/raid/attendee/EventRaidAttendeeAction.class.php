@@ -467,6 +467,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
                     'characterID' => $character->characterID,
                     'characterName' => $character->characterName,
                     'classificationID' => $character->classificationID,
+                    'internID' => $character->characterID,
                     'roleID' => $character->roleID,
                 ];
             }
@@ -544,6 +545,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
                             'characterID' => $character->characterID,
                             'characterName' => $character->characterName,
                             'classificationID' => $character->classificationID,
+                            'internID' => $character->characterID,
                             'roleID' => $character->roleID,
                         ];
                     }
@@ -745,7 +747,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
         if (!$this->attendee->getCharacter() ||
             $this->attendee->getCharacter()->userID != WCF::getUser()->userID ||
             $this->attendee->getEvent()->isClosed ||
-            $this->attendee->getEvent()->getController()->isExpired()) {
+            $this->attendee->getEvent()->startTime < TIME_NOW) {
             throw new PermissionDeniedException();
         }
     }

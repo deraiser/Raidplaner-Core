@@ -53,6 +53,16 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Controller/Popover"], 
         });
     }
     /**
+     * Initializes item popover.
+     */
+    function _initItemPopover() {
+        ControllerPopover.init({
+            className: "rpItemLink",
+            dboAction: "rp\\data\\item\\ItemAction",
+            identifier: "info.daries.rp.item",
+        });
+    }
+    /**
      * Bootstraps general modules and frontend exclusive ones.
      */
     function setup(options) {
@@ -62,6 +72,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Controller/Popover"], 
         }
         if (options.enableEventPopover) {
             _initEventPopover();
+        }
+        if (options.enableItemPopover) {
+            _initItemPopover();
         }
     }
     exports.setup = setup;
