@@ -1,5 +1,5 @@
 {foreach from=$raidList item=raid}
-    <li>
+    <li class="contentItem contentItemMultiColumn">
         <div class="box48">
             {@$raid->getIcon(64)}
             

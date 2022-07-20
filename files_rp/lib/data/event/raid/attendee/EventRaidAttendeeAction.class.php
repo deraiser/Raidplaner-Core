@@ -597,7 +597,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
                 ])
             ];
         }
-        
+
         return $returnDatas;
     }
 
@@ -657,7 +657,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
      */
     public function validateCreateAddDialog(): void
     {
-        $this->readBoolean('eventID');
+        $this->readInteger('eventID');
 
         if (!WCF::getSession()->getPermission('user.rp.canParticipate')) {
             throw new PermissionDeniedException();
@@ -678,7 +678,7 @@ class EventRaidAttendeeAction extends AbstractDatabaseObjectAction implements IP
      */
     public function validateCreateLeaderAddDialog(): void
     {
-        $this->readBoolean('eventID');
+        $this->readInteger('eventID');
         $this->readIntegerArray('characterIDs', true);
 
         $this->event = EventRuntimeCache::getInstance()->getObject($this->parameters['eventID']);

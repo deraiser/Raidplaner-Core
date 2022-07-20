@@ -54,9 +54,9 @@ class EventAppointment {
         this.maybeButton = document.querySelector(".jsButtonEventMaybe") as HTMLButtonElement;
         this.maybeButton.addEventListener("click", (ev) => this.click(ev));
 
-        document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "accepted"));
-        document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "canceled"));
-        document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "maybe"));
+        document.querySelectorAll(".jsEventAccepted .contentItemList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "accepted"));
+        document.querySelectorAll(".jsEventCanceled .contentItemList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "canceled"));
+        document.querySelectorAll(".jsEventMaybe .contentItemList > LI").forEach((appointment: HTMLLIElement) => this.initAppointment(appointment, "maybe"));
         
         const header = document.querySelector(".rpEventHeader") as HTMLElement;
         const disable = (header.dataset.isDeleted === "1" || header.dataset.isDisabled === "1") ? true : false;
@@ -179,7 +179,7 @@ class EventAppointment {
             
             switch (appointment.status) {
                 case "accepted":
-                    document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment: HTMLLIElement) => {
+                    document.querySelectorAll(".jsEventAccepted .contentItemList > LI").forEach((appointment: HTMLLIElement) => {
                         const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
@@ -187,7 +187,7 @@ class EventAppointment {
                     });
                     break;
                 case "canceled":
-                    document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment: HTMLLIElement) => {
+                    document.querySelectorAll(".jsEventCanceled .contentItemList > LI").forEach((appointment: HTMLLIElement) => {
                         const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
@@ -195,7 +195,7 @@ class EventAppointment {
                     });
                     break;
                 case "maybe":
-                    document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment: HTMLLIElement) => {
+                    document.querySelectorAll(".jsEventMaybe .contentItemList > LI").forEach((appointment: HTMLLIElement) => {
                         const userId: number = ~~appointment.dataset.objectId!;
                         if (data.returnValues.userID === userId) {
                             appointment.remove();
@@ -210,32 +210,32 @@ class EventAppointment {
             case "accepted":
                 this.disableButton(this.acceptedButton);
 
-                object = document.querySelector(".jsEventAccepted .containerList") as HTMLElement;
-                if (object === undefined) {
+                object = document.querySelector(".jsEventAccepted .contentItemList") as HTMLElement;
+                if (object === null) {
                     document.querySelector(".jsEventAccepted .info")!.remove();
                     document.querySelector(".jsEventAccepted")!.appendChild(this._newObject());
                 }
-                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventAccepted .containerList")!, "append");
+                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventAccepted .contentItemList")!, "append");
                 break;
             case "canceled":
                 this.disableButton(this.canceledButton);
 
-                object = document.querySelector(".jsEventCanceled .containerList") as HTMLElement;
-                if (object === undefined) {
+                object = document.querySelector(".jsEventCanceled .contentItemList") as HTMLElement;
+                if (object === null) {
                     document.querySelector(".jsEventCanceled .info")!.remove();
                     document.querySelector(".jsEventCanceled")!.appendChild(this._newObject());
                 }
-                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventCanceled .containerList")!, "append");
+                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventCanceled .contentItemList")!, "append");
                 break;
             case "maybe":
                 this.disableButton(this.maybeButton);
 
-                object = document.querySelector(".jsEventMaybe .containerList") as HTMLElement;
-                if (object === undefined) {
+                object = document.querySelector(".jsEventMaybe .contentItemList") as HTMLElement;
+                if (object === null) {
                     document.querySelector(".jsEventMaybe .info")!.remove();
                     document.querySelector(".jsEventMaybe")!.appendChild(this._newObject());
                 }
-                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventMaybe .containerList")!, "append");
+                DomUtil.insertHtml(data.returnValues.template, document.querySelector(".jsEventMaybe .contentItemList")!, "append");
                 break;
         }
 
@@ -248,7 +248,7 @@ class EventAppointment {
 
     _newObject(): HTMLOListElement {
         const newObject = document.createElement("ol");
-        newObject.className = "containerList tripleColumned";
+        newObject.className = "contentItemList eventAppointment";
         return newObject;
     }
 }

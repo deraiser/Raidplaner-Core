@@ -4,10 +4,10 @@
     </header>
 
     {hascontent}
-        <ol class="containerList tripleColumned">
+        <ol class="contentItemList eventAppointment">
             {content}
                 {foreach from=$accepted item=user}
-                    {include file='userListItem'}
+                    {include file='userListItem' application='rp'}
                 {/foreach}
             {/content}
         </ol>
@@ -22,10 +22,10 @@
     </header>
 
     {hascontent}
-        <ol class="containerList tripleColumned">
+        <ol class="contentItemList eventAppointment">
             {content}
                 {foreach from=$maybe item=user}
-                    {include file='userListItem'}
+                    {include file='userListItem' application='rp'}
                 {/foreach}
             {/content}
         </ol>
@@ -40,10 +40,10 @@
     </header>
 
     {hascontent}
-        <ol class="containerList tripleColumned">
+        <ol class="contentItemList eventAppointment">
             {content}
                 {foreach from=$canceled item=user}
-                    {include file='userListItem'}
+                    {include file='userListItem' application='rp'}
                 {/foreach}
             {/content}
         </ol>

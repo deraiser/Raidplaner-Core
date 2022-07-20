@@ -80,10 +80,10 @@ class PointsCharacterProfileMenuContent extends SingletonFactory implements ICha
 
             if (isset($raidDates[$pointAccountID])) {
                 foreach ($raidDates[$pointAccountID] as $date) {
-                    $characterStats[$pointAccountID]['raidAll']++;
-                    if ($date >= (TIME_NOW - (90 * 86400))) $characterStats[$pointAccountID]['raid90']++;
-                    if ($date >= (TIME_NOW - (60 * 86400))) $characterStats[$pointAccountID]['raid60']++;
-                    if ($date >= (TIME_NOW - (30 * 86400))) $characterStats[$pointAccountID]['raid30']++;
+                    $characterStats[$pointAccountID]['raidAll']['is']++;
+                    if ($date >= (TIME_NOW - (90 * 86400))) $characterStats[$pointAccountID]['raid90']['is']++;
+                    if ($date >= (TIME_NOW - (60 * 86400))) $characterStats[$pointAccountID]['raid60']['is']++;
+                    if ($date >= (TIME_NOW - (30 * 86400))) $characterStats[$pointAccountID]['raid30']['is']++;
                 }
             }
 

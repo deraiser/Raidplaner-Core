@@ -36,9 +36,17 @@ class AccessibleEventList extends ViewableEventList
     /**
      * Creates a new AccessibleEventList object.
      */
-    public function __construct()
+    public function __construct(int $start = 0, int $end = 0)
     {
         parent::__construct();
+
+        if ($start && $end) {
+            $this->getConditionBuilder()->add('((event.startTime >= ? AND event.startTime < ?) OR (event.startTime < ? AND event.endTime >= ?))', [$start, $end, $start, $start]);
+        } else if ($start) {
+            $this->getConditionBuilder()->add('(event.startTime >= ? OR (event.startTime <= ? AND event.endTime > ?))', [$start, $start, $start]);
+        } else if ($end) {
+            $this->getConditionBuilder()->add('event.endTime < ?', [$end]);
+        }
 
         // default conditions
         if (!WCF::getSession()->getPermission('mod.rp.canModerateEvent')) $this->getConditionBuilder()->add('event.isDisabled = ?', [0]);

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/objectType.xsd">
     <import>
+        <!-- box controllers -->
+        <type>
+            <name>info.daries.rp.eventLegend</name>
+            <definitionname>com.woltlab.wcf.boxController</definitionname>
+            <classname>rp\system\box\EventLegendBoxController</classname>
+        </type>
+        <!-- /box controllers -->
+        
         <!-- character search conditions -->
         <type>
             <name>info.daries.rp.characterID</name>

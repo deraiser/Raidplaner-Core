@@ -45,7 +45,13 @@
                             {if $event == ':empty'}
                                 <div class="rpEvent rpEmptyEvent"></div>
                             {else}
-                                <div class="rpEvent{if $event->isNew()} isNew{/if}{if $event->cssMultipleEvent} {$event->cssMultipleEvent}{/if}{if $event->isDisabled} rpEventDisabled{/if}{if $event->isClosed} rpEventClosed{/if}{if $event->isDeleted} rpEventDeleted{/if}">
+                                <div class="rpEvent
+                                        {if $event->isNew()} isNew{/if}
+                                        {if $event->cssMultipleEvent} {$event->cssMultipleEvent}{/if}
+                                        {if $event->isDisabled} rpEventDisabled{/if}
+                                        {if $event->isClosed} rpEventClosed{/if}
+                                        {if $event->isDeleted} rpEventDeleted{/if}"
+                                    {@$event->getCustomCSS()}>
                                     {if !$event->cssMultipleEvent || ($event->cssMultipleEvent != 'rpEventStart' && $day->isFirstDayOfWeek()) || $event->cssMultipleEvent == 'rpEventStart'}
                                         {if $event->getController()->isExpired()}
                                             <span class="icon icon16 fa-lock rpEventExpired jsTooltip" title="{lang}rp.event.expired{/lang}"></span>

@@ -39,6 +39,7 @@
         <instruction type="acpMenu" />
         <instruction type="page" />
         <instruction type="menuItem" />
+        <instruction type="box" />
         <instruction type="clipboardAction" />
         <instruction type="templateListener" />
         <instruction type="option" />

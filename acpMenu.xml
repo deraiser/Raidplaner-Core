@@ -30,10 +30,52 @@
             <icon>fa-plus</icon>
         </acpmenuitem>
         
+        <!-- calendar -->
+        <acpmenuitem name="rp.acp.menu.link.calendar">
+            <parent>rp.acp.menu.link.rp</parent>
+            <showOrder>2</showOrder>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.event.legend.list">
+            <controller>rp\acp\page\EventLegendListPage</controller>
+            <parent>rp.acp.menu.link.calendar</parent>
+            <showorder>1</showorder>
+            <permissions>admin.rp.canManageEventLegend</permissions>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.event.legend.add">
+            <controller>rp\acp\form\EventLegendAddForm</controller>
+            <parent>rp.acp.menu.link.event.legend.list</parent>
+            <permissions>admin.rp.canManageEventLegend</permissions>
+            <icon>fa-plus</icon>
+        </acpmenuitem>
+        
         <!-- event -->
         <acpmenuitem name="rp.acp.menu.link.raid">
             <parent>rp.acp.menu.link.rp</parent>
             <showOrder>3</showOrder>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.raid.event.list">
+            <controller>rp\acp\page\RaidEventListPage</controller>
+            <parent>rp.acp.menu.link.raid</parent>
+            <showorder>1</showorder>
+            <permissions>admin.rp.canManageRaidEvent</permissions>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.raid.event.add">
+            <controller>rp\acp\form\RaidEventAddForm</controller>
+            <parent>rp.acp.menu.link.raid.event.list</parent>
+            <permissions>admin.rp.canManageRaidEvent</permissions>
+            <icon>fa-plus</icon>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.raid.group.list">
+            <controller>rp\acp\page\RaidGroupListPage</controller>
+            <parent>rp.acp.menu.link.raid</parent>
+            <showorder>2</showorder>
+            <permissions>admin.rp.canManageRaidGroup</permissions>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.raid.group.add">
+            <controller>rp\acp\form\RaidGroupAddForm</controller>
+            <parent>rp.acp.menu.link.raid.group.list</parent>
+            <permissions>admin.rp.canManageRaidGroup</permissions>
+            <icon>fa-plus</icon>
         </acpmenuitem>
         <acpmenuitem name="rp.acp.menu.link.point.account.list">
             <controller>rp\acp\page\PointAccountListPage</controller>

@@ -48,12 +48,6 @@ use wcf\util\StringUtil;
  */
 class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObject
 {
-    const GENDER_MALE = 1;
-
-    const GENDER_FEMALE = 2;
-
-    const GENDER_OTHER = 3;
-
     /**
      * character avatar
      */
@@ -84,7 +78,7 @@ class CharacterProfile extends DatabaseObjectDecorator implements ITitledLinkObj
     {
         if ($this->avatar === null) {
             $avatar = null;
-            
+
             if ($this->avatarID) {
                 if (!$this->fileHash) {
                     $avatars = [];

@@ -71,6 +71,21 @@
 				<title>Ungelesene Termine</title>
 			</content>
 		</page>
+		<page identifier="info.daries.rp.EventParticipationList">
+			<pageType>system</pageType>
+			<parent>info.daries.rp.Calendar</parent>
+			<controller>rp\page\EventParticipationListPage</controller>
+			<name language="de">Termin-Teilnahme</name>
+			<name language="en">Event Participation</name>
+			<handler>rp\system\page\handler\EventParticipationListPageHandler</handler>
+			<permissions>user.rp.canReadEvent</permissions>
+			<content language="en">
+				<title>Event Participation</title>
+			</content>
+			<content language="de">
+				<title>Termin-Teilnahme</title>
+			</content>
+		</page>
         
         <page identifier="info.daries.rp.CharactersList">
             <pageType>system</pageType>
@@ -135,20 +150,6 @@
             <handler>rp\system\page\handler\CharacterPageHandler</handler>
             <parent>info.daries.rp.CharactersList</parent>
             <requireObjectID>1</requireObjectID>
-        </page>
-        
-        <page identifier="info.daries.rp.Roster">
-            <pageType>system</pageType>
-            <controller>rp\page\RosterPage</controller>
-            <name language="de">Roster</name>
-            <name language="en">Roster</name>
-            <allowSpidersToIndex>1</allowSpidersToIndex>
-            <content language="en">
-                <title>Roster</title>
-            </content>
-            <content language="de">
-                <title>Roster</title>
-            </content>
         </page>
                 
         <page identifier="info.daries.rp.PointList">

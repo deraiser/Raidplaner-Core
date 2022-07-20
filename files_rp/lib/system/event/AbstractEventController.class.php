@@ -3,16 +3,23 @@
 namespace rp\system\event;
 
 use rp\data\event\Event;
+use rp\data\event\legend\EventLegend;
+use rp\data\event\legend\EventLegendCache;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\event\EventHandler;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ColorFormField;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\EmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
@@ -87,6 +94,51 @@ abstract class AbstractEventController implements IEventController
                 ->label('rp.event.enableComments')
                 ->value(1)
         );
+    }
+
+    /**
+     * Adds legends to the container.
+     */
+    protected function formLegends(IFormContainer|IFormDocument $form): void
+    {
+        $legendType = RadioButtonFormField::create('legendType')
+            ->options(function () {
+                return [
+                EventLegend::TYPE_INDIVIDUAL => WCF::getLanguage()->get('rp.event.legendType.individual'),
+                EventLegend::TYPE_SELECT => WCF::getLanguage()->get('rp.event.legendType.select')
+                ];
+            }, false, false)
+            ->value(EventLegend::TYPE_INDIVIDUAL)
+            ->addClass('floated');
+
+        $legendContainer = FormContainer::create('legend')
+            ->label('rp.event.legend')
+            ->description('rp.event.legend.description')
+            ->appendChildren([
+            $legendType,
+            ColorFormField::create('customBGColor')
+            ->label('rp.acp.event.legend.bgColor')
+            ->addDependency(
+                ValueFormFieldDependency::create('legendType')
+                ->field($legendType)
+                ->values([0])
+            ),
+            SingleSelectionFormField::create('legendID')
+            ->label('rp.acp.event.legend.list')
+            ->required()
+            ->options(['' => 'wcf.global.noSelection'] + EventLegendCache::getInstance()->getLegends())
+            ->addDependency(
+                ValueFormFieldDependency::create('legendType')
+                ->field($legendType)
+                ->values([1])
+            )
+            ->addValidator(new FormFieldValidator('empty', static function (SingleSelectionFormField $formField) {
+                        if (empty($formField->getSaveValue())) {
+                            $formField->addValidationError(new FormFieldValidationError('empty'));
+                        }
+                    }))
+        ]);
+        $form->appendChild($legendContainer);
     }
 
     /**
@@ -381,8 +433,10 @@ abstract class AbstractEventController implements IEventController
     {
         $fields = \array_merge(
             [
+                'customBGColor',
                 'fEndTime' => 'endTime',
                 'fStartTime' => 'startTime',
+                'legendType',
             ],
             $fields,
         );

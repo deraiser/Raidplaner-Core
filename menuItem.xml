@@ -13,6 +13,12 @@
 			<title language="en">Unread Events</title>
 			<page>info.daries.rp.UnreadEventList</page>
 		</item>
+		<item identifier="info.daries.rp.EventParticipationList">
+			<parent>info.daries.rp.Calendar</parent>
+			<title language="de">Teilnahme</title>
+			<title language="en">Participations</title>
+			<page>info.daries.rp.EventParticipationList</page>
+		</item>
         
         <item identifier="info.daries.rp.CharactersList">
             <menu>com.woltlab.wcf.MainMenu</menu>
@@ -26,13 +32,6 @@
 			<title language="en">Search Characters</title>
 			<page>info.daries.rp.CharacterSearch</page>
 		</item>
-        
-        <item identifier="info.daries.rp.Roster">
-            <menu>com.woltlab.wcf.MainMenu</menu>
-            <title language="de">Roster</title>
-            <title language="en">Roster</title>
-            <page>info.daries.rp.Roster</page>
-        </item>
         
         <item identifier="info.daries.rp.PointList">
             <menu>com.woltlab.wcf.MainMenu</menu>

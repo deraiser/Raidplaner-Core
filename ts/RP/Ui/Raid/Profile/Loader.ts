@@ -68,7 +68,7 @@ class RaidCharacterProfileLoader {
         loadButtonList.appendChild(this._loadButton);
         this._container.appendChild(loadButtonList);
 
-        if (document.querySelectorAll("#raidList > li").length) {
+        if (document.querySelectorAll("#raidList > li").length === 1) {
             this._noMoreEntries.style.display = "";
         } else {
             this._loadButton.style.display = "";
@@ -99,7 +99,7 @@ class RaidCharacterProfileLoader {
         if (data.returnValues.template) {
             document
                 .querySelector("#raidList > li:last-child")!
-                .insertAdjacentHTML("afterend", data.returnValues.template);
+                .insertAdjacentHTML("beforebegin", data.returnValues.template);
 
             this._container.dataset.lastRaidTime = data.returnValues.lastRaidTime.toString();
             

@@ -91,7 +91,7 @@ class EventAction extends AbstractDatabaseObjectAction implements IPopoverAction
 
         return [
             'status' => $this->parameters['status'],
-            'template' => WCF::getTPL()->fetch('userListItem'),
+            'template' => WCF::getTPL()->fetch('userListItem', 'rp'),
             'userID' => $user->userID
         ];
     }

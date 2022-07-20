@@ -81,7 +81,7 @@ class RaidEvent extends DatabaseObject implements ITitledLinkObject
     public function getLink(): string
     {
         return LinkHandler::getInstance()->getLink(
-                'Raids',
+                'RaidList',
                 [
                     'application' => 'rp',
                     'forceFrontend' => true

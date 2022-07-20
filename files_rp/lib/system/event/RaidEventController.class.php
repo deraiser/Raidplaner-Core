@@ -78,6 +78,7 @@ class RaidEventController extends AbstractEventController
     protected array $savedFields = [
         'enableComments',
         'endTime',
+        'legendID',
         'notes',
         'startTime',
         'title',
@@ -204,6 +205,7 @@ class RaidEventController extends AbstractEventController
         ]);
 
         $this->formComment($dataContainer);
+        $this->formLegends($dataTab);
 
         // condition tab
         $conditionTab = TabFormContainer::create('conditionTab');

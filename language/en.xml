@@ -13,6 +13,13 @@
             <item name="rp.acp.character.user"><![CDATA[Username]]></item>
         </category>
 
+        <category name="rp.acp.event">
+            <item name="rp.acp.event.legend.add"><![CDATA[Add Legend]]></item>
+            <item name="rp.acp.event.legend.bgColor"><![CDATA[Background Color]]></item>
+            <item name="rp.acp.event.legend.edit"><![CDATA[Edit Legend]]></item>
+            <item name="rp.acp.event.legend.list"><![CDATA[Legends]]></item>
+        </category>
+
         <category name="rp.acp.item">
             <item name="rp.acp.item.databaseName"><![CDATA[Database Name]]></item>
             <item name="rp.acp.item.databaseName.description"><![CDATA[The name may only consist of letters and must begin with a lowercase letter.]]></item>
@@ -21,13 +28,20 @@
         </category>
         
         <category name="rp.acp.menu">
+            <item name="rp.acp.menu.link.calendar"><![CDATA[Calendar]]></item>
             <item name="rp.acp.menu.link.character"><![CDATA[Character]]></item>
             <item name="rp.acp.menu.link.character.add"><![CDATA[Add Character]]></item>
             <item name="rp.acp.menu.link.character.list"><![CDATA[Characters]]></item>
             <item name="rp.acp.menu.link.character.search"><![CDATA[Search Characters]]></item>
+            <item name="rp.acp.menu.link.event.legend.add"><![CDATA[Add Legend]]></item>
+            <item name="rp.acp.menu.link.event.legend.list"><![CDATA[Legends]]></item>
             <item name="rp.acp.menu.link.point.account.add"><![CDATA[Add Points Account]]></item>
             <item name="rp.acp.menu.link.point.account.list"><![CDATA[Points Accounts]]></item>
             <item name="rp.acp.menu.link.raid"><![CDATA[Raid]]></item>
+            <item name="rp.acp.menu.link.raid.event.add"><![CDATA[Add Raid Event]]></item>
+            <item name="rp.acp.menu.link.raid.event.list"><![CDATA[Raid Events]]></item>
+            <item name="rp.acp.menu.link.raid.group.add"><![CDATA[Add Raid Group]]></item>
+            <item name="rp.acp.menu.link.raid.group.list"><![CDATA[Raid Groups]]></item>
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
         </category>
 
@@ -42,14 +56,19 @@
             <item name="rp.acp.raid.event.add"><![CDATA[Add Raid Event]]></item>
             <item name="rp.acp.raid.event.defaultPoints"><![CDATA[Value]]></item>
             <item name="rp.acp.raid.event.defaultPoints.description"><![CDATA[Default value of the event. Serves as an help and is not binding.]]></item>
-            <item name="rp.acp.raid.event.point.account"><![CDATA[Points Account]]></item>
             <item name="rp.acp.raid.event.edit"><![CDATA[Edit Raid Event]]></item>
             <item name="rp.acp.raid.event.image"><![CDATA[Icon]]></item>
             <item name="rp.acp.raid.event.image.mode"><![CDATA[Selection]]></item>
             <item name="rp.acp.raid.event.image.mode.select"><![CDATA[Select icon]]></item>
             <item name="rp.acp.raid.event.image.mode.upload"><![CDATA[Upload icon]]></item>
             <item name="rp.acp.raid.event.list"><![CDATA[Raid Events]]></item>
+            <item name="rp.acp.raid.event.point.account"><![CDATA[Points Account]]></item>
             <item name="rp.acp.raid.event.showProfile"><![CDATA[Show in character profile]]></item>
+            <item name="rp.acp.raid.group.add"><![CDATA[Add Raid Group]]></item>
+            <item name="rp.acp.raid.group.edit"><![CDATA[Edit Raid Group]]></item>
+            <item name="rp.acp.raid.group.list"><![CDATA[Raid Groups]]></item>
+            <item name="rp.acp.raid.group.members"><![CDATA[Members]]></item>
+            <item name="rp.acp.raid.group.showMembers"><![CDATA[Display Members]]></item>
         </category>
         
         <category name="rp.calendar">
@@ -91,6 +110,8 @@
             <item name="rp.character.point.account.title"><![CDATA[Account name]]></item>
             <item name="rp.character.primary"><![CDATA[Main]]></item>
             <item name="rp.character.profileHits"><![CDATA[Hits]]></item>
+            <item name="rp.character.raid.more"><![CDATA[More Raids]]></item>
+            <item name="rp.character.raid.noMoreEntries"><![CDATA[There are no new raids at the moment.]]></item>
             <item name="rp.character.rank"><![CDATA[Rank]]></item>
             <item name="rp.character.search"><![CDATA[Search Characters]]></item>
             <item name="rp.character.search.results"><![CDATA[Search Results]]></item>
@@ -137,6 +158,10 @@
             <item name="rp.event.eventViews"><![CDATA[{#$event->views} View{if $event->views != 1}s{/if}]]></item>
             <item name="rp.event.expired"><![CDATA[The registration deadline for this event has already passed.]]></item>
             <item name="rp.event.isFullDay"><![CDATA[Full day event]]></item>
+            <item name="rp.event.legend"><![CDATA[Individual event color setting]]></item>
+            <item name="rp.event.legend.description"><![CDATA[Individual event color setting for this event in the calendar. [Optional]]]></item>
+            <item name="rp.event.legendType.individual"><![CDATA[Individual]]></item>
+            <item name="rp.event.legendType.select"><![CDATA[Select]]></item>
             <item name="rp.event.like.notification.message"><![CDATA[<strong>{$author}</strong> reacted to your event <strong>{$event->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
             <item name="rp.event.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to event <strong>{$event->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
             <item name="rp.event.like.notification.title"><![CDATA[Reaction to your event]]></item>
@@ -242,8 +267,13 @@
         </category>
         
         <category name="rp.raid">
+            <item name="rp.raid.add"><![CDATA[Add Raid]]></item>
+            <item name="rp.raid.attendees"><![CDATA[Attendees]]></item>
+            <item name="rp.raid.date"><![CDATA[Date]]></item>
             <item name="rp.raid.items"><![CDATA[Items]]></item>
             <item name="rp.raid.items.delete.confirmMessages"><![CDATA[Do you really want to delete the item?]]></item>
+            <item name="rp.raid.notes"><![CDATA[Notes]]></item>
+            <item name="rp.raid.points"><![CDATA[Points]]></item>
         </category>
 
         <category name="rp.raid.event">
@@ -315,16 +345,25 @@
             <item name="rp.user.notification.raid.event.status.title"><![CDATA[Statusänderung]]></item>
         </category>
         
+        <category name="wcf.acp.box">
+            <item name="wcf.acp.box.boxController.info.daries.rp.eventLegend"><![CDATA[Event Legend (Raidplaner)]]></item>
+        </category>
+        
         <category name="wcf.acp.group">
             <item name="wcf.acp.group.option.admin.rp.canAddCharacter"><![CDATA[Can create characters]]></item>
             <item name="wcf.acp.group.option.admin.rp.canDeleteCharacter"><![CDATA[Can delete characters]]></item>
             <item name="wcf.acp.group.option.admin.rp.canEditCharacter"><![CDATA[Can edit characters]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canManageEventLegend"><![CDATA[Can manage legends]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageGame"><![CDATA[Can manage game]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManagePointAccount"><![CDATA[Can manage points accounts]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageRank"><![CDATA[Can manage ranks]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canManageRaidEvent"><![CDATA[Can manage raid events]]></item>
+            <item name="wcf.acp.group.option.admin.rp.canManageRaidGroup"><![CDATA[Can manage raid groups]]></item>
             <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Can search characters]]></item>
             <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
+            <item name="wcf.acp.group.option.category.admin.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.admin.rp.character"><![CDATA[Character]]></item>
+            <item name="wcf.acp.group.option.category.admin.rp.raid"><![CDATA[Raid]]></item>
             <item name="wcf.acp.group.option.category.mod.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.mod.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.mod.rp.raid"><![CDATA[Raids]]></item>
@@ -332,9 +371,11 @@
             <item name="wcf.acp.group.option.category.user.rp.calendar"><![CDATA[Calendar]]></item>
             <item name="wcf.acp.group.option.category.user.rp.character"><![CDATA[Character]]></item>
             <item name="wcf.acp.group.option.category.user.rp.raid"><![CDATA[Raids]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canAddRaid"><![CDATA[Can add raids]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteComment"><![CDATA[Can delete comments]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteEvent"><![CDATA[Can move events to trash]]></item>
             <item name="wcf.acp.group.option.mod.rp.canDeleteEventCompletely"><![CDATA[Can delete events]]></item>
+            <item name="wcf.acp.group.option.mod.rp.canDeleteRaid"><![CDATA[Can delete raids]]></item>
             <item name="wcf.acp.group.option.mod.rp.canEditComment"><![CDATA[Can edit comments]]></item>
             <item name="wcf.acp.group.option.mod.rp.canEditEvent"><![CDATA[Can edit events]]></item>
             <item name="wcf.acp.group.option.mod.rp.canModerateComment"><![CDATA[Can moderate comments]]></item>
@@ -348,11 +389,11 @@
             <item name="wcf.acp.group.option.user.rp.canCreateEventWithoutModeration"><![CDATA[Can create events without approval]]></item>
             <item name="wcf.acp.group.option.user.rp.canDeleteComment"><![CDATA[Can delete their comments]]></item>
             <item name="wcf.acp.group.option.user.rp.canDeleteEvent"><![CDATA[Can move their events to trash]]></item>
+            <item name="wcf.acp.group.option.user.rp.canDeleteOwnCharacter"><![CDATA[Can delete their characters]]></item>
             <item name="wcf.acp.group.option.user.rp.canDisableCommentFunction"><![CDATA[Can disable comments on their events]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditComment"><![CDATA[Can edit their comments]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditEvent"><![CDATA[Can edit their events]]></item>
             <item name="wcf.acp.group.option.user.rp.canEditOwnCharacter"><![CDATA[Can edit own characters]]></item>
-            <item name="wcf.acp.group.option.user.rp.maxEventMessageLength"><![CDATA[Maximum Event Description Length]]></item>
             <item name="wcf.acp.group.option.user.rp.canParticipate"><![CDATA[Can participate in raids]]></item>
             <item name="wcf.acp.group.option.user.rp.canReadEvent"><![CDATA[Can view events]]></item>
             <item name="wcf.acp.group.option.user.rp.canUploadCharacterAvatar"><![CDATA[Can upload own avatar]]></item>
@@ -360,6 +401,7 @@
             <item name="wcf.acp.group.option.user.rp.canViewCharacterProfile"><![CDATA[Can view character profiles]]></item>
             <item name="wcf.acp.group.option.user.rp.characterAvatarAllowedFileExtensions"><![CDATA[Allowed file extensions]]></item>
             <item name="wcf.acp.group.option.user.rp.characterAvatarMaxSize"><![CDATA[Maximum file size]]></item>
+            <item name="wcf.acp.group.option.user.rp.maxEventMessageLength"><![CDATA[Maximum Event Description Length]]></item>
         </category>
 
         <category name="wcf.acp.modificationLog">

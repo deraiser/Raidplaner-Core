@@ -51,7 +51,7 @@
 
         .statusDisplay {
             flex: 0 auto;
-            
+
             display: flex;
             align-items: center;
         }
@@ -226,18 +226,24 @@
 
 .eventLikeContent {
     margin-top: 20px;
-    
+
     .eventLikeSection {
-		align-items: center;
-	}
+        align-items: center;
+    }
 
     .eventLikeButtons {
-		justify-content: flex-end;
+        justify-content: flex-end;
 
-		.invisible {
-			display: inline;
-		}
-	}
+        .invisible {
+            display: inline;
+        }
+    }
+}
+
+.eventAppointment {
+    > li {
+        padding: 5px;
+    }
 }
 
 /* fix icons in rtl design */

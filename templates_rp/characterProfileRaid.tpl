@@ -9,6 +9,8 @@
 	});
 </script>
 
-<ul id="raidList" class="containerList tripleColumned raidList" data-last-raid-time="{@$lastRaidTime}">
-    {include file='characterProfileRaidItem' application='rp'}
-</ul>
+<section class="section sectionContainerList">
+    <ol id="raidList" class="contentItemList raidList" data-last-raid-time="{@$lastRaidTime}">
+        {include file='characterProfileRaidItem' application='rp'}
+    </ol>
+</section>

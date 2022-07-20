@@ -49,7 +49,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             this._loadButton.style.display = "none";
             loadButtonList.appendChild(this._loadButton);
             this._container.appendChild(loadButtonList);
-            if (document.querySelectorAll("#raidList > li").length) {
+            if (document.querySelectorAll("#raidList > li").length === 1) {
                 this._noMoreEntries.style.display = "";
             }
             else {
@@ -78,7 +78,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Ajax", "WoltLabSuite/C
             if (data.returnValues.template) {
                 document
                     .querySelector("#raidList > li:last-child")
-                    .insertAdjacentHTML("afterend", data.returnValues.template);
+                    .insertAdjacentHTML("beforebegin", data.returnValues.template);
                 this._container.dataset.lastRaidTime = data.returnValues.lastRaidTime.toString();
                 Util_1.default.hide(this._noMoreEntries);
                 Util_1.default.show(this._loadButton);

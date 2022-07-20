@@ -78,6 +78,7 @@ class RaidEditor extends DatabaseObjectEditor
                 'attendees' => $attendees,
             ];
             EventHandler::getInstance()->fireAction($this, 'addAttendees', $parameters);
+            $attendees = $parameters['attendees'];
 
             if (empty($attendees)) {
                 $attendees = CharacterRuntimeCache::getInstance()->getObjects($attendeeIDs);

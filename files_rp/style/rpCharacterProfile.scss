@@ -71,7 +71,7 @@
     }
 
     .yellow {
-        color: #ff0;
+        color: rgba(176,176,8, 0.8);
     }
 }
 
@@ -79,6 +79,63 @@
     > li {
         &.showMore {
             flex-basis: 100%;
+            text-align: center;
+            padding: 10px;
+            margin-left: 20px;
+            border-top: 1px solid $wcfContentBorderInner;
+        }
+    }
+}
+
+.characterProfileRaidAttendance {
+    .contentItem {
+        > div {
+            display: flex;
+
+            > div {
+                padding-top: 5px;
+                padding-right: 5px;
+                width: 100%;
+            }
+        }
+    }
+
+    .raidEventIcon {
+        padding: 5px;
+    }
+    
+    .containerHeadline {
+        > h3 {
+            @include wcfFontDefault;
+        }
+    }
+
+    .progressBarContainer {
+        position: relative;
+        display: inline-block;
+        margin-top: 3px;
+        border: 1px solid $wcfContentBorderInner;
+        height: 15px;
+        width: 100%;
+
+        .progressBar {
+            position: absolute;
+            height: 100%;
+            left: 0;
+            top: 0;
+            background-color: rgba(0, 153, 0, 1);
+        }
+
+        span {
+            position: absolute;
+            text-align: center;
+            left: 0;
+            line-height: 1em;
+            font-size: 10px;
+            font-weight: bold;
+            top: 1px;
+            width: 100%;
+            z-index: 1;
         }
     }
 }

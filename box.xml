@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/box.xsd">
+    <import>
+        <box identifier="info.daries.rp.EventLegend">
+            <name language="de">Termin Legende (Raidplaner)</name>
+            <name language="en">Event Legend (Raidplaner)</name>
+            <boxType>system</boxType>
+            <position>contentBottom</position>
+            <objectType>info.daries.rp.eventLegend</objectType>
+            <showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>info.daries.rp.Calendar</page>
+			</visibilityExceptions>
+            <content language="de">
+                <title>Legende</title>
+            </content>
+            <content language="en">
+                <title>Legend</title>
+            </content>
+        </box>
+    </import>
+</data>

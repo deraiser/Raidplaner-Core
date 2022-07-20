@@ -50,10 +50,18 @@ CREATE TABLE rp1_event (
     hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	deleteTime INT(10) NOT NULL DEFAULT 0,
     raidID INT(10) NULL,
+    legendID INT(10) NULL,
 	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
     isCanceled TINYINT(1) NOT NULL DEFAULT 0,
     isDisabled TINYINT(1) NOT NULL DEFAULT 0,
     additionalData TEXT
+);
+
+DROP TABLE IF EXISTS rp1_event_legend;
+CREATE TABLE rp1_event_legend (
+    legendID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL DEFAULT '',
+    bgColor VARCHAR(255) NOT NULL DEFAULT '',
 );
 
 DROP TABLE IF EXISTS rp1_event_raid_attendee;
@@ -164,6 +172,14 @@ CREATE TABLE rp1_member_profile_menu_item (
     UNIQUE KEY (packageID, menuItem)
 );
 
+DROP TABLE IF EXISTS rp1_member_to_raid_group;
+CREATE TABLE rp1_member_to_raid_group (
+    characterID INT(10) NOT NULL,
+    groupID INT(10) NOT NULL,
+    isLeader TINYINT(1) NOT NULL DEFAULT 0,
+    UNIQUE KEY characterID (characterID, groupID)
+);
+
 DROP TABLE IF EXISTS rp1_point_account;
 CREATE TABLE rp1_point_account (
     pointAccountID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -223,6 +239,13 @@ CREATE TABLE rp1_raid_event (
     showProfile TINYINT(1) NOT NULL DEFAULT 0
 );
 
+DROP TABLE IF EXISTS rp1_raid_group;
+CREATE TABLE rp1_raid_group (
+    groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    groupName VARCHAR(255) NOT NULL DEFAULT '',
+    groupDescription TEXT
+);
+
 DROP TABLE IF EXISTS rp1_rank;
 CREATE TABLE rp1_rank (
     rankID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -271,6 +294,7 @@ ALTER TABLE rp1_classification_to_role ADD FOREIGN KEY (roleID) REFERENCES rp1_r
 ALTER TABLE rp1_event ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE rp1_event ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE rp1_event ADD FOREIGN KEY (raidID) REFERENCES rp1_raid (raidID) ON DELETE SET NULL;
+ALTER TABLE rp1_event ADD FOREIGN KEY (legendID) REFERENCES rp1_event_legend (legendID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (classificationID) REFERENCES rp1_classification (classificationID) ON DELETE SET NULL;
 ALTER TABLE rp1_event_raid_attendee ADD FOREIGN KEY (eventID) REFERENCES rp1_event (eventID) ON DELETE CASCADE;
@@ -293,6 +317,8 @@ ALTER TABLE rp1_member ADD FOREIGN KEY (rankID) REFERENCES rp1_rank (rankID) ON 
 ALTER TABLE rp1_member ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE rp1_member_avatar ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
 ALTER TABLE rp1_member_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+ALTER TABLE rp1_member_to_raid_group ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
+ALTER TABLE rp1_member_to_raid_group ADD FOREIGN KEY (groupID) REFERENCES rp1_raid_group (groupID) ON DELETE CASCADE;
 
 ALTER TABLE rp1_point_account ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 

@@ -35,9 +35,9 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             this.canceledButton.addEventListener("click", (ev) => this.click(ev));
             this.maybeButton = document.querySelector(".jsButtonEventMaybe");
             this.maybeButton.addEventListener("click", (ev) => this.click(ev));
-            document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment) => this.initAppointment(appointment, "accepted"));
-            document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment) => this.initAppointment(appointment, "canceled"));
-            document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment) => this.initAppointment(appointment, "maybe"));
+            document.querySelectorAll(".jsEventAccepted .contentItemList > LI").forEach((appointment) => this.initAppointment(appointment, "accepted"));
+            document.querySelectorAll(".jsEventCanceled .contentItemList > LI").forEach((appointment) => this.initAppointment(appointment, "canceled"));
+            document.querySelectorAll(".jsEventMaybe .contentItemList > LI").forEach((appointment) => this.initAppointment(appointment, "maybe"));
             const header = document.querySelector(".rpEventHeader");
             const disable = (header.dataset.isDeleted === "1" || header.dataset.isDisabled === "1") ? true : false;
             if (disable) {
@@ -147,7 +147,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                 }
                 switch (appointment.status) {
                     case "accepted":
-                        document.querySelectorAll(".jsEventAccepted .containerList > LI").forEach((appointment) => {
+                        document.querySelectorAll(".jsEventAccepted .contentItemList > LI").forEach((appointment) => {
                             const userId = ~~appointment.dataset.objectId;
                             if (data.returnValues.userID === userId) {
                                 appointment.remove();
@@ -155,7 +155,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                         });
                         break;
                     case "canceled":
-                        document.querySelectorAll(".jsEventCanceled .containerList > LI").forEach((appointment) => {
+                        document.querySelectorAll(".jsEventCanceled .contentItemList > LI").forEach((appointment) => {
                             const userId = ~~appointment.dataset.objectId;
                             if (data.returnValues.userID === userId) {
                                 appointment.remove();
@@ -163,7 +163,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
                         });
                         break;
                     case "maybe":
-                        document.querySelectorAll(".jsEventMaybe .containerList > LI").forEach((appointment) => {
+                        document.querySelectorAll(".jsEventMaybe .contentItemList > LI").forEach((appointment) => {
                             const userId = ~~appointment.dataset.objectId;
                             if (data.returnValues.userID === userId) {
                                 appointment.remove();
@@ -176,30 +176,30 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
             switch (data.returnValues.status) {
                 case "accepted":
                     this.disableButton(this.acceptedButton);
-                    object = document.querySelector(".jsEventAccepted .containerList");
-                    if (object === undefined) {
+                    object = document.querySelector(".jsEventAccepted .contentItemList");
+                    if (object === null) {
                         document.querySelector(".jsEventAccepted .info").remove();
                         document.querySelector(".jsEventAccepted").appendChild(this._newObject());
                     }
-                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventAccepted .containerList"), "append");
+                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventAccepted .contentItemList"), "append");
                     break;
                 case "canceled":
                     this.disableButton(this.canceledButton);
-                    object = document.querySelector(".jsEventCanceled .containerList");
-                    if (object === undefined) {
+                    object = document.querySelector(".jsEventCanceled .contentItemList");
+                    if (object === null) {
                         document.querySelector(".jsEventCanceled .info").remove();
                         document.querySelector(".jsEventCanceled").appendChild(this._newObject());
                     }
-                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventCanceled .containerList"), "append");
+                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventCanceled .contentItemList"), "append");
                     break;
                 case "maybe":
                     this.disableButton(this.maybeButton);
-                    object = document.querySelector(".jsEventMaybe .containerList");
-                    if (object === undefined) {
+                    object = document.querySelector(".jsEventMaybe .contentItemList");
+                    if (object === null) {
                         document.querySelector(".jsEventMaybe .info").remove();
                         document.querySelector(".jsEventMaybe").appendChild(this._newObject());
                     }
-                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventMaybe .containerList"), "append");
+                    Util_1.default.insertHtml(data.returnValues.template, document.querySelector(".jsEventMaybe .contentItemList"), "append");
                     break;
             }
             appointments.set(data.returnValues.userID, {
@@ -209,7 +209,7 @@ define(["require", "exports", "tslib", "WoltLabSuite/Core/Core", "WoltLabSuite/C
         }
         _newObject() {
             const newObject = document.createElement("ol");
-            newObject.className = "containerList tripleColumned";
+            newObject.className = "contentItemList eventAppointment";
             return newObject;
         }
     }

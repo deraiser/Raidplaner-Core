@@ -68,7 +68,7 @@ class ItemCharacterProfileLoader {
         loadButtonList.appendChild(this._loadButton);
         this._container.after(loadButtonList);
 
-        if (document.querySelectorAll("#itemList > li").length) {
+        if (document.querySelectorAll("#itemList > li").length === 1) {
             this._noMoreEntries.style.display = "";
         } else {
             this._loadButton.style.display = "";
@@ -99,7 +99,7 @@ class ItemCharacterProfileLoader {
         if (data.returnValues.template) {
             document
                 .querySelector("#itemList > li:last-child")!
-                .insertAdjacentHTML("afterend", data.returnValues.template);
+                .insertAdjacentHTML("beforebegin", data.returnValues.template);
 
             this._container.dataset.lastItemOffset = data.returnValues.lastItemOffset.toString();
             

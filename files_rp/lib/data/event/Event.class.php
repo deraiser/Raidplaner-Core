@@ -2,6 +2,8 @@
 
 namespace rp\data\event;
 
+use rp\data\event\legend\EventLegend;
+use rp\data\event\legend\EventLegendCache;
 use rp\system\calendar\Day;
 use rp\system\calendar\Month;
 use rp\system\event\discussion\CommentEventDiscussionProvider;
@@ -66,6 +68,7 @@ use wcf\util\StringUtil;
  * @property-read   int         $hasEmbeddedObjects     is `1` if there are embedded objects in the event, otherwise `0`
  * @property-read	int         $deleteTime             timestamp at which the event has been deleted
  * @property-read	int|null    $raidID                 raid id after a raid event has been converted to a raid or `null` if not converted to a raid
+ * @property-read	int|null    $legendID               legend id individual color selection or `null` if not specified
  * @property-read	int         $isDeleted              is `1` if the event is in trash bin, otherwise `0`
  * @property-read   int         $isCanceled             is `1` if the even is canceled, otherwise `0`
  * @property-read   int         $isDisabled             is `1` if the even is disabled, otherwise `0`
@@ -265,6 +268,30 @@ class Event extends DatabaseObject implements IUserContent, IRouteController
         }
 
         return $this->controller;
+    }
+
+    public function getCustomCSS(): string
+    {
+        $custom = '';
+
+        switch ($this->legendType) {
+            case EventLegend::TYPE_INDIVIDUAL:
+                if ($this->customBGColor || $this->customFrontColor) {
+                    $color = StringUtil::trim($this->customBGColor);
+                    $custom = " style='background-color: {$color};'";
+                }
+                break;
+            case EventLegend::TYPE_SELECT:
+                if ($this->legendID) {
+                    $legend = EventLegendCache::getInstance()->getLegendByID($this->legendID);
+
+                    $color = StringUtil::trim($legend->bgColor);
+                    $custom = " style='background-color: {$color};'";
+                }
+                break;
+        }
+
+        return $custom;
     }
 
     /**
