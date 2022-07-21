@@ -5,20 +5,21 @@ namespace rp\data\character;
 use rp\data\character\avatar\CharacterAvatar;
 use rp\data\character\avatar\CharacterAvatarAction;
 use rp\data\rank\RankCache;
+use rp\system\cache\runtime\CharacterRuntimeCache;
 use rp\system\character\CharacterHandler;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
-use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\system\WCF;
 use wcf\util\ImageUtil;
 
 /*  Project:    Raidplaner: Core
@@ -50,13 +51,17 @@ use wcf\util\ImageUtil;
  * @method      CharacterEditor[]   getObjects()
  * @method      CharacterEditor     getSingleObject()
  */
-class CharacterAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction, IToggleAction
+class CharacterAction extends AbstractDatabaseObjectAction implements IClipboardAction, ISearchAction
 {
-    use TDatabaseObjectToggle;
     /**
      * @inheritDoc
      */
     protected $allowGuestAccess = ['getSearchResultList'];
+
+    /**
+     * chracter object
+     */
+    protected ?Character $character = null;
 
     /**
      * @inheritDoc
@@ -181,6 +186,46 @@ class CharacterAction extends AbstractDatabaseObjectAction implements IClipboard
         $this->unmarkItems();
 
         return ['objectIDs' => $this->objectIDs];
+    }
+
+    /**
+     * delete own character
+     */
+    public function deleteOwnCharacter(): void
+    {
+        $editor = new CharacterEditor($this->character);
+        $editor->update([
+            'isDisabled' => 1,
+            'userID' => null,
+        ]);
+    }
+
+    /**
+     * Disables characters.
+     */
+    public function disable(): void
+    {
+        foreach ($this->getObjects() as $object) {
+            $object->update([
+                'isDisabled' => 1
+            ]);
+        }
+
+        $this->unmarkItems();
+    }
+
+    /**
+     * Enables characters.
+     */
+    public function enable(): void
+    {
+        foreach ($this->getObjects() as $object) {
+            $object->update([
+                'isDisabled' => 0
+            ]);
+        }
+
+        $this->unmarkItems();
     }
 
     /**
@@ -332,6 +377,62 @@ class CharacterAction extends AbstractDatabaseObjectAction implements IClipboard
                 $avatarFile->setProcessed($avatar->getLocation());
             } catch (\RuntimeException $e) {
                 
+            }
+        }
+    }
+
+    /**
+     * validate `deleteOwnCharacter` function
+     */
+    public function validateDeleteOwnCharacter(): void
+    {
+        if (\count($this->objectIDs) != 1) {
+            throw new UserInputException('objectIDs');
+        }
+
+        $characterID = \reset($this->objectIDs);
+        $this->character = CharacterRuntimeCache::getInstance()->getObject($characterID);
+        if ($this->character === null) {
+            throw new UserInputException('objectIDs');
+        }
+
+        if (!$this->character->canDelete()) {
+            throw new PermissionDeniedException();
+        }
+    }
+
+    /**
+     * Validates the disable action.
+     */
+    public function validateDisable()
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        foreach ($this->getObjects() as $object) {
+            if ($object->isDisabled) {
+                throw new UserInputException('objectIDs');
+            }
+        }
+
+        if (!RequestHandler::getInstance()->isACPRequest()) {
+            WCF::getSession()->checkPermissions(['user.rp.canDeleteOwnCharacter']);
+        }
+    }
+
+    /**
+     * Validates the enable action.
+     */
+    public function validateEnable(): void
+    {
+        if (empty($this->objects)) {
+            $this->readObjects();
+        }
+
+        foreach ($this->getObjects() as $object) {
+            if (!$object->isDisabled) {
+                throw new UserInputException('objectIDs');
             }
         }
     }

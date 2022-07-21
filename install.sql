@@ -172,14 +172,6 @@ CREATE TABLE rp1_member_profile_menu_item (
     UNIQUE KEY (packageID, menuItem)
 );
 
-DROP TABLE IF EXISTS rp1_member_to_raid_group;
-CREATE TABLE rp1_member_to_raid_group (
-    characterID INT(10) NOT NULL,
-    groupID INT(10) NOT NULL,
-    isLeader TINYINT(1) NOT NULL DEFAULT 0,
-    UNIQUE KEY characterID (characterID, groupID)
-);
-
 DROP TABLE IF EXISTS rp1_point_account;
 CREATE TABLE rp1_point_account (
     pointAccountID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -237,13 +229,6 @@ CREATE TABLE rp1_raid_event (
     defaultPoints FLOAT(11,2) NOT NULL DEFAULT 0,
     icon VARCHAR(255) NOT NULL DEFAULT '',
     showProfile TINYINT(1) NOT NULL DEFAULT 0
-);
-
-DROP TABLE IF EXISTS rp1_raid_group;
-CREATE TABLE rp1_raid_group (
-    groupID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    groupName VARCHAR(255) NOT NULL DEFAULT '',
-    groupDescription TEXT
 );
 
 DROP TABLE IF EXISTS rp1_rank;
@@ -317,8 +302,6 @@ ALTER TABLE rp1_member ADD FOREIGN KEY (rankID) REFERENCES rp1_rank (rankID) ON 
 ALTER TABLE rp1_member ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE rp1_member_avatar ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
 ALTER TABLE rp1_member_profile_menu_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
-ALTER TABLE rp1_member_to_raid_group ADD FOREIGN KEY (characterID) REFERENCES rp1_member (characterID) ON DELETE CASCADE;
-ALTER TABLE rp1_member_to_raid_group ADD FOREIGN KEY (groupID) REFERENCES rp1_raid_group (groupID) ON DELETE CASCADE;
 
 ALTER TABLE rp1_point_account ADD FOREIGN KEY (gameID) REFERENCES rp1_game (gameID) ON DELETE CASCADE;
 

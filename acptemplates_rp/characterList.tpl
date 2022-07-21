@@ -84,12 +84,16 @@
                                 <ul class="dropdownMenu">
                                     {event name='dropdownItems'}
                                     
-                                    {if $character->canDelete()}
+                                    {if $__wcf->session->getPermission('admin.rp.canEditCharacter')}
+                                        <li><a href="#" class="jsEnable" data-enable-message="{lang}rp.acp.character.enable{/lang}" data-disable-message="{lang}rp.acp.character.disable{/lang}">{lang}rp.acp.character.{if !$character->isDisabled}disable{else}enable{/if}{/lang}</a></li>
+                                    {/if}
+                                    
+                                    {if $__wcf->session->getPermission('admin.rp.canDeleteCharacter')}
                                         <li class="dropdownDivider"></li>
                                         <li><a href="#" class="jsDelete" data-confirm-message="{lang __encode=true objectTitle=$character->characterName}wcf.button.delete.confirmMessage{/lang}">{lang}wcf.global.button.delete{/lang}</a></li>
                                     {/if}
                                     
-                                    {if $character->canEdit()}
+                                    {if $__wcf->session->getPermission('admin.rp.canEditCharacter')}
                                         <li class="dropdownDivider"></li>
                                         <li><a href="{link controller='CharacterEdit' application='rp' id=$character->characterID}{/link}" class="jsEditLink">{lang}wcf.global.button.edit{/lang}</a></li>
                                     {/if}

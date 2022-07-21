@@ -19,5 +19,22 @@
                 <title>Legend</title>
             </content>
         </box>
+        <box identifier="info.daries.rp.UpcomingEvents">
+            <name language="de">Anstehende Termine (Raidplaner)</name>
+            <name language="en">Upcoming Events (Raidplaner)</name>
+            <boxType>system</boxType>
+            <position>sidebarRight</position>
+            <objectType>info.daries.rp.eventList</objectType>
+            <showHeader>1</showHeader>
+            <sortField>startTime</sortField>
+            <sortOrder>ASC</sortOrder>
+            <limit>5</limit>
+            <content language="de">
+                <title>Anstehende Termine</title>
+            </content>
+            <content language="en">
+                <title>Upcoming Events</title>
+            </content>
+        </box>
     </import>
 </data>

@@ -15,7 +15,7 @@
                             <a>
                                 <span 
                                     class="icon icon16 fa-times jsObjectAction pointer" 
-                                    data-object-action="delete" 
+                                    data-object-action="deleteOwnCharacter" 
                                     data-confirm-message="{lang objectTitle=$character->getTitle() __encode=true}wcf.button.delete.confirmMessage{/lang}"
                                     data-object-action-success="reload" 
                                     data-tooltip="{lang}wcf.global.button.delete{/lang}" 

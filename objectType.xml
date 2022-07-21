@@ -7,6 +7,11 @@
             <definitionname>com.woltlab.wcf.boxController</definitionname>
             <classname>rp\system\box\EventLegendBoxController</classname>
         </type>
+        <type>
+            <name>info.daries.rp.eventList</name>
+            <definitionname>com.woltlab.wcf.boxController</definitionname>
+            <classname>rp\system\box\EventListBoxController</classname>
+        </type>
         <!-- /box controllers -->
         
         <!-- character search conditions -->

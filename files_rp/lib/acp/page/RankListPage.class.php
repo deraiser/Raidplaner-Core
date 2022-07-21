@@ -2,9 +2,8 @@
 
 namespace rp\acp\page;
 
-use rp\data\raid\group\I18nRaidGroupList;
-use wcf\page\SortablePage;
-
+use rp\data\rank\RankList;
+use wcf\page\MultipleLinkPage;
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
  *  Link:       http://daries.info
@@ -26,39 +25,40 @@ use wcf\page\SortablePage;
  */
 
 /**
- * Shows a list of raid groups.
- * 
+ * Shows the list of ranks.
+ *
  * @author      Marco Daries
  * @package     Daries\RP\Acp\Page
  *
- * @property	I18nRaidGroupList   $objectList
+ * @property    RankList    $objectList
  */
-class RaidGroupListPage extends SortablePage
+class RankListPage extends MultipleLinkPage
 {
-    /**
-     * @inheritDoc
-     */
-    public $activeMenuItem = 'rp.acp.menu.link.raid.group.list';
 
     /**
      * @inheritDoc
      */
-    public $defaultSortField = 'groupNameI18n';
+    public $activeMenuItem = 'rp.acp.menu.link.rank.list';
 
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.rp.canManageRaidGroup'];
+    public $neededModules = ['RP_ENABLE_RANK'];
 
     /**
      * @inheritDoc
      */
-    public $objectListClassName = I18nRaidGroupList::class;
+    public $neededPermissions = ['admin.rp.canManageRank'];
 
     /**
      * @inheritDoc
      */
-    public $validSortFields = ['groupID', 'groupNameI18n', 'members'];
+    public $objectListClassName = RankList::class;
+
+    /**
+     * @inheritDoc
+     */
+    public $sqlOrderBy = 'showOrder ASC, rankID ASC';
 
     /**
      * @inheritDoc
@@ -67,23 +67,6 @@ class RaidGroupListPage extends SortablePage
     {
         parent::initObjectList();
 
-        if (!empty($this->objectList->sqlSelects)) {
-            $this->objectList->sqlSelects .= ',';
-        }
-        $this->objectList->sqlSelects .= "(
-            SELECT  COUNT(*)
-            FROM    rp" . WCF_N . "_member_to_raid_group
-            WHERE   groupID = raid_group.groupID
-        ) AS members";
-    }
-
-    /**
-     * @inheritDoc
-     */
-    protected function readObjects(): void
-    {
-        $this->sqlOrderBy = (($this->sortField != 'members' && $this->sortField != 'groupNameI18n') ? 'raid_group.' : '') . $this->sortField . " " . $this->sortOrder;
-
-        parent::readObjects();
+        $this->objectList->getConditionBuilder()->add('rank.gameID = ?', [RP_DEFAULT_GAME_ID]);
     }
 }

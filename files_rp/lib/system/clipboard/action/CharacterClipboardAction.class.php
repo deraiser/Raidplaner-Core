@@ -7,7 +7,6 @@ use rp\data\character\CharacterAction;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\system\clipboard\action\AbstractClipboardAction;
 use wcf\system\clipboard\ClipboardEditorItem;
-use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /*  Project:    Raidplaner: Core
@@ -43,14 +42,17 @@ class CharacterClipboardAction extends AbstractClipboardAction
      */
     protected $actionClassActions = [
         'delete',
+        'disable',
+        'enable',
     ];
 
     /**
      * @inheritDoc
      */
     protected $supportedActions = [
-        'assignToRaidGroup',
         'delete',
+        'disable',
+        'enable',
     ];
 
     /**
@@ -66,10 +68,6 @@ class CharacterClipboardAction extends AbstractClipboardAction
 
         // handle actions
         switch ($action->actionName) {
-            case 'assignToRaidGroup':
-                $item->setURL(LinkHandler::getInstance()->getLink('CharacterAssignToRaidGroup', ['application' => 'rp']));
-                break;
-
             case 'delete':
                 $item->addInternalData(
                     'confirmMessage',
@@ -113,6 +111,42 @@ class CharacterClipboardAction extends AbstractClipboardAction
         /** @var Character $character */
         foreach ($this->objects as $character) {
             if ($character->canDelete()) {
+                $objectIDs[] = $character->characterID;
+            }
+        }
+
+        return $objectIDs;
+    }
+
+    /**
+     * Returns the ids of the characters that can be disabled.
+     *
+     * @return  int[]
+     */
+    public function validateDisable(): array
+    {
+        $objectIDs = [];
+
+        foreach ($this->objects as $character) {
+            if (!$character->isDisabled) {
+                $objectIDs[] = $character->characterID;
+            }
+        }
+
+        return $objectIDs;
+    }
+
+    /**
+     * Returns the ids of the characters that can be enabled.
+     *
+     * @return  int[]
+     */
+    public function validateEnable(): array
+    {
+        $objectIDs = [];
+
+        foreach ($this->objects as $character) {
+            if ($character->isDisabled && $character->userID !== null) {
                 $objectIDs[] = $character->characterID;
             }
         }

@@ -3,6 +3,8 @@
     <import>
         <category name="rp.acp.character">
             <item name="rp.acp.character.condition.conditionGroup.general"><![CDATA[General]]></item>
+            <item name="rp.acp.character.disable"><![CDATA[Disable]]></item>
+            <item name="rp.acp.character.enable"><![CDATA[Enable]]></item>
             <item name="rp.acp.character.isDisabled"><![CDATA[Character is deactivated]]></item>
             <item name="rp.acp.character.list"><![CDATA[Characters]]></item>
             <item name="rp.acp.character.owner"><![CDATA[Owner]]></item>
@@ -40,8 +42,8 @@
             <item name="rp.acp.menu.link.raid"><![CDATA[Raid]]></item>
             <item name="rp.acp.menu.link.raid.event.add"><![CDATA[Add Raid Event]]></item>
             <item name="rp.acp.menu.link.raid.event.list"><![CDATA[Raid Events]]></item>
-            <item name="rp.acp.menu.link.raid.group.add"><![CDATA[Add Raid Group]]></item>
-            <item name="rp.acp.menu.link.raid.group.list"><![CDATA[Raid Groups]]></item>
+            <item name="rp.acp.menu.link.rank.add"><![CDATA[Add Rank]]></item>
+            <item name="rp.acp.menu.link.rank.list"><![CDATA[Ranks]]></item>
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
         </category>
 
@@ -64,11 +66,16 @@
             <item name="rp.acp.raid.event.list"><![CDATA[Raid Events]]></item>
             <item name="rp.acp.raid.event.point.account"><![CDATA[Points Account]]></item>
             <item name="rp.acp.raid.event.showProfile"><![CDATA[Show in character profile]]></item>
-            <item name="rp.acp.raid.group.add"><![CDATA[Add Raid Group]]></item>
-            <item name="rp.acp.raid.group.edit"><![CDATA[Edit Raid Group]]></item>
-            <item name="rp.acp.raid.group.list"><![CDATA[Raid Groups]]></item>
-            <item name="rp.acp.raid.group.members"><![CDATA[Members]]></item>
-            <item name="rp.acp.raid.group.showMembers"><![CDATA[Display Members]]></item>
+        </category>
+
+        <category name="rp.acp.rank">
+            <item name="rp.acp.rank.add"><![CDATA[Add Rank]]></item>
+            <item name="rp.acp.rank.edit"><![CDATA[Edit Rank]]></item>
+            <item name="rp.acp.rank.list"><![CDATA[Ranks]]></item>
+            <item name="rp.acp.rank.prefix"><![CDATA[Prefix]]></item>
+            <item name="rp.acp.rank.setAsDefault"><![CDATA[Make the default rank]]></item>
+            <item name="rp.acp.rank.showOrder.description"><![CDATA[Sets the order in which the ranks are displayed.]]></item>
+            <item name="rp.acp.rank.suffix"><![CDATA[Suffix]]></item>
         </category>
         
         <category name="rp.calendar">
@@ -166,6 +173,7 @@
             <item name="rp.event.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to event <strong>{$event->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
             <item name="rp.event.like.notification.title"><![CDATA[Reaction to your event]]></item>
             <item name="rp.event.like.notification.title.stacked"><![CDATA[{#$count} users reacted to your event]]></item>
+            <item name="rp.event.login"><![CDATA[You are registered/deregistered for the event.]]></item>
             <item name="rp.event.maybe"><![CDATA[Maybe]]></item>
             <item name="rp.event.moderation.info"><![CDATA[Newly created events will remain inaccessible until approved by a moderator.]]></item>
             <item name="rp.event.moderation.redirect"><![CDATA[Your event has been created and will be displayed once approved.]]></item>
@@ -177,6 +185,9 @@
             <item name="rp.event.raidLink"><![CDATA[To raid]]></item>
             <item name="rp.event.restore"><![CDATA[Restore]]></item>
             <item name="rp.event.settings"><![CDATA[Settings]]></item>
+            <item name="rp.event.sortField.startTime"><![CDATA[Date]]></item>
+            <item name="rp.event.sortField.comments"><![CDATA[Comments]]></item>
+            <item name="rp.event.sortField.views"><![CDATA[Views]]></item>
             <item name="rp.event.startTime"><![CDATA[Start time]]></item>
             <item name="rp.event.startTime.error.invalid"><![CDATA[You have specified an invalid date for the start of the event.]]></item>
             <item name="rp.event.startTime.error.tooLong"><![CDATA[The duration of the event is too long. The maximum allowed duration is {#RP_CALENDAR_MAX_EVENT_LENGTH} days.]]></item>
@@ -269,6 +280,7 @@
         <category name="rp.raid">
             <item name="rp.raid.add"><![CDATA[Add Raid]]></item>
             <item name="rp.raid.attendees"><![CDATA[Attendees]]></item>
+            <item name="rp.raid.created"><![CDATA[Created by]]></item>
             <item name="rp.raid.date"><![CDATA[Date]]></item>
             <item name="rp.raid.items"><![CDATA[Items]]></item>
             <item name="rp.raid.items.delete.confirmMessages"><![CDATA[Do you really want to delete the item?]]></item>
@@ -347,6 +359,7 @@
         
         <category name="wcf.acp.box">
             <item name="wcf.acp.box.boxController.info.daries.rp.eventLegend"><![CDATA[Event Legend (Raidplaner)]]></item>
+            <item name="wcf.acp.box.boxController.info.daries.rp.eventList"><![CDATA[Calendar Events (Raidplaner)]]></item>
         </category>
         
         <category name="wcf.acp.group">
@@ -358,7 +371,6 @@
             <item name="wcf.acp.group.option.admin.rp.canManagePointAccount"><![CDATA[Can manage points accounts]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageRank"><![CDATA[Can manage ranks]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageRaidEvent"><![CDATA[Can manage raid events]]></item>
-            <item name="wcf.acp.group.option.admin.rp.canManageRaidGroup"><![CDATA[Can manage raid groups]]></item>
             <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Can search characters]]></item>
             <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.admin.rp.calendar"><![CDATA[Calendar]]></item>
@@ -452,6 +464,8 @@
             <item name="wcf.clipboard.label.info.daries.rp.raid.attendee.marked"><![CDATA[{if $count == 1}One{else}{#$count}{/if} attendee{if $count != 1}s{/if}]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Delete ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[Do you really want to delete {if $count == 1}an{else}{#$count}{/if} character{if $count != 1}s{/if}?]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.disable"><![CDATA[Disable ({#$count})]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.enable"><![CDATA[Enable ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.delete"><![CDATA[Remove ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.delete.confirmMessage"><![CDATA[Do you really want to remove {if $count == 1}a{else}{#$count}{/if} attendee{if $count != 1}s{/if}?]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.updateStatus"><![CDATA[Change Status ({#$count})]]></item>
@@ -472,6 +486,11 @@
         <category name="wcf.page">
             <item name="wcf.page.daries.rp.copyright"><![CDATA[<a href="https://daries.info/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Software: <strong>Raidplaner{if SHOW_VERSION_NUMBER} {$__rp->getPackage()->packageVersion}{/if}</strong>, developed by <strong>Daries.info Team</strong></a>]]></item>
             <item name="wcf.page.onlineLocation.info.daries.rp.Character"><![CDATA[Character profile of <a href="{link controller='Character' object=$character}{/link}" class="rpCharacterLink" data-character-id="{@$character->characterID}">{$character->getTitle()}</a>]]></item>
+        </category>
+
+        <category name="wcf.search">
+            <item name="wcf.search.type.info.daries.rp.event"><![CDATA[Events (Raidplaner)]]></item>
+            <item name="wcf.search.object.info.daries.rp.event"><![CDATA[Event (Raidplaner)]]></item>
         </category>
         
         <category name="wcf.user.notification">

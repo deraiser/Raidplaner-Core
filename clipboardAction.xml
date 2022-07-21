@@ -2,16 +2,23 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/5.4/clipboardAction.xsd">
 	<import>
         <!-- info.daries.rp.character -->
-        <action name="assignToRaidGroup">
+        <action name="enable">
             <actionclassname>rp\system\clipboard\action\CharacterClipboardAction</actionclassname>
             <showorder>1</showorder>
             <pages>
                 <page>rp\acp\page\CharacterListPage</page>
             </pages>
         </action>
+        <action name="disable">
+            <actionclassname>rp\system\clipboard\action\CharacterClipboardAction</actionclassname>
+            <showorder>2</showorder>
+            <pages>
+                <page>rp\acp\page\CharacterListPage</page>
+            </pages>
+        </action>
 		<action name="delete">
 			<actionclassname>rp\system\clipboard\action\CharacterClipboardAction</actionclassname>
-			<showorder>2</showorder>
+			<showorder>3</showorder>
 			<pages>
 				<page>rp\acp\page\CharacterListPage</page>
 			</pages>

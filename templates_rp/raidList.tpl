@@ -25,8 +25,8 @@
 {include file='header'}
 
 {if $items}
-    <section class="section sectionContainerList">
-        <ol class="contentItemList">
+    <section class="section sectionContainerList rpRaidList">
+        <ol class="contentItemList containerList">
             {foreach from=$objects item=raid}
                  <li class="contentItem contentItemMultiColumn" data-object-id="{@$raid->raidID}">
                      <div class="contentItemContent">
@@ -37,6 +37,31 @@
                                 <div class="containerHeadline">
                                     <h3><a href="{$raid->getLink()}">{$raid->getTitle()}</a></h3>
                                 </div>
+                                
+                                {hascontent}
+                                    <nav class="jsMobileNavigation buttonGroupNavigation">
+                                        <ul class="buttonList iconList jsObjectActionContainer" data-object-action-class-name="rp\data\raid\RaidAction">
+                                            {content}
+                                                {if $__wcf->session->getPermission('mod.rp.canDeleteRaid')}
+                                                    <li class="jsObjectActionObject" data-object-id="{@$raid->getObjectID()}">
+                                                        <a>
+                                                            <span 
+                                                                class="icon icon16 fa-times jsObjectAction pointer" 
+                                                                data-object-action="delete" 
+                                                                data-confirm-message="{lang objectTitle=$raid->getTitle() __encode=true}wcf.button.delete.confirmMessage{/lang}"
+                                                                data-object-action-success="reload" 
+                                                                data-tooltip="{lang}wcf.global.button.delete{/lang}" 
+                                                                aria-label="{lang}wcf.global.button.delete{/lang}">
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                {/if}
+
+                                                {event name='buttons'}
+                                            {/content}
+                                        </ul>
+                                    </nav>
+                                {/hascontent}
 
                                 <dl class="plain dataList containerContent small">
                                     <dt>{lang}rp.raid.date{/lang}</dt>

@@ -1,10 +1,9 @@
 <?php
 
-namespace rp\data\raid\group;
+namespace rp\acp\form;
 
-use rp\system\cache\builder\RaidGroupCacheBuilder;
-use wcf\data\DatabaseObjectEditor;
-use wcf\data\IEditableCachedObject;
+use rp\data\rank\Rank;
+use wcf\system\exception\IllegalLinkException;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -27,27 +26,35 @@ use wcf\data\IEditableCachedObject;
  */
 
 /**
- * Provides functions to edit raid groups.
- *
+ * Shows the rank edit form.
+ * 
  * @author      Marco Daries
- * @package     Daries\RP\Data\Raid\Group
- *
- * @method      RaidGroup   getDecoratedObject()
- * @mixin       RaidGroup
+ * @package     Daries\RP\Acp\Form
  */
-class RaidGroupEditor extends DatabaseObjectEditor implements IEditableCachedObject
+class RankEditForm extends RankAddForm
 {
     /**
      * @inheritDoc
      */
-    protected static $baseClass = RaidGroup::class;
+    public string $activeMenuItem = 'rp.acp.menu.link.rank.list';
 
     /**
      * @inheritDoc
      */
-    public static function resetCache(): void
-    {
+    public string $formAction = 'edit';
 
-        RaidGroupCacheBuilder::getInstance()->reset();
+    /**
+     * @inheritDoc
+     */
+    public function readParameters(): void
+    {
+        parent::readParameters();
+
+        if (isset($_REQUEST['id'])) {
+            $this->formObject = new Rank($_REQUEST['id']);
+            if (!$this->formObject->rankID) {
+                throw new IllegalLinkException();
+            }
+        }
     }
 }

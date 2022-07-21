@@ -30,7 +30,7 @@
 {/capture}
 
 {capture assign='contentInteractionPagination'}
-	{pages print=true assign='pagesLinks' controller='PointList' link="pageNo=%d$canonicalURLParameters"}
+	{pages print=true assign='pagesLinks' controller='PointList' application='rp' link="pageNo=%d$canonicalURLParameters"}
 {/capture}
 
 {include file='header'}

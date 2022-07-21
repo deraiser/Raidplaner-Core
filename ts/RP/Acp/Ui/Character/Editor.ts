@@ -27,6 +27,7 @@
 
 import * as Core from "WoltLabSuite/Core/Core";
 import DeleteAction from "./Action/DeleteAction";
+import DisableAction from "./Action/DisableAction";
 import * as EventHandler from "WoltLabSuite/Core/Event/Handler";
 import * as Language from "WoltLabSuite/Core/Language";
 import UiDropdownSimple from "WoltLabSuite/Core/Ui/Dropdown/Simple";
@@ -70,9 +71,14 @@ class AcpUiCharacterEditor {
             });
         }
         
-        const deleteUser = dropdownMenu.querySelector(".jsDelete");
-        if (deleteUser !== null) {
-            new DeleteAction(deleteUser as HTMLAnchorElement, characterId, characterRow);
+        const enableCharacter = dropdownMenu.querySelector(".jsEnable");
+        if (enableCharacter !== null) {
+            new DisableAction(enableCharacter as HTMLAnchorElement, characterId, characterRow);
+        }
+        
+        const deleteCharacter = dropdownMenu.querySelector(".jsDelete");
+        if (deleteCharacter !== null) {
+            new DeleteAction(deleteCharacter as HTMLAnchorElement, characterId, characterRow);
         }
     }
     

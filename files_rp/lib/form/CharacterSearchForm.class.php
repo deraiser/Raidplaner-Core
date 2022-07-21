@@ -60,11 +60,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
     public array $conditions = [];
 
     /**
-     * raid group id
-     */
-    public int $raidGroupID = 0;
-
-    /**
      * search id
      * @var int
      */
@@ -122,33 +117,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
     /**
      * @inheritDoc
      */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        // search character from passed raidGroupID by raidGroup-view
-        if (isset($_GET['raidGroupID'])) {
-            $this->raidGroupID = \intval($_GET['raidGroupID']);
-
-            // disable check for security token for GET requests
-            $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
-
-            // do search
-            try {
-                $this->buildForm();
-                $this->readData();
-                $this->validate();
-                $this->save();
-            } catch (UserInputException $e) {
-                $this->errorField = $e->getField();
-                $this->errorType = $e->getType();
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
     public function save(): void
     {
         AbstractForm::save();
@@ -197,11 +165,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
             foreach ($groupedObjectTypes as $objectType) {
                 /** @var ICondition $processor */
                 $processor = $objectType->getProcessor();
-
-                if ($this->raidGroupID && $objectType->objectType == 'info.daries.rp.characterRaidGroup') {
-                    $processor->setValue([$this->raidGroupID], $this->form);
-                }
-
                 $processor->addObjectListCondition($this->characterList, $this->form);
             }
         }

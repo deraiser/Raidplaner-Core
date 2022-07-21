@@ -3,6 +3,8 @@
     <import>
         <category name="rp.acp.character">
             <item name="rp.acp.character.condition.conditionGroup.general"><![CDATA[Allgemein]]></item>
+            <item name="rp.acp.character.disable"><![CDATA[Deaktivieren]]></item>
+            <item name="rp.acp.character.enable"><![CDATA[Aktivieren]]></item>
             <item name="rp.acp.character.isDisabled"><![CDATA[Charakter ist deaktiviert]]></item>
             <item name="rp.acp.character.list"><![CDATA[Charakter]]></item>
             <item name="rp.acp.character.owner"><![CDATA[Besitzer]]></item>
@@ -40,8 +42,8 @@
             <item name="rp.acp.menu.link.raid"><![CDATA[Raid]]></item>
             <item name="rp.acp.menu.link.raid.event.add"><![CDATA[Raid Event hinzufügen]]></item>
             <item name="rp.acp.menu.link.raid.event.list"><![CDATA[Raid Events]]></item>
-            <item name="rp.acp.menu.link.raid.group.add"><![CDATA[Raidgruppe hinzufügen]]></item>
-            <item name="rp.acp.menu.link.raid.group.list"><![CDATA[Raidgruppen]]></item>
+            <item name="rp.acp.menu.link.rank.add"><![CDATA[Rank hinzufügen]]></item>
+            <item name="rp.acp.menu.link.rank.list"><![CDATA[Ränge]]></item>
             <item name="rp.acp.menu.link.rp"><![CDATA[Raidplaner]]></item>
         </category>
     
@@ -64,10 +66,16 @@
             <item name="rp.acp.raid.event.list"><![CDATA[Raid Termine]]></item>
             <item name="rp.acp.raid.event.point.account"><![CDATA[Punktekonto]]></item>
             <item name="rp.acp.raid.event.showProfile"><![CDATA[Im Charakter-Profil anzeigen]]></item>
-            <item name="rp.acp.raid.group.add"><![CDATA[Raidgruppe hinzufügen]]></item>
-            <item name="rp.acp.raid.group.list"><![CDATA[Raidgruppen]]></item>
-            <item name="rp.acp.raid.group.members"><![CDATA[Mitglieder]]></item>
-            <item name="rp.acp.raid.group.showMembers"><![CDATA[Zeige die Charaktere dieser Raidgruppe]]></item>
+        </category>
+
+        <category name="rp.acp.rank">
+            <item name="rp.acp.rank.add"><![CDATA[Rang hinzufügen]]></item>
+            <item name="rp.acp.rank.edit"><![CDATA[Rang bearbeiten]]></item>
+            <item name="rp.acp.rank.list"><![CDATA[Ränge]]></item>
+            <item name="rp.acp.rank.prefix"><![CDATA[Prefix]]></item>
+            <item name="rp.acp.rank.setAsDefault"><![CDATA[Zum Standard-Rang machen]]></item>
+            <item name="rp.acp.rank.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Ränge angezeigt werden.]]></item>
+            <item name="rp.acp.rank.suffix"><![CDATA[Suffix]]></item>
         </category>
         
         <category name="rp.calendar">
@@ -165,6 +173,7 @@
             <item name="rp.event.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin <strong>{$event->getTitle()}</strong> reagiert ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
             <item name="rp.event.like.notification.title"><![CDATA[Reaktion auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin]]></item>
             <item name="rp.event.like.notification.title.stacked"><![CDATA[{#$count} Benutzer haben auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Termin reagiert]]></item>
+            <item name="rp.event.login"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} für das Event an-/abgemeldet.]]></item>
             <item name="rp.event.maybe"><![CDATA[Vielleicht]]></item>
             <item name="rp.event.moderation.info"><![CDATA[Von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} erstellte Termine unterliegen der Moderation. D.h. {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Termin wird nach dem Absenden zunächst durch einen Moderator geprüft und danach, sofern keine Beanstandung vorliegt, freigeschaltet.]]></item>
             <item name="rp.event.moderation.redirect"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Termin wurde gespeichert. Er wird zunächst von einem Moderator geprüft und danach, sofern keine Beanstandung vorliegt, freigeschaltet.]]></item>
@@ -176,6 +185,9 @@
             <item name="rp.event.raidLink"><![CDATA[Zum Raid]]></item>
             <item name="rp.event.restore"><![CDATA[Wiederherstellen]]></item>
             <item name="rp.event.settings"><![CDATA[Einstellungen]]></item>
+            <item name="rp.event.sortField.startTime"><![CDATA[Datum]]></item>
+            <item name="rp.event.sortField.comments"><![CDATA[Kommentare]]></item>
+            <item name="rp.event.sortField.views"><![CDATA[Zugriffe]]></item>
             <item name="rp.event.startTime"><![CDATA[Startzeit]]></item>
             <item name="rp.event.startTime.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} ein ungültiges Datum für den Start des Termins angegeben.]]></item>
             <item name="rp.event.startTime.error.tooLong"><![CDATA[Die Dauer des Termins ist zu groß. Die maximal zulässige Dauer beträgt {#RP_CALENDAR_MAX_EVENT_LENGTH} Tage.]]></item>
@@ -269,6 +281,7 @@
         <category name="rp.raid">
             <item name="rp.raid.add"><![CDATA[Raid hinzufügen]]></item>
             <item name="rp.raid.attendees"><![CDATA[Teilnehmers]]></item>
+            <item name="rp.raid.created"><![CDATA[Erstellt von]]></item>
             <item name="rp.raid.date"><![CDATA[Datum]]></item>
             <item name="rp.raid.items"><![CDATA[Gegenstände]]></item>
             <item name="rp.raid.items.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Gegenstand wirklich löschen?]]></item>
@@ -347,6 +360,7 @@
         
         <category name="wcf.acp.box">
             <item name="wcf.acp.box.boxController.info.daries.rp.eventLegend"><![CDATA[Termin Legende (Raidplaner)]]></item>
+            <item name="wcf.acp.box.boxController.info.daries.rp.eventList"><![CDATA[Kalender-Termine (Raidplaner)]]></item>
         </category>
         
         <category name="wcf.acp.group">
@@ -358,7 +372,6 @@
             <item name="wcf.acp.group.option.admin.rp.canManagePointAccount"><![CDATA[Kann Punktekonten verwalten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageRank"><![CDATA[Kann Ränge verwalten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canManageRaidEvent"><![CDATA[Kann Raid-Events verwalten]]></item>
-            <item name="wcf.acp.group.option.admin.rp.canManageRaidGroup"><![CDATA[Kann Raid-Gruppen verwalten]]></item>
             <item name="wcf.acp.group.option.admin.rp.canSearchCharacter"><![CDATA[Kann Charaktere suchen]]></item>
             <item name="wcf.acp.group.option.category.admin.rp"><![CDATA[Raidplaner]]></item>
             <item name="wcf.acp.group.option.category.admin.rp.calendar"><![CDATA[Kalender]]></item>
@@ -452,6 +465,8 @@
             <item name="wcf.clipboard.label.info.daries.rp.raid.attendee.marked"><![CDATA[{if $count == 1}Ein{else}{#$count}{/if} Teilnehmer]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete"><![CDATA[Löschen ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.character.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Charakter{if $count != 1}e{/if} löschen?]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.disable"><![CDATA[Deaktivieren ({#$count})]]></item>
+            <item name="wcf.clipboard.item.info.daries.rp.character.enable"><![CDATA[Aktivieren ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.delete"><![CDATA[Entfernen ({#$count})]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Teilnehmer entfernen?]]></item>
             <item name="wcf.clipboard.item.info.daries.rp.raid.attendee.updateStatus"><![CDATA[Status ändern ({#$count})]]></item>
@@ -472,6 +487,11 @@
         <category name="wcf.page">
             <item name="wcf.page.daries.rp.copyright"><![CDATA[<a href="https://daries.info/" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Software: <strong>Raidplaner{if SHOW_VERSION_NUMBER} {$__rp->getPackage()->packageVersion}{/if}</strong>, entwickelt von <strong>Daries.info Team</strong></a>]]></item>
             <item name="wcf.page.onlineLocation.info.daries.rp.Character"><![CDATA[Charakterprofil von <a href="{link controller='Character' object=$character}{/link}" class="rpCharacterLink" data-character-id="{@$character->characterID}">{$character->getTitle()}</a>]]></item>
+        </category>
+
+        <category name="wcf.search">
+            <item name="wcf.search.type.info.daries.rp.event"><![CDATA[Termine (Raidplaner)]]></item>
+            <item name="wcf.search.object.info.daries.rp.event"><![CDATA[Termin (Raidplaner)]]></item>
         </category>
     
         <category name="wcf.user.notification">

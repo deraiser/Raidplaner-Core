@@ -52,6 +52,16 @@ class RaidAction extends AbstractDatabaseObjectAction
     /**
      * @inheritDoc
      */
+    protected $permissionsCreate = ['mod.rp.canAddRaid'];
+
+    /**
+     * @inheritDoc
+     */
+    protected $permissionsDelete = ['mod.rp.canDeleteRaid'];
+
+    /**
+     * @inheritDoc
+     */
     protected $className = RaidEditor::class;
 
     /**

@@ -38,7 +38,6 @@
                 display: inline-flex;
                 font-size: 14px;
                 width: 30px;
-
             }
 
             .rpEvent {
@@ -121,8 +120,12 @@
                         position: relative;
                     }
                 }
+                
+                &.rpEmptyEvent {
+                    background: transparent;
+                    border: transparent;
+                }
             }
-
 
             &.ignore,
             &.selected {

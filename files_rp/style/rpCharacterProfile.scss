@@ -109,7 +109,10 @@
             @include wcfFontDefault;
         }
     }
+}
 
+.rpRaidClassDistribution,
+.characterProfileRaidAttendance {
     .progressBarContainer {
         position: relative;
         display: inline-block;

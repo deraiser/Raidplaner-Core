@@ -37,9 +37,10 @@ class UserMergeListener extends AbstractUserMergeListener
      */
     protected $databaseTables = [
         'rp{WCF_N}_event',
+        'rp{WCF_N}_member',
         [
             'name' => 'rp{WCF_N}_member',
-            'username' => '',
+            'username' => null,
         ],
     ];
 

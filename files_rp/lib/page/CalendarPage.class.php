@@ -54,6 +54,16 @@ class CalendarPage extends AbstractPage
     public Calendar $calendar;
 
     /**
+     * current day object
+     */
+    public Day $currentDay;
+
+    /**
+     * current month object
+     */
+    public Month $currentMonth;
+
+    /**
      * month object
      */
     public Month $month;

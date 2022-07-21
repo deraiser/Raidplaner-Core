@@ -2,10 +2,11 @@
 
 namespace rp\acp\form;
 
-use rp\data\raid\group\RaidGroupAction;
+use rp\data\rank\RankAction;
+use rp\data\rank\RankCache;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\DescriptionFormField;
+use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TextFormField;
 
 /*  Project:    Raidplaner: Core
@@ -29,37 +30,32 @@ use wcf\system\form\builder\field\TextFormField;
  */
 
 /**
- * Shows the raid group add form.
- *
+ * Shows the rank add form.
+ * 
  * @author      Marco Daries
  * @package     Daries\RP\Acp\Form
  */
-class RaidGroupAddForm extends AbstractFormBuilderForm
+class RankAddForm extends AbstractFormBuilderForm
 {
     /**
      * @inheritDoc
      */
-    public $activeMenuItem = 'rp.acp.menu.link.raid.group.add';
+    public $activeMenuItem = 'rp.acp.menu.link.rank.add';
 
     /**
      * @inheritDoc
      */
-    public $neededPermissions = ['admin.rp.canManageRaidGroup'];
+    public $neededModules = ['RP_ENABLE_RANK'];
 
     /**
      * @inheritDoc
      */
-    public $objectActionClass = RaidGroupAction::class;
+    public $neededPermissions = ['admin.rp.canManageRank'];
 
     /**
      * @inheritDoc
      */
-    public $objectEditLinkApplication = 'rp';
-
-    /**
-     * @inheritDoc
-     */
-    public $objectEditLinkController = RaidGroupEditForm::class;
+    public $objectActionClass = RankAction::class;
 
     /**
      * @inheritDoc
@@ -71,21 +67,24 @@ class RaidGroupAddForm extends AbstractFormBuilderForm
         $dataContainer = FormContainer::create('data')
             ->label('wcf.global.form.data')
             ->appendChildren([
-            TextFormField::create('groupName')
+            TextFormField::create('rankName')
             ->label('wcf.global.name')
-            ->autoFocus()
             ->required()
-            ->maximumLength(255)
-            ->i18n()
-            ->languageItemPattern('rp.raid.group.name\d+'),
-            DescriptionFormField::create('groupDescription')
             ->autoFocus()
-            ->i18n()
-            ->languageItemPattern('rp.raid.group.description\d+'),
+            ->maximumLength(100),
+            TextFormField::create('prefix')
+            ->label('rp.acp.rank.prefix')
+            ->autoFocus()
+            ->maximumLength(25),
+            TextFormField::create('suffix')
+            ->label('rp.acp.rank.suffix')
+            ->autoFocus()
+            ->maximumLength(25),
+            ShowOrderFormField::create()
+            ->description('rp.acp.rank.showOrder.description')
+            ->required()
+            ->options(RankCache::getInstance()->getRanks()),
         ]);
-
-        $this->form->appendChildren([
-            $dataContainer
-        ]);
+        $this->form->appendChild($dataContainer);
     }
 }

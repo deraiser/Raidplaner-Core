@@ -29,6 +29,20 @@
             <permissions>admin.rp.canAddCharacter</permissions>
             <icon>fa-plus</icon>
         </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.rank.list">
+            <controller>rp\acp\page\RankListPage</controller>
+            <parent>rp.acp.menu.link.character</parent>
+            <showorder>2</showorder>
+            <options>rp_enable_rank</options>
+            <permissions>admin.rp.canManageRank</permissions>
+        </acpmenuitem>
+        <acpmenuitem name="rp.acp.menu.link.rank.add">
+            <controller>rp\acp\form\RankAddForm</controller>
+            <parent>rp.acp.menu.link.rank.list</parent>
+            <options>rp_enable_rank</options>
+            <permissions>admin.rp.canManageRank</permissions>
+            <icon>fa-plus</icon>
+        </acpmenuitem>
         
         <!-- calendar -->
         <acpmenuitem name="rp.acp.menu.link.calendar">
@@ -65,22 +79,10 @@
             <permissions>admin.rp.canManageRaidEvent</permissions>
             <icon>fa-plus</icon>
         </acpmenuitem>
-        <acpmenuitem name="rp.acp.menu.link.raid.group.list">
-            <controller>rp\acp\page\RaidGroupListPage</controller>
-            <parent>rp.acp.menu.link.raid</parent>
-            <showorder>2</showorder>
-            <permissions>admin.rp.canManageRaidGroup</permissions>
-        </acpmenuitem>
-        <acpmenuitem name="rp.acp.menu.link.raid.group.add">
-            <controller>rp\acp\form\RaidGroupAddForm</controller>
-            <parent>rp.acp.menu.link.raid.group.list</parent>
-            <permissions>admin.rp.canManageRaidGroup</permissions>
-            <icon>fa-plus</icon>
-        </acpmenuitem>
         <acpmenuitem name="rp.acp.menu.link.point.account.list">
             <controller>rp\acp\page\PointAccountListPage</controller>
             <parent>rp.acp.menu.link.raid</parent>
-            <showorder>3</showorder>
+            <showorder>2</showorder>
             <permissions>admin.rp.canManagePointAccount</permissions>
             <options>rp_item_account_easymode_disabled</options>
         </acpmenuitem>

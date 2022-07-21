@@ -25,6 +25,8 @@ use wcf\util\DateUtil;
  */
 
 /**
+ * Displays a specific day in the month.
+ * 
  * @author      Marco Daries
  * @package     Daries\RP\System\Calendar
  */
@@ -37,7 +39,6 @@ final class Day
 
     /**
      * day of the week
-     * 
      */
     protected ?int $dayOfTheWeek = null;
 

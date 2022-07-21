@@ -3,6 +3,7 @@
 namespace rp\acp\form;
 
 use rp\data\character\CharacterList;
+use rp\system\condition\ICondition;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\search\SearchEditor;
@@ -17,8 +18,6 @@ use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
-use const TIME_NOW;
-use rp\system\condition\ICondition;
 
 /*  Project:    Raidplaner: Core
  *  Package:    info.daries.rp
@@ -80,11 +79,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
     public int $maxResults = 2000;
 
     /**
-     * raid group id
-     */
-    public int $raidGroupID = 0;
-
-    /**
      * search id
      */
     public int $searchID = 0;
@@ -128,33 +122,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
             foreach ($conditionObjectTypes as $condition) {
                 $container->appendChild($condition->getProcessor()->getFormField());
                 $this->form->getDataHandler()->addProcessor(new VoidFormDataProcessor($condition->getProcessor()->getID()));
-            }
-        }
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function readParameters()
-    {
-        parent::readParameters();
-
-        // search character from passed raidGroupID by raidGroup-view
-        if (isset($_GET['raidGroupID'])) {
-            $this->raidGroupID = \intval($_GET['raidGroupID']);
-
-            // disable check for security token for GET requests
-            $_REQUEST['t'] = WCF::getSession()->getSecurityToken();
-
-            // do search
-            try {
-                $this->buildForm();
-                $this->readData();
-                $this->validate();
-                $this->save();
-            } catch (UserInputException $e) {
-                $this->errorField = $e->getField();
-                $this->errorType = $e->getType();
             }
         }
     }
@@ -212,11 +179,6 @@ class CharacterSearchForm extends AbstractFormBuilderForm
             foreach ($groupedObjectTypes as $objectType) {
                 /** @var ICondition $processor */
                 $processor = $objectType->getProcessor();
-
-                if ($this->raidGroupID && $objectType->objectType == 'info.daries.rp.characterRaidGroup') {
-                    $processor->setValue([$this->raidGroupID], $this->form);
-                }
-
                 $processor->addObjectListCondition($this->characterList, $this->form);
             }
         }

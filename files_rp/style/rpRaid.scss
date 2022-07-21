@@ -1,0 +1,62 @@
+.rpRaidClassDistribution {
+    > ol {
+        > li {
+          padding: 5px;  
+          
+          &:last-child {
+              background-color: transparent;
+              box-shadow: none;
+              margin-top: -5px;
+          }
+        }
+    }
+    
+    .contentItemList {
+        .contentItemMultiColumn {
+            flex-basis: calc(100% / 2 - 20px) !important;
+            
+            &.rpRaidClassAttendees {
+                flex-basis: calc(100% - 20px) !important;
+            }
+        }
+    }
+    
+    .rpClassIcon {
+        display: block;
+        text-align: center;
+        
+        > span {
+            display: block;
+        }
+    }
+    
+    .progressBarContainer  {
+        height: 25px;
+
+        span {
+            font-size: 14px;
+            top: 4px;
+        }
+    }
+    
+    .legend {
+        > div {
+            background-color: transparent !important;
+        }
+    }
+}
+
+.rpRaidList {
+    .containerList {
+        > li {
+            padding: 0px;
+            
+            .buttonGroupNavigation  {
+                left: 10px;
+                bottom: 8px;
+                right: inherit;
+                top: inherit;
+            }
+        }
+    }
+}
